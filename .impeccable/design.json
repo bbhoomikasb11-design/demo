@@ -1,0 +1,526 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-19T13:59:44.056629Z",
+  "title": "Design System: Bhoomika S. — Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "primary",
+        "displayName": "Forest Ink",
+        "tonalRamp": [
+          "oklch(15.0% 0.04183 169.40)",
+          "oklch(26.4% 0.04183 169.40)",
+          "oklch(37.9% 0.04183 169.40)",
+          "oklch(49.3% 0.04183 169.40)",
+          "oklch(60.7% 0.04183 169.40)",
+          "oklch(72.1% 0.04183 169.40)",
+          "oklch(83.6% 0.04183 169.40)",
+          "oklch(95.0% 0.04183 169.40)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Forest Action",
+        "tonalRamp": [
+          "oklch(15.0% 0.06290 163.89)",
+          "oklch(26.4% 0.06290 163.89)",
+          "oklch(37.9% 0.06290 163.89)",
+          "oklch(49.3% 0.06290 163.89)",
+          "oklch(60.7% 0.06290 163.89)",
+          "oklch(72.1% 0.06290 163.89)",
+          "oklch(83.6% 0.06290 163.89)",
+          "oklch(95.0% 0.06290 163.89)"
+        ]
+      },
+      "accent-hover": {
+        "role": "primary",
+        "displayName": "Forest Action Hover",
+        "tonalRamp": [
+          "oklch(15.0% 0.05066 164.58)",
+          "oklch(26.4% 0.05066 164.58)",
+          "oklch(37.9% 0.05066 164.58)",
+          "oklch(49.3% 0.05066 164.58)",
+          "oklch(60.7% 0.05066 164.58)",
+          "oklch(72.1% 0.05066 164.58)",
+          "oklch(83.6% 0.05066 164.58)",
+          "oklch(95.0% 0.05066 164.58)"
+        ]
+      },
+      "muted": {
+        "role": "primary",
+        "displayName": "Readable Sage Ink",
+        "tonalRamp": [
+          "oklch(15.0% 0.03896 137.19)",
+          "oklch(26.4% 0.03896 137.19)",
+          "oklch(37.9% 0.03896 137.19)",
+          "oklch(49.3% 0.03896 137.19)",
+          "oklch(60.7% 0.03896 137.19)",
+          "oklch(72.1% 0.03896 137.19)",
+          "oklch(83.6% 0.03896 137.19)",
+          "oklch(95.0% 0.03896 137.19)"
+        ]
+      },
+      "soft-ink": {
+        "role": "primary",
+        "displayName": "Soft Reading Ink",
+        "tonalRamp": [
+          "oklch(15.0% 0.04906 138.79)",
+          "oklch(26.4% 0.04906 138.79)",
+          "oklch(37.9% 0.04906 138.79)",
+          "oklch(49.3% 0.04906 138.79)",
+          "oklch(60.7% 0.04906 138.79)",
+          "oklch(72.1% 0.04906 138.79)",
+          "oklch(83.6% 0.04906 138.79)",
+          "oklch(95.0% 0.04906 138.79)"
+        ]
+      },
+      "muted-emphasis": {
+        "role": "primary",
+        "displayName": "Muted Headline Emphasis",
+        "tonalRamp": [
+          "oklch(15.0% 0.04432 133.95)",
+          "oklch(26.4% 0.04432 133.95)",
+          "oklch(37.9% 0.04432 133.95)",
+          "oklch(49.3% 0.04432 133.95)",
+          "oklch(60.7% 0.04432 133.95)",
+          "oklch(72.1% 0.04432 133.95)",
+          "oklch(83.6% 0.04432 133.95)",
+          "oklch(95.0% 0.04432 133.95)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Warm Paper",
+        "tonalRamp": [
+          "oklch(15.0% 0.00538 117.92)",
+          "oklch(26.4% 0.00538 117.92)",
+          "oklch(37.9% 0.00538 117.92)",
+          "oklch(49.3% 0.00538 117.92)",
+          "oklch(60.7% 0.00538 117.92)",
+          "oklch(72.1% 0.00538 117.92)",
+          "oklch(83.6% 0.00538 117.92)",
+          "oklch(95.0% 0.00538 117.92)"
+        ]
+      },
+      "ground": {
+        "role": "neutral",
+        "displayName": "Surrounding Ground",
+        "tonalRamp": [
+          "oklch(15.0% 0.00541 117.93)",
+          "oklch(26.4% 0.00541 117.93)",
+          "oklch(37.9% 0.00541 117.93)",
+          "oklch(49.3% 0.00541 117.93)",
+          "oklch(60.7% 0.00541 117.93)",
+          "oklch(72.1% 0.00541 117.93)",
+          "oklch(83.6% 0.00541 117.93)",
+          "oklch(95.0% 0.00541 117.93)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "Raised White",
+        "tonalRamp": [
+          "oklch(15.0% 0.00000 0.00)",
+          "oklch(26.4% 0.00000 0.00)",
+          "oklch(37.9% 0.00000 0.00)",
+          "oklch(49.3% 0.00000 0.00)",
+          "oklch(60.7% 0.00000 0.00)",
+          "oklch(72.1% 0.00000 0.00)",
+          "oklch(83.6% 0.00000 0.00)",
+          "oklch(95.0% 0.00000 0.00)"
+        ]
+      },
+      "active-paper": {
+        "role": "neutral",
+        "displayName": "Active Paper",
+        "tonalRamp": [
+          "oklch(15.0% 0.00536 117.92)",
+          "oklch(26.4% 0.00536 117.92)",
+          "oklch(37.9% 0.00536 117.92)",
+          "oklch(49.3% 0.00536 117.92)",
+          "oklch(60.7% 0.00536 117.92)",
+          "oklch(72.1% 0.00536 117.92)",
+          "oklch(83.6% 0.00536 117.92)",
+          "oklch(95.0% 0.00536 117.92)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Soft Divider",
+        "tonalRamp": [
+          "oklch(15.0% 0.01321 130.79)",
+          "oklch(26.4% 0.01321 130.79)",
+          "oklch(37.9% 0.01321 130.79)",
+          "oklch(49.3% 0.01321 130.79)",
+          "oklch(60.7% 0.01321 130.79)",
+          "oklch(72.1% 0.01321 130.79)",
+          "oklch(83.6% 0.01321 130.79)",
+          "oklch(95.0% 0.01321 130.79)"
+        ]
+      },
+      "contact-field": {
+        "role": "neutral",
+        "displayName": "Contact Sage",
+        "tonalRamp": [
+          "oklch(15.0% 0.02214 123.64)",
+          "oklch(26.4% 0.02214 123.64)",
+          "oklch(37.9% 0.02214 123.64)",
+          "oklch(49.3% 0.02214 123.64)",
+          "oklch(60.7% 0.02214 123.64)",
+          "oklch(72.1% 0.02214 123.64)",
+          "oklch(83.6% 0.02214 123.64)",
+          "oklch(95.0% 0.02214 123.64)"
+        ]
+      },
+      "showcase-field": {
+        "role": "neutral",
+        "displayName": "Showcase Sage",
+        "tonalRamp": [
+          "oklch(15.0% 0.02261 126.24)",
+          "oklch(26.4% 0.02261 126.24)",
+          "oklch(37.9% 0.02261 126.24)",
+          "oklch(49.3% 0.02261 126.24)",
+          "oklch(60.7% 0.02261 126.24)",
+          "oklch(72.1% 0.02261 126.24)",
+          "oklch(83.6% 0.02261 126.24)",
+          "oklch(95.0% 0.02261 126.24)"
+        ]
+      },
+      "skill-field": {
+        "role": "neutral",
+        "displayName": "Skill Sage",
+        "tonalRamp": [
+          "oklch(15.0% 0.01234 121.70)",
+          "oklch(26.4% 0.01234 121.70)",
+          "oklch(37.9% 0.01234 121.70)",
+          "oklch(49.3% 0.01234 121.70)",
+          "oklch(60.7% 0.01234 121.70)",
+          "oklch(72.1% 0.01234 121.70)",
+          "oklch(83.6% 0.01234 121.70)",
+          "oklch(95.0% 0.01234 121.70)"
+        ]
+      },
+      "filter-active-ink": {
+        "role": "primary",
+        "displayName": "Selected Filter Ink",
+        "tonalRamp": [
+          "oklch(15.0% 0.07315 138.86)",
+          "oklch(26.4% 0.07315 138.86)",
+          "oklch(37.9% 0.07315 138.86)",
+          "oklch(49.3% 0.07315 138.86)",
+          "oklch(60.7% 0.07315 138.86)",
+          "oklch(72.1% 0.07315 138.86)",
+          "oklch(83.6% 0.07315 138.86)",
+          "oklch(95.0% 0.07315 138.86)"
+        ]
+      },
+      "code-field": {
+        "role": "neutral",
+        "displayName": "Code Tile Sage",
+        "tonalRamp": [
+          "oklch(15.0% 0.04317 129.01)",
+          "oklch(26.4% 0.04317 129.01)",
+          "oklch(37.9% 0.04317 129.01)",
+          "oklch(49.3% 0.04317 129.01)",
+          "oklch(60.7% 0.04317 129.01)",
+          "oklch(72.1% 0.04317 129.01)",
+          "oklch(83.6% 0.04317 129.01)",
+          "oklch(95.0% 0.04317 129.01)"
+        ]
+      },
+      "code-ink": {
+        "role": "primary",
+        "displayName": "Code Tile Ink",
+        "tonalRamp": [
+          "oklch(15.0% 0.09355 135.93)",
+          "oklch(26.4% 0.09355 135.93)",
+          "oklch(37.9% 0.09355 135.93)",
+          "oklch(49.3% 0.09355 135.93)",
+          "oklch(60.7% 0.09355 135.93)",
+          "oklch(72.1% 0.09355 135.93)",
+          "oklch(83.6% 0.09355 135.93)",
+          "oklch(95.0% 0.09355 135.93)"
+        ]
+      },
+      "focus": {
+        "role": "primary",
+        "displayName": "Focus Green",
+        "tonalRamp": [
+          "oklch(15.0% 0.08093 155.50)",
+          "oklch(26.4% 0.08093 155.50)",
+          "oklch(37.9% 0.08093 155.50)",
+          "oklch(49.3% 0.08093 155.50)",
+          "oklch(60.7% 0.08093 155.50)",
+          "oklch(72.1% 0.08093 155.50)",
+          "oklch(83.6% 0.08093 155.50)",
+          "oklch(95.0% 0.08093 155.50)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Hero Display",
+        "purpose": "Desktop hero default; responsive values are documented in Layout."
+      },
+      "headline": {
+        "displayName": "Section Headline",
+        "purpose": "Major editorial section headings."
+      },
+      "title": {
+        "displayName": "Project Title",
+        "purpose": "Final full-width project gallery titles."
+      },
+      "body": {
+        "displayName": "Section Copy",
+        "purpose": "Editorial section copy, with a 590px maximum line container."
+      },
+      "body-detail": {
+        "displayName": "Project Detail Copy",
+        "purpose": "Project detail prose; 13px on mobile in the final cascade."
+      },
+      "navigation": {
+        "displayName": "Navigation",
+        "purpose": "Desktop destinations, accompanied by outline icons."
+      },
+      "button": {
+        "displayName": "Action Label",
+        "purpose": "Primary and secondary pill actions."
+      },
+      "label": {
+        "displayName": "Section Orientation",
+        "purpose": "Existing small section labels from the pinned reference; a contextual role, not body copy."
+      },
+      "chip": {
+        "displayName": "Skill Metadata",
+        "purpose": "Static skill tags with compact leading."
+      }
+    },
+    "shadows": [
+      {
+        "name": "raised-control",
+        "value": "0 2px 3px #263e3010,0 9px 15px #263e300c,0 22px 24px #263e3005",
+        "purpose": "Shared --shadow for raised controls and selected states."
+      },
+      {
+        "name": "primary-action",
+        "value": "0 2px 4px #16362520,0 9px 17px #2e503524",
+        "purpose": "Forest primary action at rest."
+      },
+      {
+        "name": "action-hover",
+        "value": "0 3px 5px #263e3010,0 12px 20px #263e3015",
+        "purpose": "Pill button hover lift."
+      },
+      {
+        "name": "page-sheet",
+        "value": "0 2px 8px #334b3310",
+        "purpose": "Ambient separation of the page sheet."
+      },
+      {
+        "name": "experience-card",
+        "value": "0 2px 4px #3c513307,0 10px 23px #3c51330a",
+        "purpose": "White experience panels."
+      },
+      {
+        "name": "showcase-stack",
+        "value": "0 2px 0 #fff,0 8px 0 #dfe4d9,0 19px 25px #3040260c",
+        "purpose": "Local stacked-sheet edges and diffuse shadow beneath the hero showcase."
+      },
+      {
+        "name": "mobile-drawer",
+        "value": "15px 0 45px #1c331426",
+        "purpose": "Depth at the mobile navigation edge."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-expressive",
+        "value": "cubic-bezier(.16,1,.3,1)",
+        "purpose": "Shared --ease for settling transforms."
+      },
+      {
+        "name": "button-lift",
+        "value": ".35s",
+        "purpose": "Primary and secondary button transform and shadow changes."
+      },
+      {
+        "name": "hero-fan",
+        "value": "1.4s",
+        "purpose": "One-shot left and right interface entrances."
+      },
+      {
+        "name": "hero-small-fan",
+        "value": "1.7s",
+        "purpose": "One-shot smaller hero object entrance."
+      },
+      {
+        "name": "section-enter",
+        "value": ".75s",
+        "purpose": "One-time observed editorial section entrance."
+      },
+      {
+        "name": "filter-enter",
+        "value": ".45s",
+        "purpose": "Project card entrance after filtering."
+      },
+      {
+        "name": "playground-tile",
+        "value": "1.1s",
+        "purpose": "User-triggered tile entrance, staggered by .12s."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animation:none!important;transition:none!important;scroll-behavior:auto!important",
+        "purpose": "Applied under prefers-reduced-motion: reduce to keep all interactions usable without animation."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide-min",
+        "value": "1600px"
+      },
+      {
+        "name": "compact-desktop-max",
+        "value": "1200px"
+      },
+      {
+        "name": "narrow-desktop-max",
+        "value": "950px"
+      },
+      {
+        "name": "mobile-max",
+        "value": "760px"
+      },
+      {
+        "name": "wide-mobile-min",
+        "value": "500px"
+      },
+      {
+        "name": "small-mobile-max",
+        "value": "370px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Forest action with white text, soft depth, and a small hover lift.",
+      "html": "<a class=\"ds-button ds-primary\" href=\"#connect\">Let’s connect<svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 7h10v10M7 17 17 7\"/></svg></a>",
+      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:50px;padding:14px 21px;border:0;border-radius:50px;font-family:Manrope,sans-serif;font-size:12px;font-weight:700;text-decoration:none;cursor:pointer;transition:transform .35s var(--ease,cubic-bezier(.16,1,.3,1)),box-shadow .35s var(--ease,cubic-bezier(.16,1,.3,1)),background .3s}.ds-button:hover{transform:translateY(-3px);box-shadow:0 3px 5px #263e3010,0 12px 20px #263e3015;background:#fff}.ds-button:focus-visible{outline:2px solid #3c7452;outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-button{animation:none!important;transition:none!important}}.ds-primary{background:var(--accent,#245440);color:#fff;box-shadow:0 2px 4px #16362520,0 9px 17px #2e503524}.ds-primary:hover{background:#193e2f}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Raised white companion action for exploration or a resume.",
+      "html": "<a class=\"ds-button ds-secondary\" href=\"#projects\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6A2 2 0 0 1 18.46 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2A2 2 0 0 0 12.1 7H20a2 2 0 0 1 2 2v2\"/></svg>Explore projects</a>",
+      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:50px;padding:14px 21px;border:0;border-radius:50px;font-family:Manrope,sans-serif;font-size:12px;font-weight:700;text-decoration:none;cursor:pointer;transition:transform .35s var(--ease,cubic-bezier(.16,1,.3,1)),box-shadow .35s var(--ease,cubic-bezier(.16,1,.3,1)),background .3s}.ds-button:hover{transform:translateY(-3px);box-shadow:0 3px 5px #263e3010,0 12px 20px #263e3015;background:#fff}.ds-button:focus-visible{outline:2px solid #3c7452;outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-button{animation:none!important;transition:none!important}}.ds-secondary{background:#fff;color:var(--ink,#29483d);box-shadow:var(--shadow,0 2px 3px #263e3010,0 9px 15px #263e300c,0 22px 24px #263e3005)}"
+    },
+    {
+      "name": "Raised Icon Button",
+      "kind": "button",
+      "refersTo": "icon-button-raised",
+      "description": "Compact circular utility control with an accessible name.",
+      "html": "<button class=\"ds-icon-button\" type=\"button\" aria-label=\"Replay showcase animation\"><svg viewBox=\"0 0 24 24\" width=\"15\" height=\"15\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 10a9 9 0 1 1 2 8M3 4v6h6\"/></svg></button>",
+      "css": ".ds-icon-button{width:37px;height:37px;display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:50%;background:#fff;color:var(--ink,#29483d);box-shadow:var(--shadow,0 2px 3px #263e3010,0 9px 15px #263e300c,0 22px 24px #263e3005);cursor:pointer;transition:background .2s,transform .3s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-icon-button:hover{background:#e3e8df;transform:translateY(-2px)}.ds-icon-button:focus-visible{outline:2px solid #3c7452;outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-icon-button{animation:none!important;transition:none!important}}"
+    },
+    {
+      "name": "Sidebar Navigation",
+      "kind": "nav",
+      "refersTo": "navigation-item",
+      "description": "Icon-and-label navigation; selection is a raised paper pill with a trailing arrow.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main navigation\"><a class=\"ds-nav-link ds-nav-active\" href=\"#home\" aria-current=\"page\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m3 10 9-7 9 7v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/><path d=\"M9 21v-8h6v8\"/></svg><span>Home</span><span class=\"ds-nav-arrow\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></span></a><a class=\"ds-nav-link\" href=\"#projects\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6A2 2 0 0 1 18.46 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2A2 2 0 0 0 12.1 7H20a2 2 0 0 1 2 2v2\"/></svg><span>Projects</span><span class=\"ds-nav-arrow\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></span></a></nav>",
+      "css": ".ds-nav{display:flex;flex-direction:column;gap:7px;font-family:Manrope,sans-serif}.ds-nav-link{display:flex;align-items:center;gap:12px;min-height:53px;padding:15px 20px;border-radius:28px;font-size:14px;font-weight:650;color:var(--muted,#5e6e58);text-decoration:none;white-space:nowrap;transition:background .25s,color .25s,box-shadow .3s}.ds-nav-link:hover{color:var(--ink,#29483d);background:#e7eae3}.ds-nav-active{background:#fafbf7;color:var(--ink,#29483d);box-shadow:var(--shadow,0 2px 3px #263e3010,0 9px 15px #263e300c,0 22px 24px #263e3005)}.ds-nav-active>svg:first-child{fill:#29483d12}.ds-nav-arrow{margin-left:auto;opacity:0;color:#83957f;transition:opacity .2s,transform .2s}.ds-nav-active .ds-nav-arrow{opacity:1}.ds-nav-link:hover .ds-nav-arrow{opacity:1;transform:translateX(2px)}.ds-nav-link:focus-visible{outline:2px solid #3c7452;outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-nav-link,.ds-nav-arrow{animation:none!important;transition:none!important}}"
+    },
+    {
+      "name": "Project Filter",
+      "kind": "chip",
+      "refersTo": "filter-chip",
+      "description": "Category buttons with counts and an elevated selected state.",
+      "html": "<div class=\"ds-filters\" role=\"group\" aria-label=\"Filter projects\"><button class=\"ds-filter ds-filter-selected\" type=\"button\" aria-pressed=\"true\">All work<span>7</span></button><button class=\"ds-filter\" type=\"button\" aria-pressed=\"false\">Design</button></div>",
+      "css": ".ds-filters{display:flex;gap:7px;flex-wrap:wrap}.ds-filter{display:flex;align-items:center;gap:10px;min-height:43px;padding:12px 17px;border:0;border-radius:30px;background:transparent;color:var(--muted,#5e6e58);font-family:Manrope,sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:background .3s,box-shadow .3s,color .3s}.ds-filter>span{font-size:8px;min-width:14px;color:var(--muted,#5e6e58)}.ds-filter:hover{color:#3f5f34;background:#eaf0e2}.ds-filter-selected{background:#fff;color:#3a5931;box-shadow:var(--shadow,0 2px 3px #263e3010,0 9px 15px #263e300c,0 22px 24px #263e3005)}.ds-filter:focus-visible{outline:2px solid #3c7452;outline-offset:5px}@media(prefers-reduced-motion:reduce){.ds-filter{animation:none!important;transition:none!important}}"
+    },
+    {
+      "name": "Skill Chip",
+      "kind": "chip",
+      "refersTo": "skill-chip",
+      "description": "Static skill metadata with a quiet tinted background and small corners.",
+      "html": "<span class=\"ds-skill-chip\">Product design</span>",
+      "css": ".ds-skill-chip{display:inline-block;padding:6px 10px;border-radius:6px;background:#edf0e7;color:var(--muted,#5e6e58);font-family:Manrope,sans-serif;font-size:10px;font-weight:450;line-height:1.4}"
+    },
+    {
+      "name": "Experience Card",
+      "kind": "card",
+      "refersTo": "experience-card",
+      "description": "An ambient white card with a rotated company mark and factual role.",
+      "html": "<article class=\"ds-experience\"><div class=\"ds-company-mark\" aria-hidden=\"true\">jc<span>.</span></div><div><h3>Jarurat Care Foundation</h3><p>UI/UX Design Intern</p></div></article>",
+      "css": ".ds-experience{display:flex;gap:24px;padding:30px;border-radius:19px;background:#fff;color:var(--ink,#29483d);box-shadow:0 2px 4px #3c513307,0 10px 23px #3c51330a;font-family:Manrope,sans-serif}.ds-company-mark{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:61px;height:66px;border-radius:15px;transform:rotate(-6deg);background:#e4edd8;color:#6e8755;font-size:27px;font-weight:700;letter-spacing:-.07em}.ds-experience h3{margin:0;font-size:17px;font-weight:650;letter-spacing:-.02em}.ds-experience p{margin:5px 0 0;color:var(--muted,#5e6e58);font-size:11px;font-weight:450;line-height:1.8}@media(max-width:760px){.ds-experience{flex-direction:column;gap:15px;padding:23px 20px;border-radius:17px}.ds-company-mark{width:47px;height:50px;border-radius:13px;font-size:22px}.ds-experience h3{font-size:15px}}@media(min-width:500px) and (max-width:760px){.ds-experience{flex-direction:row}}"
+    },
+    {
+      "name": "Type Size Range",
+      "kind": "input",
+      "refersTo": "type-range",
+      "description": "Native range control used by the bounded typography study, from 24 to 48 in steps of 4.",
+      "html": "<label class=\"ds-type-slider\"><input aria-label=\"Type size\" type=\"range\" min=\"24\" max=\"48\" step=\"4\" value=\"32\"/></label>",
+      "css": ".ds-type-slider{display:flex;align-items:center;width:90%;height:13px}.ds-type-slider input{width:100%;height:3px;accent-color:#8c856e;caret-color:var(--accent,#245440);cursor:ew-resize}.ds-type-slider input:hover{cursor:ew-resize}.ds-type-slider input:focus-visible{outline:2px solid #3c7452;outline-offset:5px}"
+    },
+    {
+      "name": "Inline Code Tile",
+      "kind": "custom",
+      "refersTo": "inline-code-tile",
+      "description": "The decorative code object inside the hero headline responds to heading hover.",
+      "html": "<h1 class=\"ds-code-context\">Purpose in <span class=\"ds-code-tile\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\" width=\"30\" height=\"30\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m18 16 4-4-4-4M6 8l-4 4 4 4M14.5 4l-5 16\"/></svg></span> code.</h1>",
+      "css": ".ds-code-context{margin:0;color:var(--ink,#29483d);font-family:Manrope,sans-serif;font-size:clamp(40px,4.1vw,58px);font-weight:650;line-height:1.24;letter-spacing:-.04em}.ds-code-tile{display:inline-flex;align-items:center;justify-content:center;vertical-align:baseline;width:49px;height:48px;margin:0 2px;border-radius:13px;background:#d6e5c7;color:#486d35;box-shadow:inset 0 2px 3px #ffffff80,0 4px 6px #31522912;transform:rotate(-9deg) translateY(-2px);transition:transform .5s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-code-context:hover .ds-code-tile{transform:rotate(5deg) translateY(-5px)}@media(prefers-reduced-motion:reduce){.ds-code-tile{animation:none!important;transition:none!important}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Personal Studio",
+    "overview": "A personal studio in forest green, sage, and warm white. The user's pinned Kree8 reference establishes the fixed navigation rail, rounded scrolling sheet, narrow editorial copy, wider project showcases, and tactile controls. Manrope, crisp outline icons, restrained rotations, and soft layered shadows give the interface a thoughtful, approachable character.\n\nThe work changes scale between reading and looking: quiet text sits beside generous code-drawn interface compositions. Project art is original illustrative UI, with that status disclosed on detail pages; there are no shipping raster images. Motion is a brief entrance or a direct response to an action. Small section labels and pill controls are native to this chosen reference and retain their specific orientation and action roles.",
+    "keyCharacteristics": [
+      "Forest text and controls over warm paper and pale sage fields.",
+      "A persistent desktop rail with alternating editorial and showcase widths.",
+      "Manrope hierarchy, open paragraph leading, and tightly spaced display type.",
+      "Softly raised pills, clipped project panels, and gently rotated code objects.",
+      "Finite entrances, manual project navigation, and three bounded playground studies."
+    ],
+    "rules": [
+      {
+        "name": "The Reading Contrast Rule",
+        "body": "Use the final muted and soft-ink values for secondary reading text. Pale sage surfaces and decorative headline emphasis do not replace readable body colors.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Family Rule",
+        "body": "Keep Manrope across display, reading, and controls. Preserve the isolated italic sign-off as a signature rather than extending it into a competing heading system.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tactile Control Rule",
+        "body": "Reserve the recurring raised white treatment for controls and selected states; use the quieter sheet and card shadows for content surfaces.",
+        "section": "elevation & depth"
+      },
+      {
+        "name": "The Motion at Your Pace Rule",
+        "body": "Entrances finish, project switching stays manual, and playground motion begins on request. Under `prefers-reduced-motion: reduce`, animations, transitions, and smooth scrolling are disabled while the static layered composition and every control remain usable.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do preserve the rail, rounded sheet, and alternating editorial/showcase widths established by the pinned reference.",
+      "Do use the final contrast-adjusted reading colors and final single-column project gallery.",
+      "Do retain native small section labels for orientation and tactile pills for actions and selected states.",
+      "Do preserve truthful visual provenance: label illustrative UI, and use actual project captures when available.",
+      "Do preserve keyboard focus, named icon controls, mobile drawer behavior, and reduced-motion support.",
+      "Do make motion finite and let visitors control project changes and playground replay."
+    ],
+    "donts": [
+      "Don't turn every content row into a raised card or replace the narrow/wide composition with a repeated uniform grid.",
+      "Don't promote pale illustrative text colors or tiny decorative captions into body-text defaults.",
+      "Don't extend a local project illustration palette or the isolated italic signature into a new global visual system.",
+      "Don't add an auto-advancing carousel, infinite playground, autoplay video, or continuously repeating experiment animation.",
+      "Don't present illustrative UI as supplied screenshots or add invented metrics, testimonials, or agency proof as visual content."
+    ]
+  }
+}
