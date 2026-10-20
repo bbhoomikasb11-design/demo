@@ -47,3 +47,14 @@ Final captures live under `.impeccable/review/` as development-only evidence. Th
 - Applied the actual reduced-motion CSS rules in the browser with a matching JavaScript preference stub: entrance/detail animations were `none`, pointer tilt stayed unset, and the replay control was hidden. Restored the normal environment after this scoped check; OS-level preference switching was not exercised.
 - Independent read-only review of source and desktop/mobile captures returned **ship**, with no consequential findings. The existing T3 screenshot raster limitation remains; DOM geometry was checked separately.
 - Production build and `git diff --check` passed.
+
+## Tech-stack fan — 20 October 2026
+
+- Replaced the skills rows with the shared six-category card fan on the homepage and `/skills`, preserving every supplied tool.
+- Inspected desktop and settled phone captures. Verified 1280px, 390px, and 320px layouts through browser geometry; the selected card fits the viewport and all six tool lists fit inside their cards. At 320px the longest content ends at 310px inside a 376px card.
+- Desktop pointer hover brings an outer card above its neighbors and exposes the correct stack without changing the fan’s center. Card animations finish; no running or infinite animation remains at rest.
+- Checked category selection, keyboard arrows, and End. Corrected focus precedence so keyboard focus clears the previous hover and centers the focused card, including on phones.
+- A synthetic horizontal touch-pointer gesture switched from Tools to Design across the wrap boundary. Physical-device swipe behavior was not exercised.
+- Applied the actual reduced-motion CSS rules with a scoped JavaScript preference stub: card/tool animations and transitions were `none`, and pointer tilt stayed unset. Restored the environment afterward; OS-level preference switching was not exercised.
+- Independent source review found only the corrected focus issue and recommended no further code changes. The existing T3 screenshot-host blur/duplicate-raster limitation remains; DOM dimensions and content bounds were checked independently.
+- Verified navigation to `/skills` and back to `/`, with all six cards on both surfaces. Production build and `git diff --check` passed.

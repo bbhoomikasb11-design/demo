@@ -30,6 +30,7 @@ npm run preview
 - `src/App.jsx` contains page layouts and navigation.
 - `src/components/ProjectArt.jsx` contains the illustrative project previews.
 - `src/components/ProjectBoard.jsx` contains the seven swinging polaroid cards; `ProjectSpotlight.jsx` contains their inline details and destination links.
+- `src/components/TechStack.jsx` and `TechStack.css` contain the interactive fan of six skill cards. `TechCardArt.jsx` contains their original SVG illustrations.
 - `src/components/Playground.jsx` contains the three experiments.
 - `src/components/ReelPlayer.jsx` contains the homepage introduction player.
 - `scripts/reel/` contains the editable video and original music generators; see `docs/reel.md`.
@@ -52,3 +53,5 @@ The portfolio has no backend or contact submission service. Contact buttons open
 Keyboard navigation, visible focus styles, a skip link, a focus-trapped mobile menu, semantic page headings, descriptive destination links, and reduced-motion styles are included. The introduction video starts only when played and includes captions, a text alternative, and a download. Playground motion only runs when activated and stops automatically.
 
 The homepage project cards swing into place once, lift and tilt on pointer hover, and can be animated again with “Swing the cards.” Selecting a project opens its information below the collage without changing routes. “Back to the cards” closes the information and restores focus to the selected card. Reduced-motion preferences remove the swinging and tilting.
+
+The tech-stack cards fan out on arrival. Hover reveals a category’s tools with a lift, pointer tilt, and staggered labels. Clicking or focusing a card centers it; category buttons, previous/next controls, horizontal swipes, and Left/Right/Home/End keys provide other ways to explore. Motion finishes without looping and respects reduced-motion preferences. The same component appears on the homepage and `/skills`.

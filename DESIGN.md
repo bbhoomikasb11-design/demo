@@ -234,7 +234,7 @@ The final project gallery is one full-width column at every viewport, with a des
 | --- | --- |
 | At least 1600px | Rail (320px), editorial maximum (700px), showcase maximum (940px); hero display (61px). |
 | 951–1200px | Rail (244px), editorial width `calc(100% - 80px)`, showcase width `calc(100% - 44px)`; section headings (36px). |
-| 761–950px | Rail (205px), editorial width `calc(100% - 56px)`; hero display (35px), section headings (31px); skill rows stack and home experiments use two columns. |
+| 761–950px | Rail (205px), editorial width `calc(100% - 56px)`; hero display (35px), section headings (31px); tech cards scale to their container and standalone experiments use two columns. |
 | At most 760px | Header (76px); content height `calc(100dvh - 76px)`; sheet radius uses `mobile-sheet`; drawer width (300px), capped at (86vw). Editorial width `calc(100% - 44px)`, capped at (560px); showcase width `calc(100% - 30px)`. |
 | 500–760px | Home experiments use two columns with the last study spanning both; the dedicated playground stays one column. Section headings use (37px). |
 | At most 370px | Editorial width `calc(100% - 36px)` and showcase width `calc(100% - 24px)`; hero actions stack; hero display (27px), section headings (28px). |
@@ -291,7 +291,8 @@ Visual work is generous; factual content is orderly.
 - **Homepage project board:** Seven warm-white polaroids form an irregular three-column collage, with authored CSS pins, paperclips, and tape. Cards rotate by −4° to +4°, use 6–10px paper insets, and show an external-arrow-shaped affordance that opens same-page details. At container widths below 640px the collage becomes two columns, with the final project centered. Project names stay visible on phones; decorative subtitles disappear below 380px.
 - **Inline project details:** A cream project file opens below the collage with its illustration, factual description, contribution or technologies where supplied, and GitHub/Figma/live destination. It uses two columns on desktop and stacks on phones. The project heading receives focus; returning to the board restores the trigger’s focus.
 - **Experience cards:** White raised panels use the card radius and (30px) desktop padding, with a small rotated company mark and the factual role and description. Mobile cards use (23px 20px) padding and stack their content; wider mobile layouts can restore a row.
-- **Skill, education, and achievement rows:** Fine divider lines and spacing do the grouping. These are not all converted into raised cards.
+- **Tech-stack fan:** Six illustrated cards preserve the supplied skill groups. Five overlapping cards are visible on wider screens; the center and two neighbors remain on phones. Cream, sage, blue-gray, pale olive, lavender, and clay distinguish categories while forest typography connects them to the site. A card reveals its tools when hovered or focused; activation centers it. Previous/next controls and six named category buttons stay below the fan.
+- **Education and achievement rows:** Fine divider lines and spacing do the grouping.
 
 ### Inputs / Fields
 
@@ -308,6 +309,8 @@ Mobile navigation opens as a drawer over a blurred backdrop. It traps keyboard f
 The hero contains a user-controlled 60-second introduction video, with original typography and interface animation over forest, sage, and ivory fields. Its 4.8–7.2-second chapters connect Bhoomika’s approach, projects, education, and experience; transitions last approximately (0.54s). The 16:9 poster keeps its center clear for the play control. Playback never starts automatically or loops, and pauses when hidden or offscreen. Captions, a full text alternative, seeking, sound, fullscreen, replay, and download are available. The inline code tile rotates slightly on heading hover.
 
 The homepage project collage has a physical-paper motion sequence: each card swings from its fastening point and settles over (1.15s), with (65ms) sibling delays. Hover straightens, lifts, enlarges, and tilts the selected card towards the pointer. Selection opens the inline project file over (560ms). The sequence runs once on arrival, or when “Swing the cards” is pressed; it does not loop. All spatial movement is removed for reduced-motion preferences.
+
+The tech-stack fan deals into place over (950ms) with (55ms) card delays. Hover lifts and straightens a card above its neighbors, with subtle pointer tilt; its illustration shrinks into a mark and tool labels enter with (35ms) spacing. Category changes move the fan using transforms over (720ms). Keyboard focus centers the chosen card so its content stays within the phone viewport. Touch swipes, arrow buttons, and category buttons keep exploration manual. Reduced-motion preferences remove entrance, tilt, reveal, and navigation transitions.
 
 The playground has exactly three bounded studies: a saved-state button, adjustable Manrope type, and a user-triggered three-tile motion study. The motion study uses a (1.1s) animation with (0.12s) staggered delays. Section entrances run once as they enter view; project filter entries settle over (0.45s).
 
