@@ -30,6 +30,8 @@ npm run preview
 - `src/App.jsx` contains page layouts and navigation.
 - `src/components/ProjectArt.jsx` contains the illustrative project previews.
 - `src/components/Playground.jsx` contains the three experiments.
+- `src/components/ReelPlayer.jsx` contains the homepage introduction player.
+- `scripts/reel/` contains the editable video and original music generators; see `docs/reel.md`.
 - `src/styles.css` contains the visual system, responsive layouts, and motion.
 - `public/fonts/` contains the self-hosted Manrope font and its license.
 - `docs/reference-study.md` records the reference analysis and adaptation.
@@ -46,4 +48,4 @@ The portfolio has no backend or contact submission service. Contact buttons open
 
 ## Accessibility and motion
 
-Keyboard navigation, visible focus styles, a skip link, a focus-trapped mobile menu, semantic page headings, descriptive destination links, and reduced-motion styles are included. The hero animates once and can be replayed. Playground motion only runs when activated and stops automatically.
+Keyboard navigation, visible focus styles, a skip link, a focus-trapped mobile menu, semantic page headings, descriptive destination links, and reduced-motion styles are included. The introduction video starts only when played and includes captions, a text alternative, and a download. Playground motion only runs when activated and stops automatically.

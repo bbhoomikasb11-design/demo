@@ -252,7 +252,7 @@ Depth is soft and tactile. White controls float slightly above neutral surfaces;
 - **Action hover:** `0 3px 5px #263e3010, 0 12px 20px #263e3015` — button lift with a small upward translation.
 - **Page sheet:** `0 2px 8px #334b3310` — separates the sheet from the surrounding ground.
 - **Experience card:** `0 2px 4px #3c513307, 0 10px 23px #3c51330a` — ambient elevation for factual experience entries.
-- **Showcase stack:** `0 2px 0 #fff, 0 8px 0 #dfe4d9, 0 19px 25px #3040260c` — thin stacked-sheet edges beneath the hero's rounded showcase, followed by a diffuse shadow. This is a local material cue from the pinned reference.
+- **Introduction player:** `0 3px 6px #30402608, 0 16px 28px #3040260c` — a white rounded frame and diffuse shadow around the 16:9 video, continuing the tactile media treatment of the pinned reference.
 
 ### Named Rules
 
@@ -303,11 +303,11 @@ Mobile navigation opens as a drawer over a blurred backdrop. It traps keyboard f
 
 ### Layered Showcase and Playground
 
-The hero layers three code-native interface objects on a sage visual field. They fan into place once using (1.4s) and (1.7s) entrances and can be replayed explicitly. Project navigation is manual; the carousel does not advance itself. The inline code tile rotates slightly on heading hover.
+The hero contains a user-controlled 60-second introduction video, with original typography and interface animation over forest, sage, and ivory fields. Its 4.8–7.2-second chapters connect Bhoomika’s approach, projects, education, and experience; transitions last approximately (0.54s). The 16:9 poster keeps its center clear for the play control. Playback never starts automatically or loops, and pauses when hidden or offscreen. Captions, a full text alternative, seeking, sound, fullscreen, replay, and download are available. Project navigation is manual; the carousel does not advance itself. The inline code tile rotates slightly on heading hover.
 
 The playground has exactly three bounded studies: a saved-state button, adjustable Manrope type, and a user-triggered three-tile motion study. The motion study uses a (1.1s) animation with (0.12s) staggered delays. Section entrances run once as they enter view; project filter entries settle over (0.45s).
 
-**The Motion at Your Pace Rule.** Entrances finish, project switching stays manual, and playground motion begins on request. Under `prefers-reduced-motion: reduce`, animations, transitions, and smooth scrolling are disabled while the static layered composition and every control remain usable.
+**The Motion at Your Pace Rule.** Entrances finish, project switching stays manual, and playground motion begins on request. Under `prefers-reduced-motion: reduce`, interface animations, transitions, and smooth scrolling are disabled. The introduction stays on its poster until explicitly played; visitors can read its complete story without starting the video.
 
 ## Do's and Don'ts
 

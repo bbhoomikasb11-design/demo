@@ -26,3 +26,13 @@ The five project repositories, hackathon repository, SEBI event, and resume retu
 The first browser pass used the shared T3 preview. Its host disconnected during verification; a snapshot timed out and evaluation reported no available host. Verification continued in an isolated Chrome tab using the supported computer-use browser API.
 
 Final captures live under `.impeccable/review/` as development-only evidence. They are not shipped in `dist/`.
+
+## Introduction video — 20 October 2026
+
+- Rendered and decoded the complete MP4: 60.000 seconds, 1,800 H.264 frames, 1920 × 1080 at 30 fps, AAC stereo at 48 kHz, 7,065,072 bytes. Fast-start metadata is enabled.
+- Inspected all ten rendered chapter keyframes, the poster, and a contact sheet extracted from the encoded MP4. No clipped typography was found.
+- Encoded soundtrack measures −17.02 LUFS integrated and −2.14 dBTP. Audio was measured and decoded, not audibly auditioned.
+- Live Chrome checks passed: metadata loading, initial paused state, play/pause, focus transfer, keyboard timeline seeking, mute, 11 loaded caption cues, fullscreen entry/exit, offscreen pause, end state, and replay from zero.
+- Player geometry and control bounds fit 1440px, 390px, and 320px viewports without horizontal overflow. The mobile poster uses a single play icon so its text stays visible. T3’s screenshot host returned a 1280px raster even when the CSS viewport changed; DOM viewport dimensions and element bounds were checked independently.
+- The complete text alternative now includes all seven projects, education, experience, contact, and availability. It addresses the independent review’s only requested improvement.
+- Final production build passed and includes the MP4, poster, and VTT. Safari’s native fullscreen fallback and a physical mobile device were not exercised.
