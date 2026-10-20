@@ -126,7 +126,7 @@ function Footer() {
 }
 
 function HomePage() {
-  return <><Hero/><section className="intro-story section-block narrow"><p className="story-lead">The best part of an idea?<br/><span className="muted-word">Turning it into something real.</span></p><p>Sometimes that starts with a wireframe.<br/>Sometimes, a line of code. Or a little <span className="inline-spark"><Sparkles size={18}/></span> “what if?”</p><p>I enjoy connecting those dots—understanding the problem, shaping the experience, and building something that’s <span className="highlight-word">actually useful.</span></p><div className="craft-tokens"><span><PencilRuler size={18}/>Think it through.</span><ArrowRight size={15}/><span><Code2 size={19}/>Bring it to life.</span></div></section><WorkFeature/><SkillsSection/><ExperienceSection/><EducationAchievements/><AboutSection/><ContactSection/><Footer/></>
+  return <><Hero/><section className="intro-story section-block narrow"><p className="story-lead">The best part of an idea?<br/><span className="muted-word">Turning it into something real.</span></p><p>Sometimes that starts with a wireframe.<br/>Sometimes, a line of code. Or a little <span className="inline-spark"><Sparkles size={18}/></span> “what if?”</p><p>I enjoy connecting those dots—understanding the problem, shaping the experience, and building something that’s <span className="highlight-word">actually useful.</span></p><div className="craft-tokens"><span><PencilRuler size={18}/>Think it through.</span><ArrowRight size={15}/><span><Code2 size={19}/>Bring it to life.</span></div></section><WorkFeature/><SkillsSection/><ExperienceSection/><EducationAchievements/><ContactSection/><Footer/></>
 }
 
 function ProjectsPage() {

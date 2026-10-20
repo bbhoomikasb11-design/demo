@@ -18,7 +18,7 @@ npm run preview
 
 ## Pages
 
-- `/` — introduction, animated project-card collage with same-page details, skills, experience, education, achievements, About, and Connect.
+- `/` — introduction, animated project-card collage with same-page details, skills, experience, education, achievements, and Connect.
 - `/projects` — the seven projects, with Design, Full-stack, and AI filters.
 - `/projects/:projectId` — individual project details and their original destination links.
 - `/playground` — three contained, user-activated experiments.
