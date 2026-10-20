@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, Route, Routes, useLocation, useParams } from 'react-router-dom'
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Blocks, BriefcaseBusiness, Check, ChevronLeft, ChevronRight, Code2, Copy, Database, ExternalLink, FileText, FolderOpen, GraduationCap, Home, Layers, Mail, MapPin, Menu, MousePointer2, PanelLeftClose, PanelLeftOpen, PencilRuler, Send, Server, Sparkles, Terminal, Trophy, UserRound, X } from 'lucide-react'
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Blocks, BriefcaseBusiness, Check, Code2, Copy, Database, ExternalLink, FileText, FolderOpen, GraduationCap, Home, Layers, Mail, MapPin, Menu, MousePointer2, PanelLeftClose, PanelLeftOpen, PencilRuler, Send, Server, Sparkles, Terminal, Trophy, UserRound, X } from 'lucide-react'
 import { Github, Linkedin } from './components/BrandIcons.jsx'
 import { links, projects, skills, experience } from './data.js'
 import ProjectArt from './components/ProjectArt.jsx'
 import Playground from './components/Playground.jsx'
 import ReelPlayer from './components/ReelPlayer.jsx'
+import ProjectBoard from './components/ProjectBoard.jsx'
 
 const navItems = [
   {to:'/',label:'Home',Icon:Home},
@@ -80,14 +81,9 @@ function Hero() {
 }
 
 function WorkFeature() {
-  const [index,setIndex]=useState(0)
-  const project=projects[index]
   return <section className="section-block" id="selected-work">
     <div className="narrow"><SectionTitle label="SELECTED WORK" Icon={FolderOpen}>Ideas out of my head.<br/><span className="muted-word">And into the world.</span></SectionTitle><p className="section-copy">A few things I’ve designed, developed, and learned from. Different problems. Different possibilities. The same attention to detail.</p></div>
-    <div className="featured-project wide">
-      <Link to={`/projects/${project.id}`} className="featured-art-link" aria-label={`Explore ${project.name}`} key={project.id}><ProjectArt project={project}/><span className="project-open"><ArrowUpRight size={22}/></span></Link>
-      <div className="featured-meta"><div className="featured-project-title" aria-live="polite"><Link to={`/projects/${project.id}`}><h3>{project.name}</h3></Link><p>{project.disciplines.join(' · ')}</p></div><div className="carousel-controls"><span>{String(index+1).padStart(2,'0')}<i>/ {String(projects.length).padStart(2,'0')}</i></span><button className="icon-button raised-button" aria-label="Previous project" onClick={()=>setIndex(i=>(i-1+projects.length)%projects.length)}><ChevronLeft size={18}/></button><button className="icon-button raised-button" aria-label="Next project" onClick={()=>setIndex(i=>(i+1)%projects.length)}><ChevronRight size={18}/></button></div></div>
-    </div>
+    <ProjectBoard/>
     <div className="work-categories narrow">{[[PencilRuler,'Product design','Design'],[Code2,'Full-stack development','Full-stack'],[Sparkles,'AI applications','AI']].map(([Icon,label,filter])=><Link key={label} to={`/projects?filter=${encodeURIComponent(filter)}`}><span><Icon strokeWidth={1.4}/></span>{label}</Link>)}</div><div className="center-action"><ButtonLink to="/projects"><FolderOpen size={17}/>See all seven projects<ArrowRight size={16}/></ButtonLink></div>
   </section>
 }
