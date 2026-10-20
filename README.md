@@ -18,7 +18,7 @@ npm run preview
 
 ## Pages
 
-- `/` — introduction, featured work, playground, skills, experience, education, achievements, About, and Connect.
+- `/` — introduction, animated project-card collage with same-page details, playground, skills, experience, education, achievements, About, and Connect.
 - `/projects` — the seven projects, with Design, Full-stack, and AI filters.
 - `/projects/:projectId` — individual project details and their original destination links.
 - `/playground` — three contained, user-activated experiments.
@@ -29,6 +29,7 @@ npm run preview
 - `src/data.js` contains project content, all destination links, skills, and experience.
 - `src/App.jsx` contains page layouts and navigation.
 - `src/components/ProjectArt.jsx` contains the illustrative project previews.
+- `src/components/ProjectBoard.jsx` contains the seven swinging polaroid cards; `ProjectSpotlight.jsx` contains their inline details and destination links.
 - `src/components/Playground.jsx` contains the three experiments.
 - `src/components/ReelPlayer.jsx` contains the homepage introduction player.
 - `scripts/reel/` contains the editable video and original music generators; see `docs/reel.md`.
@@ -49,3 +50,5 @@ The portfolio has no backend or contact submission service. Contact buttons open
 ## Accessibility and motion
 
 Keyboard navigation, visible focus styles, a skip link, a focus-trapped mobile menu, semantic page headings, descriptive destination links, and reduced-motion styles are included. The introduction video starts only when played and includes captions, a text alternative, and a download. Playground motion only runs when activated and stops automatically.
+
+The homepage project cards swing into place once, lift and tilt on pointer hover, and can be animated again with “Swing the cards.” Selecting a project opens its information below the collage without changing routes. “Back to the cards” closes the information and restores focus to the selected card. Reduced-motion preferences remove the swinging and tilting.

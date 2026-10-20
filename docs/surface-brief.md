@@ -12,6 +12,6 @@ STORY: Meet Bhoomika, see her work, try a few lightweight interactions, understa
 
 FIRST VIEWPORT: A 300px navigation rail at left; a rounded content sheet at right. A 660px editorial hero with availability, name, a large two-line tagline, description, and two pill actions. An 860px project showcase begins below. Preserve the reference's generous space and offset narrow/wide columns.
 
-FORM: The user's pinned Kree8 structure supersedes seed f960a784's assignment and challengers. Signature interaction: a layered interface showcase that fans into place once, plus a user-controlled project switcher. Sidebar collapse, tab transitions, hover elevation, and small on-demand playground studies complete the system. Mobile uses a compact header and an accessible navigation drawer.
+FORM: The user's pinned Kree8 structure supersedes seed f960a784's assignment and challengers. The hero contains a user-controlled personal introduction reel. The homepage work section uses the subsequently supplied Kree8 polaroid reference: seven tilted project cards with pins, tape, clips, swinging entrances, and pointer-responsive lift. Clicking a card opens its project information in a paper card below the collage, on the same page. Sidebar collapse, tab transitions, and small on-demand playground studies complete the system. Mobile uses a compact header and an accessible navigation drawer.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

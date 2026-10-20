@@ -9,7 +9,7 @@
 - Mobile drawer opens, navigates, and closes; the main area is inert while it is open. Escape closes it and returns focus to the navigation toggle.
 - Project filters show the expected counts: all seven, four Design, six Full-stack, and two AI projects.
 - All seven project detail routes open in sequence, contain the supplied destination link, and identify the previews as illustrative.
-- The manual home carousel changes the project, detail destination, and counter together (CampusMesh → ClearHead, 01/07 → 02/07) on mobile.
+- The original manual home carousel was checked on mobile; it was replaced by the project board described below on 20 October.
 - Playground saved-state button changes to “Saved to collection”; increasing type updates both the displayed size and computed font size; the motion button starts its bounded animation and returns to its resting state automatically.
 - The copy-email action displays its “Copied!” confirmation.
 - Chrome reported no application console warnings or errors during the responsive and interaction checks.
@@ -36,3 +36,14 @@ Final captures live under `.impeccable/review/` as development-only evidence. Th
 - Player geometry and control bounds fit 1440px, 390px, and 320px viewports without horizontal overflow. The mobile poster uses a single play icon so its text stays visible. T3’s screenshot host returned a 1280px raster even when the CSS viewport changed; DOM viewport dimensions and element bounds were checked independently.
 - The complete text alternative now includes all seven projects, education, experience, contact, and availability. It addresses the independent review’s only requested improvement.
 - Final production build passed and includes the MP4, poster, and VTT. Safari’s native fullscreen fallback and a physical mobile device were not exercised.
+
+## Homepage project board — 20 October 2026
+
+- Replaced only the selected-work carousel with seven pinned project cards and inline project details.
+- Checked desktop (1280px), tablet (768px), and phone (390px and 320px) geometry. The board and detail card fit without horizontal overflow.
+- Opened all seven cards: the displayed title, supplied destination URL, and focused detail heading match each project. The route remains `/`.
+- Verified the return button closes the details and restores the selected card’s focus. Native Enter activation opened SplitGrid and exposed its complete supplied technology list.
+- Confirmed replay starts seven staggered card animations and that they finish; no looping animations remain on the board.
+- Applied the actual reduced-motion CSS rules in the browser with a matching JavaScript preference stub: entrance/detail animations were `none`, pointer tilt stayed unset, and the replay control was hidden. Restored the normal environment after this scoped check; OS-level preference switching was not exercised.
+- Independent read-only review of source and desktop/mobile captures returned **ship**, with no consequential findings. The existing T3 screenshot raster limitation remains; DOM geometry was checked separately.
+- Production build and `git diff --check` passed.

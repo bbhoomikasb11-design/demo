@@ -288,6 +288,8 @@ Two different uses remain visually distinct.
 Visual work is generous; factual content is orderly.
 
 - **Project cards:** A clipped illustration leads, followed by an unboxed title, discipline, summary, and detail link. The final gallery remains one column. A circular open affordance appears on hover or focus and is visible on mobile; artwork scales by (1.025) on hover.
+- **Homepage project board:** Seven warm-white polaroids form an irregular three-column collage, with authored CSS pins, paperclips, and tape. Cards rotate by −4° to +4°, use 6–10px paper insets, and show an external-arrow-shaped affordance that opens same-page details. At container widths below 640px the collage becomes two columns, with the final project centered. Project names stay visible on phones; decorative subtitles disappear below 380px.
+- **Inline project details:** A cream project file opens below the collage with its illustration, factual description, contribution or technologies where supplied, and GitHub/Figma/live destination. It uses two columns on desktop and stacks on phones. The project heading receives focus; returning to the board restores the trigger’s focus.
 - **Experience cards:** White raised panels use the card radius and (30px) desktop padding, with a small rotated company mark and the factual role and description. Mobile cards use (23px 20px) padding and stack their content; wider mobile layouts can restore a row.
 - **Skill, education, and achievement rows:** Fine divider lines and spacing do the grouping. These are not all converted into raised cards.
 
@@ -303,7 +305,9 @@ Mobile navigation opens as a drawer over a blurred backdrop. It traps keyboard f
 
 ### Layered Showcase and Playground
 
-The hero contains a user-controlled 60-second introduction video, with original typography and interface animation over forest, sage, and ivory fields. Its 4.8–7.2-second chapters connect Bhoomika’s approach, projects, education, and experience; transitions last approximately (0.54s). The 16:9 poster keeps its center clear for the play control. Playback never starts automatically or loops, and pauses when hidden or offscreen. Captions, a full text alternative, seeking, sound, fullscreen, replay, and download are available. Project navigation is manual; the carousel does not advance itself. The inline code tile rotates slightly on heading hover.
+The hero contains a user-controlled 60-second introduction video, with original typography and interface animation over forest, sage, and ivory fields. Its 4.8–7.2-second chapters connect Bhoomika’s approach, projects, education, and experience; transitions last approximately (0.54s). The 16:9 poster keeps its center clear for the play control. Playback never starts automatically or loops, and pauses when hidden or offscreen. Captions, a full text alternative, seeking, sound, fullscreen, replay, and download are available. The inline code tile rotates slightly on heading hover.
+
+The homepage project collage has a physical-paper motion sequence: each card swings from its fastening point and settles over (1.15s), with (65ms) sibling delays. Hover straightens, lifts, enlarges, and tilts the selected card towards the pointer. Selection opens the inline project file over (560ms). The sequence runs once on arrival, or when “Swing the cards” is pressed; it does not loop. All spatial movement is removed for reduced-motion preferences.
 
 The playground has exactly three bounded studies: a saved-state button, adjustable Manrope type, and a user-triggered three-tile motion study. The motion study uses a (1.1s) animation with (0.12s) staggered delays. Section entrances run once as they enter view; project filter entries settle over (0.45s).
 
