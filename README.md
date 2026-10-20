@@ -36,6 +36,7 @@ npm run preview
 - `scripts/reel/` contains the editable video and original music generators; see `docs/reel.md`.
 - `src/styles.css` contains the visual system, responsive layouts, and motion.
 - `public/fonts/` contains the self-hosted Manrope font and its license.
+- `public/media/bhoomika-portrait.jpg` is the supplied homepage portrait, optimized for the web. Its source and preparation are recorded in `docs/assets.md`.
 - `docs/reference-study.md` records the reference analysis and adaptation.
 - `DESIGN.md` records the implemented palette, typography, spacing, components, and motion rules.
 - `docs/verification.md` records the checks performed and their scope.

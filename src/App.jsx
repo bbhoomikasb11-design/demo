@@ -67,14 +67,24 @@ function Sidebar({collapsed,setCollapsed,mobileOpen,setMobileOpen,isMobile}) {
 
 function Hero() {
   return <>
-    <section className="hero narrow" aria-labelledby="hero-title">
-      <div className="hero-availability"><span className="status-dot"/>OPEN TO INTERNSHIPS & FULL-TIME OPPORTUNITIES</div>
-      <p className="hero-intro">Hi, I’m <strong>Bhoomika S.</strong><span className="hello-line"/></p>
-      <h1 id="hero-title">Curiosity in <span className="muted-word">design.</span><br/>Purpose in <span className="inline-code" aria-hidden="true"><Code2/></span> code.</h1>
-      <p className="hero-roles">Full-Stack Developer <i/> Product Designer <i/> AI Builder</p>
-      <p className="hero-description">I design thoughtful digital experiences and build useful products by combining product design, frontend and backend development, and AI integration.</p>
-      <div className="button-row"><ButtonLink to="/contact" primary><Sparkles size={17}/>Let’s connect<ArrowUpRight size={16}/></ButtonLink><ButtonLink to="/projects"><FolderOpen size={18}/>Explore projects</ButtonLink></div>
-      <span className="hero-location"><MapPin size={13}/>Based in Bengaluru, India</span>
+    <section className="hero hero-with-portrait wide" aria-labelledby="hero-title">
+      <div className="hero-composition">
+        <div className="hero-copy">
+          <div className="hero-availability"><span className="status-dot"/>OPEN TO INTERNSHIPS & FULL-TIME OPPORTUNITIES</div>
+          <p className="hero-intro">Hi, I’m <strong>Bhoomika S.</strong><span className="hello-line"/></p>
+          <h1 id="hero-title">Curiosity in <span className="muted-word">design.</span><br/>Purpose in <span className="inline-code" aria-hidden="true"><Code2/></span> code.</h1>
+          <p className="hero-roles">Full-Stack Developer <i/> Product Designer <i/> AI Builder</p>
+          <p className="hero-description">I design thoughtful digital experiences and build useful products by combining product design, frontend and backend development, and AI integration.</p>
+          <div className="button-row"><ButtonLink to="/contact" primary><Sparkles size={17}/>Let’s connect<ArrowUpRight size={16}/></ButtonLink><ButtonLink to="/projects"><FolderOpen size={18}/>Explore projects</ButtonLink></div>
+          <span className="hero-location"><MapPin size={13}/>Based in Bengaluru, India</span>
+        </div>
+        <div className="hero-portrait">
+          <figure className="hero-portrait-frame">
+            <img src="/media/bhoomika-portrait.jpg" alt="Portrait of Bhoomika S." width="576" height="768" fetchPriority="high" decoding="async"/>
+            <figcaption>Bhoomika S.</figcaption>
+          </figure>
+        </div>
+      </div>
     </section>
     <ReelPlayer/>
     <div className="under-showcase wide"><span>Made with intention. Built to be useful.</span><a href="#selected-work" className="text-link">Take a look around <ArrowDown size={13}/></a></div>

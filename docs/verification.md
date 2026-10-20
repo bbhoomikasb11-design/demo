@@ -58,3 +58,12 @@ Final captures live under `.impeccable/review/` as development-only evidence. Th
 - Applied the actual reduced-motion CSS rules with a scoped JavaScript preference stub: card/tool animations and transitions were `none`, and pointer tilt stayed unset. Restored the environment afterward; OS-level preference switching was not exercised.
 - Independent source review found only the corrected focus issue and recommended no further code changes. The existing T3 screenshot-host blur/duplicate-raster limitation remains; DOM dimensions and content bounds were checked independently.
 - Verified navigation to `/skills` and back to `/`, with all six cards on both surfaces. Production build and `git diff --check` passed.
+
+## Homepage portrait and About removal — 20 October 2026
+
+- Removed the long About section from `/`; verified the sidebar still opens the complete `/about` page.
+- Added the supplied portrait to the homepage hero. Confirmed the optimized JPEG loads at 576 × 768 pixels (76,660 bytes) and retains the full source composition.
+- Inspected desktop and phone captures; measured layouts at 1280px, 1024px, 390px, and 320px. No page-width or headline overflow. The framed portrait stays within the page, and both homepage actions retain 47px minimum height on phones.
+- Checked the actual reduced-motion CSS rules in a temporary scoped browser style: portrait animation and frame transform both compute to `none`. OS-level preference switching was not exercised.
+- The scoped layout detector returned no findings. Independent review of source and desktop/mobile captures returned **ship**, with no concrete blockers. The known preview-host screenshot blur/duplication remains; layout bounds were also checked through the DOM.
+- Production build and `git diff --check` passed. Final browser confirmation found the image loaded, valid figure/caption nesting, and no headline overflow.

@@ -163,7 +163,7 @@ components:
 
 A personal studio in forest green, sage, and warm white. The user's pinned Kree8 reference establishes the fixed navigation rail, rounded scrolling sheet, narrow editorial copy, wider project showcases, and tactile controls. Manrope, crisp outline icons, restrained rotations, and soft layered shadows give the interface a thoughtful, approachable character.
 
-The work changes scale between reading and looking: quiet text sits beside generous code-drawn interface compositions. Project art is original illustrative UI, with that status disclosed on detail pages; there are no shipping raster images. Motion is a brief entrance or a direct response to an action. Small section labels and pill controls are native to this chosen reference and retain their specific orientation and action roles.
+The work changes scale between reading and looking: quiet text sits beside generous code-drawn interface compositions. Project art is original illustrative UI, with that status disclosed on detail pages. The homepage also uses Bhoomika’s supplied portrait and an original introduction-video poster; their sources are recorded in `docs/assets.md` and `docs/reel.md`. Motion is a brief entrance or a direct response to an action. Small section labels and pill controls are native to this chosen reference and retain their specific orientation and action roles.
 
 **Key Characteristics:**
 
@@ -224,7 +224,7 @@ The palette is a quiet family of forest and sage greens grounded by warm white a
 
 The desktop shell occupies the viewport. The navigation rail stays in place while the right-hand content pane scrolls independently. At the default desktop size, the rail is (300px); its collapsed state is (95px). The pane has exterior padding (32px 18px 18px 10px), and the rounded page sheet has a minimum height of `calc(100dvh - 50px)`.
 
-Two centered content widths create the rhythm: editorial content is capped at (660px), with width `calc(100% - 120px)`; showcases are capped at (860px), with width `calc(100% - 80px)`. The final desktop hero starts at (72px) of top padding, and its showcase follows at (42px). Major sections use generous (132px) top spacing. Small control groups use gaps such as (6px), (8px), and (12px), while grouped content commonly uses (20px), (24px), and (32px). These are observed reusable measurements, not an enforced arithmetic scale.
+Two centered content widths create the rhythm: editorial content is capped at (660px), with width `calc(100% - 120px)`; showcases are capped at (860px), with width `calc(100% - 80px)`. The hero now uses the showcase width to pair its copy with the supplied portrait: a flexible text column, (36px) gap, and (240px) image frame. Above a hero-container width of (740px), its headline scales from (40px) to (50px). Below that threshold a (200px) portrait sits above the copy with a (38px) gap, preserving the existing mobile headline sizes. The desktop hero starts at (72px) of top padding, and its video follows at (42px). Major sections use generous (132px) top spacing. Small control groups use gaps such as (6px), (8px), and (12px), while grouped content commonly uses (20px), (24px), and (32px). These are observed reusable measurements, not an enforced arithmetic scale.
 
 The final project gallery is one full-width column at every viewport, with a desktop gap of (47px). Gallery covers use an aspect ratio of (1.65), with titles and descriptions below the art instead of inside it. Skill rows pair a title column of (240px) with wrapping tags. The home playground uses three columns; the dedicated playground uses two columns.
 
@@ -232,7 +232,7 @@ The final project gallery is one full-width column at every viewport, with a des
 
 | Viewport | Shell and content behavior |
 | --- | --- |
-| At least 1600px | Rail (320px), editorial maximum (700px), showcase maximum (940px); hero display (61px). |
+| At least 1600px | Rail (320px), editorial maximum (700px), showcase maximum (940px); portrait hero display capped at (50px). |
 | 951–1200px | Rail (244px), editorial width `calc(100% - 80px)`, showcase width `calc(100% - 44px)`; section headings (36px). |
 | 761–950px | Rail (205px), editorial width `calc(100% - 56px)`; hero display (35px), section headings (31px); tech cards scale to their container and standalone experiments use two columns. |
 | At most 760px | Header (76px); content height `calc(100dvh - 76px)`; sheet radius uses `mobile-sheet`; drawer width (300px), capped at (86vw). Editorial width `calc(100% - 44px)`, capped at (560px); showcase width `calc(100% - 30px)`. |
@@ -263,6 +263,8 @@ Depth is soft and tactile. White controls float slightly above neutral surfaces;
 The page sheet, media frames, and cards use softly rounded rectangles. Pill geometry belongs to actions, navigation, and project filters; small skill and technology tags have tighter corners. Circular controls handle compact directional or utility actions. The frontmatter names the actual reused radii rather than forcing every surface onto one radius.
 
 Project media clips its illustrative composition. The desktop hero showcase has its own rounded frame; featured art is slightly tighter, and gallery art tighter again. Small identity and code tiles may rotate by a few degrees while readable copy remains upright. Outline SVG icons use thin, crisp strokes and accompany labels or accessible names.
+
+The supplied portrait preserves its full (3:4) image and natural warm colors. An ivory mat, sage backing sheet, soft downward shadow, and serif name caption connect it to the project-board paper treatment. The frame rests at (2.5°) and straightens on pointer hover. Its (850ms) arrival finishes once; reduced-motion preferences disable both entrance and hover movement.
 
 ## Components
 
