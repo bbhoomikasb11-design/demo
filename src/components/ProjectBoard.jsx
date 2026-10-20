@@ -68,7 +68,7 @@ export default function ProjectBoard() {
     event.currentTarget.style.setProperty('--tilt-y', '0deg')
   }
 
-  return <div className="project-board-wrap wide">
+  return <div className="project-board-wrap wide" id="project-board">
     <div className="project-board-toolbar">
       <p id="project-board-hint">Pick a card. There’s a story behind it.</p>
       <button type="button" className="board-swing" onClick={() => { setEntered(true); setSwing(n => n + 1) }} aria-label="Replay the swinging card animation">

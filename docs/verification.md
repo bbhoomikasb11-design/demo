@@ -67,3 +67,10 @@ Final captures live under `.impeccable/review/` as development-only evidence. Th
 - Checked the actual reduced-motion CSS rules in a temporary scoped browser style: portrait animation and frame transform both compute to `none`. OS-level preference switching was not exercised.
 - The scoped layout detector returned no findings. Independent review of source and desktop/mobile captures returned **ship**, with no concrete blockers. The known preview-host screenshot blur/duplication remains; layout bounds were also checked through the DOM.
 - Production build and `git diff --check` passed. Final browser confirmation found the image loaded, valid figure/caption nesting, and no headline overflow.
+
+## Homepage hero destinations — 20 October 2026
+
+- Hero actions use native fragment links: “Explore projects” targets `#project-board`, and “Let’s connect” targets `#connect`.
+- Verified both destinations at 1280px and 390px; each scrolls into view while the pathname stays `/`. Native Enter activation also reached the project board on mobile.
+- The board anchor has a 40px scroll margin. Existing scroll behavior and reduced-motion styles apply; the other navigation links retain their original destinations.
+- Independent source review, production build, and `git diff --check` passed.

@@ -1,5 +1,6 @@
 .project-board-wrap {
   margin-top: 39px;
+  scroll-margin-top: 40px;
   container-type: inline-size;
 }
 

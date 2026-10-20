@@ -28,6 +28,7 @@ function Brand({small=false}) {
 
 function ButtonLink({to,href,children,primary=false,className='',...props}) {
   const cls=`button ${primary?'button-primary':''} ${className}`
+  if(href?.startsWith('#'))return <a href={href} className={cls} {...props}>{children}</a>
   return href?<External href={href} className={cls} {...props}>{children}</External>:<Link to={to} className={cls} {...props}>{children}</Link>
 }
 
@@ -75,7 +76,7 @@ function Hero() {
           <h1 id="hero-title">Curiosity in <span className="muted-word">design.</span><br/>Purpose in <span className="inline-code" aria-hidden="true"><Code2/></span> code.</h1>
           <p className="hero-roles">Full-Stack Developer <i/> Product Designer <i/> AI Builder</p>
           <p className="hero-description">I design thoughtful digital experiences and build useful products by combining product design, frontend and backend development, and AI integration.</p>
-          <div className="button-row"><ButtonLink to="/contact" primary><Sparkles size={17}/>Let’s connect<ArrowUpRight size={16}/></ButtonLink><ButtonLink to="/projects"><FolderOpen size={18}/>Explore projects</ButtonLink></div>
+          <div className="button-row"><ButtonLink href="#connect" primary><Sparkles size={17}/>Let’s connect<ArrowDown size={16}/></ButtonLink><ButtonLink href="#project-board"><FolderOpen size={18}/>Explore projects</ButtonLink></div>
           <span className="hero-location"><MapPin size={13}/>Based in Bengaluru, India</span>
         </div>
         <div className="hero-portrait">

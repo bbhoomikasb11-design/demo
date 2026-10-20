@@ -55,4 +55,6 @@ Keyboard navigation, visible focus styles, a skip link, a focus-trapped mobile m
 
 The homepage project cards swing into place once, lift and tilt on pointer hover, and can be animated again with “Swing the cards.” Selecting a project opens its information below the collage without changing routes. “Back to the cards” closes the information and restores focus to the selected card. Reduced-motion preferences remove the swinging and tilting.
 
+The homepage hero’s “Explore projects” and “Let’s connect” buttons scroll to the card board and Connect section on the same page.
+
 The tech-stack cards fan out on arrival. Hover reveals a category’s tools with a lift, pointer tilt, and staggered labels. Clicking or focusing a card centers it; category buttons, previous/next controls, horizontal swipes, and Left/Right/Home/End keys provide other ways to explore. Motion finishes without looping and respects reduced-motion preferences. The same component appears on the homepage and `/skills`.
