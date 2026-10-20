@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, Route, Routes, useLocation, useParams } from 'react-router-dom'
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Blocks, BriefcaseBusiness, Check, Code2, Copy, Database, ExternalLink, FileText, FolderOpen, GraduationCap, Home, Layers, Mail, MapPin, Menu, MousePointer2, PanelLeftClose, PanelLeftOpen, PencilRuler, Send, Server, Sparkles, Terminal, Trophy, UserRound, X } from 'lucide-react'
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Blocks, BriefcaseBusiness, Check, Code2, Copy, ExternalLink, FileText, FolderOpen, GraduationCap, Home, Layers, Mail, MapPin, Menu, MousePointer2, PanelLeftClose, PanelLeftOpen, PencilRuler, Send, Sparkles, Trophy, UserRound, X } from 'lucide-react'
 import { Github, Linkedin } from './components/BrandIcons.jsx'
-import { links, projects, skills, experience } from './data.js'
+import { links, projects, experience } from './data.js'
 import ProjectArt from './components/ProjectArt.jsx'
 import Playground from './components/Playground.jsx'
 import ReelPlayer from './components/ReelPlayer.jsx'
 import ProjectBoard from './components/ProjectBoard.jsx'
+import TechStack from './components/TechStack.jsx'
 
 const navItems = [
   {to:'/',label:'Home',Icon:Home},
@@ -89,8 +90,7 @@ function WorkFeature() {
 }
 
 function SkillsSection({page=false}) {
-  const icons={design:PencilRuler,frontend:Code2,backend:Server,database:Database,ai:Sparkles,tools:Terminal}
-  return <section className={`section-block ${page?'page-section':''}`} id="skills"><div className="narrow"><SectionTitle label="MY TOOLKIT" Icon={Layers} level={page?1:2}>From the first sketch<br/>to the <span className="highlight-word">last commit.</span></SectionTitle><p className="section-copy">I like seeing the whole picture. Here are the tools and skills I use to connect design, development, and intelligent applications.</p></div><div className="skills-list wide">{skills.map(({name,icon,items})=>{const Icon=icons[icon];return <div className="skill-row" key={name}><div className="skill-title"><Icon size={21} strokeWidth={1.6}/><h3>{name}</h3></div><div className="skill-items">{items.map(item=><span key={item}>{item}</span>)}</div></div>})}</div></section>
+  return <section className={`section-block ${page?'page-section':''}`} id="skills"><div className="narrow"><SectionTitle label="MY TECH STACK" Icon={Layers} level={page?1:2}>From the first sketch<br/>to the <span className="highlight-word">last commit.</span></SectionTitle><p className="section-copy">The tools behind the things I make. Explore the stack I use to connect design, development, and intelligent applications.</p></div><TechStack/></section>
 }
 
 function ExperienceSection({page=false}) {

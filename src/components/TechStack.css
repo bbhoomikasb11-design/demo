@@ -1,0 +1,310 @@
+.tech-stack {
+  container-type: inline-size;
+  margin-top: 28px;
+}
+
+.tech-fan-stage {
+  --fan-step: 13cqw;
+  --tech-card-width: clamp(220px, 34cqw, 294px);
+  position: relative;
+  height: 505px;
+  isolation: isolate;
+  perspective: 1500px;
+  touch-action: pan-y;
+}
+
+.tech-card-slot {
+  position: absolute;
+  top: 72px;
+  left: 50%;
+  width: var(--tech-card-width);
+  height: 380px;
+  margin-left: calc(var(--tech-card-width) / -2);
+  z-index: var(--fan-z);
+  transform: translate(calc(var(--fan-offset) * var(--fan-step)), calc(var(--fan-depth) * 27px)) rotate(var(--fan-angle)) scale(calc(1 - var(--fan-depth) * .075));
+  transform-origin: 50% 105%;
+  transition: transform .72s cubic-bezier(.16, 1, .3, 1);
+}
+
+.tech-card-slot[data-offstage] { display: none; }
+
+.tech-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid #fffefa;
+  border-radius: 23px;
+  text-align: left;
+  color: #29483d;
+  background: var(--tech-paper);
+  box-shadow: 0 3px 5px #213c2f10, 0 16px 23px #213c2f22;
+  transform-origin: 50% 95%;
+  transition: transform .55s cubic-bezier(.22, 1.25, .36, 1), box-shadow .4s;
+}
+
+.tech-theme-design { --tech-paper: #eee7d7; --tech-tone: #675842; }
+.tech-theme-frontend { --tech-paper: #dfe9d7; --tech-tone: #315c43; }
+.tech-theme-backend { --tech-paper: #dfe7e9; --tech-tone: #3d5a64; }
+.tech-theme-database { --tech-paper: #e8eace; --tech-tone: #536332; }
+.tech-theme-ai { --tech-paper: #e8e1ee; --tech-tone: #625277; }
+.tech-theme-tools { --tech-paper: #eee0d3; --tech-tone: #76523d; }
+
+.tech-active {
+  transform: translate(calc(var(--fan-offset) * var(--fan-step)), -22px) rotate(0) scale(1.025);
+}
+
+.tech-active .tech-card {
+  transform: rotateX(var(--tech-tilt-x, 0deg)) rotateY(var(--tech-tilt-y, 0deg));
+  box-shadow: 0 6px 9px #213c2f12, 0 28px 34px #213c2f26, 0 40px 55px #213c2f0c;
+}
+
+.tech-card:focus-visible {
+  outline: 3px solid #245440;
+  outline-offset: 5px;
+}
+
+.tech-card:active { transform: scale(.98); }
+
+.tech-card-cover,
+.tech-card-reveal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 23px;
+  transition: opacity .26s, transform .5s var(--ease), clip-path .48s var(--ease);
+}
+
+.tech-card-cover {
+  opacity: 1;
+  color: var(--tech-tone);
+}
+
+.tech-cover-tag {
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.tech-card-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.tech-card-cover > .tech-card-art {
+  margin: 24px auto 13px;
+  height: 185px;
+  flex-shrink: 0;
+  transform: rotate(-5deg);
+  transition: transform .65s var(--ease);
+}
+
+.tech-cover-title {
+  display: block;
+  margin-top: auto;
+  font-size: 27px;
+  line-height: 1.12;
+  letter-spacing: -.035em;
+  font-weight: 750;
+}
+
+.tech-cover-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 11px;
+}
+
+.tech-card-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  clip-path: inset(12% 0 0);
+  pointer-events: none;
+}
+
+.tech-active .tech-card-cover {
+  opacity: 0;
+  transform: translateY(-15px) scale(.96);
+  pointer-events: none;
+}
+
+.tech-active .tech-card-cover > .tech-card-art { transform: rotate(4deg) scale(.9); }
+
+.tech-active .tech-card-reveal {
+  opacity: 1;
+  transform: translateY(0);
+  clip-path: inset(0);
+}
+
+.tech-reveal-mark {
+  display: block;
+  width: 76px;
+  height: 60px;
+  margin: -5px 0 13px -9px;
+  transform-origin: 50% 70%;
+}
+
+.tech-active .tech-reveal-mark {
+  animation: tech-mark-pop .6s cubic-bezier(.16, 1, .3, 1);
+}
+
+.tech-reveal-title {
+  font-size: 25px;
+  font-weight: 750;
+  letter-spacing: -.035em;
+  line-height: 1.15;
+  text-wrap: balance;
+  color: var(--tech-tone);
+}
+
+.tech-reveal-note {
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--tech-tone);
+}
+
+.tech-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 7px 6px;
+  margin-top: 20px;
+}
+
+.tech-tools > span {
+  display: block;
+  padding: 7px 9px;
+  border-radius: 7px;
+  background: #fffefa;
+  color: #29483d;
+  font-size: 11px;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+.tech-active .tech-tools > span {
+  animation: tech-tool-in .4s var(--ease) both;
+  animation-delay: calc(100ms + var(--tool-delay));
+}
+
+.tech-fan-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 21px;
+  margin-top: 16px;
+}
+
+.tech-arrow {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #fffefa;
+  box-shadow: var(--shadow);
+  transition: transform .3s var(--ease), background .2s;
+}
+
+.tech-arrow:hover { transform: translateY(-4px); background: #e7efde; }
+.tech-arrow:active { transform: scale(.92); }
+
+.tech-fan-controls p {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #5e6e58;
+  font-size: 11px;
+}
+
+.tech-touch-hint { display: none; }
+
+.tech-category-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+.tech-category-nav button {
+  min-height: 42px;
+  padding: 9px 13px;
+  border-radius: 24px;
+  background: transparent;
+  color: #5e6e58;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background .2s, color .2s, transform .3s var(--ease);
+}
+
+.tech-category-nav button:hover { background: #e9eee2; transform: translateY(-2px); }
+.tech-category-nav button[aria-pressed="true"] { background: #245440; color: white; }
+
+.tech-entered .tech-card { animation: tech-deal-in .95s var(--ease) backwards; animation-delay: var(--tech-delay); }
+
+@keyframes tech-deal-in {
+  from { opacity: .15; transform: translateY(70px) rotate(12deg) scale(.85); }
+  65% { opacity: 1; transform: translateY(-7px) rotate(-3deg) scale(1.025); }
+  to { opacity: 1; transform: translateY(0) rotate(0) scale(1); }
+}
+
+@keyframes tech-mark-pop {
+  from { transform: rotate(-12deg) scale(.7); }
+  65% { transform: rotate(5deg) scale(1.05); }
+  to { transform: rotate(0) scale(1); }
+}
+
+@keyframes tech-tool-in {
+  from { opacity: 0; transform: translateY(9px) rotate(-3deg); }
+  to { opacity: 1; transform: translateY(0) rotate(0); }
+}
+
+@container (max-width: 640px) {
+  .tech-fan-stage { --tech-card-width: 250px; --fan-step: 13cqw; height: 493px; }
+  .tech-card-slot { height: 380px; }
+  .tech-card-cover, .tech-card-reveal { padding: 22px 19px; }
+  .tech-cover-title { font-size: 25px; }
+  .tech-reveal-title { font-size: 23px; }
+  .tech-tools { margin-top: 17px; gap: 6px; }
+  .tech-tools > span { padding: 6px 8px; font-size: 11px; }
+  .tech-card-cover > .tech-card-art { height: 177px; }
+}
+
+@container (max-width: 430px) {
+  .tech-fan-stage { --tech-card-width: min(270px, calc(100cqw - 42px)); --fan-step: 14cqw; height: 458px; }
+  .tech-card-slot { top: 45px; height: 380px; }
+  .tech-card-slot[data-distance="2"] { display: none; }
+  .tech-card-slot[data-distance="1"] { transform: translate(calc(var(--fan-offset) * var(--fan-step)), 24px) rotate(var(--fan-angle)) scale(.91); }
+  .tech-active { transform: translate(calc(var(--fan-offset) * var(--fan-step)), -12px) rotate(0) scale(1); }
+  .tech-card-slot.tech-active[data-distance="1"] { transform: translate(calc(var(--fan-offset) * var(--fan-step)), -12px) rotate(0) scale(1); }
+  .tech-fan-controls { gap: 13px; margin-top: 8px; }
+  .tech-fan-controls p { font-size: 10px; gap: 6px; text-align: center; }
+  .tech-fan-controls p > svg { display: none; }
+  .tech-desktop-hint { display: none; }
+  .tech-touch-hint { display: inline; }
+  .tech-category-nav { gap: 1px; margin-top: 18px; }
+  .tech-category-nav button { padding: 9px 10px; font-size: 11px; min-height: 42px; }
+  .tech-arrow { width: 44px; height: 44px; flex-shrink: 0; }
+}
+
+@media (hover: none) {
+  .tech-desktop-hint { display: none; }
+  .tech-touch-hint { display: inline; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-stack *, .tech-stack *::before, .tech-stack *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .tech-active .tech-card, .tech-card:active { transform: none; }
+  .tech-arrow:hover, .tech-category-nav button:hover { transform: none; }
+}
