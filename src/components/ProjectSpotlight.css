@@ -1,0 +1,345 @@
+.project-spotlight {
+  position: relative;
+  margin-top: 48px;
+  padding: 24px 30px 32px;
+  border-radius: 14px;
+  background: #fffefa;
+  color: var(--ink);
+  box-shadow: 0 3px 5px #29483d0c, 0 18px 38px #29483d14;
+  scroll-margin-top: 48px;
+  transform-origin: 50% 0;
+  animation: spotlight-open 560ms cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.spotlight-paperclip {
+  position: absolute;
+  top: -22px;
+  right: 29px;
+  color: #829080;
+  transform: rotate(18deg);
+  filter: drop-shadow(1px 2px 1px #29483d25);
+  pointer-events: none;
+}
+
+.spotlight-toolbar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.spotlight-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-left: -10px;
+  padding: 8px 10px;
+  border-radius: 9px;
+  background: transparent;
+  color: #53684d;
+  font-size: 12px;
+  font-weight: 650;
+  transition: background 180ms, color 180ms;
+}
+
+.spotlight-back:hover {
+  color: #245440;
+  background: #edf1e6;
+}
+
+.spotlight-back svg {
+  transition: transform 260ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.spotlight-back:hover svg {
+  transform: translateX(-3px);
+}
+
+.spotlight-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.spotlight-visual {
+  min-width: 0;
+  margin: 0;
+}
+
+.spotlight-visual > .project-art {
+  aspect-ratio: 1.14;
+  border-radius: 9px;
+}
+
+.spotlight-visual .art-inner {
+  transform: scale(1.05);
+  transform-origin: center 34%;
+}
+
+.spotlight-visual .mock-browser {
+  top: 22%;
+}
+
+.spotlight-visual .clear-browser {
+  top: 19%;
+}
+
+.spotlight-visual .phone {
+  top: 22%;
+}
+
+.spotlight-visual .art-caption {
+  display: none;
+}
+
+.spotlight-visual figcaption {
+  margin-top: 16px;
+}
+
+.spotlight-category {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.spotlight-disciplines {
+  margin-top: 5px;
+  color: #53684d;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.spotlight-illustration-note {
+  margin-top: 15px;
+  color: #63715c;
+  font-size: 11px;
+  line-height: 1.75;
+  max-width: 35ch;
+}
+
+.spotlight-story {
+  min-width: 0;
+}
+
+.spotlight-story > h3 {
+  width: fit-content;
+  max-width: 100%;
+  color: #29483d;
+  font-size: clamp(26px, 2.5vw, 34px);
+  line-height: 1.2;
+  letter-spacing: -.035em;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  border-radius: 3px;
+}
+
+.spotlight-tagline {
+  margin-top: 12px;
+  color: #53684d;
+  font-size: 17px;
+  line-height: 1.55;
+  letter-spacing: -.015em;
+  text-wrap: pretty;
+}
+
+.spotlight-description {
+  margin-top: 24px;
+}
+
+.spotlight-description p,
+.spotlight-facts > p {
+  color: #53684d;
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.spotlight-description p + p {
+  margin-top: 12px;
+}
+
+.spotlight-facts {
+  margin-top: 21px;
+}
+
+.spotlight-facts > h4 {
+  margin-bottom: 7px;
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.6;
+}
+
+.spotlight-tools {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 13px;
+  row-gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: #53684d;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.spotlight-project-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 48px;
+  margin-top: 27px;
+  padding: 13px 19px;
+  border-radius: 50px;
+  background: #245440;
+  color: #fff;
+  box-shadow: 0 3px 5px #16362512, 0 8px 17px #2e50351a;
+  font-size: 12px;
+  font-weight: 700;
+  transition: transform 300ms cubic-bezier(.16, 1, .3, 1), background 180ms, box-shadow 300ms;
+}
+
+.spotlight-project-link:hover {
+  transform: translateY(-3px);
+  background: #193e2f;
+  box-shadow: 0 4px 7px #16362514, 0 12px 23px #2e503524;
+}
+
+.spotlight-project-link:active {
+  transform: translateY(0);
+}
+
+@keyframes spotlight-open {
+  0% {
+    opacity: .55;
+    transform: perspective(1200px) translateY(26px) rotateX(-6deg) rotate(-1deg) scale(.95);
+    clip-path: inset(0 0 12% 0 round 14px);
+  }
+  72% {
+    opacity: 1;
+    transform: perspective(1200px) translateY(-3px) rotateX(0) rotate(.25deg) scale(1.005);
+    clip-path: inset(0 round 14px);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1200px) translateY(0) rotateX(0) rotate(0) scale(1);
+    clip-path: inset(-28px -40px -45px round 14px);
+  }
+}
+
+@media (min-width: 761px) and (max-width: 1050px) {
+  .project-spotlight {
+    padding: 20px 24px 28px;
+  }
+
+  .spotlight-layout {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .spotlight-visual {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 20px;
+    align-items: center;
+  }
+
+  .spotlight-visual > .project-art {
+    aspect-ratio: 1.25;
+  }
+
+  .spotlight-visual figcaption {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .project-spotlight {
+    margin-top: 33px;
+    padding: 18px 20px 25px;
+    scroll-margin-top: 90px;
+  }
+
+  .spotlight-paperclip {
+    right: 20px;
+    width: 40px;
+  }
+
+  .spotlight-toolbar {
+    margin-bottom: 16px;
+  }
+
+  .spotlight-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .spotlight-visual > .project-art {
+    aspect-ratio: 1.4;
+  }
+
+  .spotlight-visual .mock-browser {
+    top: 17%;
+  }
+
+  .spotlight-visual .clear-browser {
+    top: 14%;
+  }
+
+  .spotlight-visual .phone {
+    top: 14%;
+  }
+
+  .spotlight-visual figcaption {
+    margin-top: 13px;
+  }
+
+  .spotlight-illustration-note {
+    max-width: 48ch;
+    margin-top: 10px;
+  }
+
+  .spotlight-story > h3 {
+    font-size: 28px;
+  }
+
+  .spotlight-tagline {
+    font-size: 17px;
+  }
+
+  .spotlight-description {
+    margin-top: 20px;
+  }
+
+  .spotlight-project-link {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 370px) {
+  .project-spotlight {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .spotlight-story > h3 {
+    font-size: 25px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-spotlight {
+    animation: none;
+  }
+
+  .spotlight-back,
+  .spotlight-back svg,
+  .spotlight-project-link {
+    transition: none;
+  }
+
+  .spotlight-back:hover svg,
+  .spotlight-project-link:hover {
+    transform: none;
+  }
+}
