@@ -3,8 +3,9 @@ import { Link, NavLink, Route, Routes, useLocation, useParams } from 'react-rout
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Blocks, BriefcaseBusiness, Check, ChevronLeft, ChevronRight, Code2, Copy, Database, ExternalLink, FileText, FolderOpen, GraduationCap, Home, Layers, Mail, MapPin, Menu, MousePointer2, PanelLeftClose, PanelLeftOpen, PencilRuler, Send, Server, Sparkles, Terminal, Trophy, UserRound, X } from 'lucide-react'
 import { Github, Linkedin } from './components/BrandIcons.jsx'
 import { links, projects, skills, experience } from './data.js'
-import ProjectArt, { HeroArtwork } from './components/ProjectArt.jsx'
+import ProjectArt from './components/ProjectArt.jsx'
 import Playground from './components/Playground.jsx'
+import ReelPlayer from './components/ReelPlayer.jsx'
 
 const navItems = [
   {to:'/',label:'Home',Icon:Home},
@@ -63,7 +64,6 @@ function Sidebar({collapsed,setCollapsed,mobileOpen,setMobileOpen,isMobile}) {
 }
 
 function Hero() {
-  const [replay,setReplay]=useState(0)
   return <>
     <section className="hero narrow" aria-labelledby="hero-title">
       <div className="hero-availability"><span className="status-dot"/>OPEN TO INTERNSHIPS & FULL-TIME OPPORTUNITIES</div>
@@ -74,12 +74,10 @@ function Hero() {
       <div className="button-row"><ButtonLink to="/contact" primary><Sparkles size={17}/>Let’s connect<ArrowUpRight size={16}/></ButtonLink><ButtonLink to="/projects"><FolderOpen size={18}/>Explore projects</ButtonLink></div>
       <span className="hero-location"><MapPin size={13}/>Based in Bengaluru, India</span>
     </section>
-    <section className="hero-showcase wide" aria-label="Design and development showcase"><div className="hero-showcase-top"><span><Sparkles className="small-star" size={15}/> DESIGN MEETS DEVELOPMENT</span><span>A FEW THINGS I’VE BUILT <ArrowDown size={12}/></span></div><div key={replay} className="showcase-art"><HeroArtwork/></div><div className="hero-showcase-bottom"><span><span className="showcase-dot"/> A little design. A little code. A lot of curiosity.</span><button onClick={()=>setReplay(n=>n+1)} className="replay-button" aria-label="Replay showcase animation"><RotateIcon/></button></div></section>
+    <ReelPlayer/>
     <div className="under-showcase wide"><span>Made with intention. Built to be useful.</span><a href="#selected-work" className="text-link">Take a look around <ArrowDown size={13}/></a></div>
   </>
 }
-
-function RotateIcon(){return <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6"/></svg>}
 
 function WorkFeature() {
   const [index,setIndex]=useState(0)
