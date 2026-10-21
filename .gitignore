@@ -4,3 +4,8 @@ dist/
 .impeccable/review/
 .impeccable/mocks/
 *.local
+
+# Local environment configuration
+.env
+.env.*
+!.env.example
