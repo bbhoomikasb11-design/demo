@@ -1,0 +1,10 @@
+# Keep authored text consistent across platforms.
+* text=auto eol=lf
+
+# Store shipped media and fonts as binary assets.
+*.jpg binary
+*.mp4 binary
+*.ttf binary
+
+# Preserve the supplied font license byte-for-byte, with readable diffs.
+public/fonts/OFL.txt -text
