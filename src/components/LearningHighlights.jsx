@@ -39,10 +39,20 @@ export function EducationNote() {
 }
 
 export function MilestoneHighlights() {
-  const [expanded, setExpanded] = useState(0)
+  const [expanded, setExpanded] = useState(null)
   const id = useId()
   return <div className="learning-highlights wide">
-    <p className="milestone-invitation">A few moments along the way. <span>Open one to explore.</span></p>
+    <div className="learning-awards">
+      <article className="learning-award-primary">
+        <div className="learning-award-top"><span className="learning-award-mark" aria-hidden="true">4<span>×</span></span><Trophy size={24} strokeWidth={1.5} aria-hidden="true"/></div>
+        <h3>Four poster presentation wins.</h3><p>Turning ideas into stories worth sharing. Winner of four poster presentation competitions.</p>
+      </article>
+      <article>
+        <div className="learning-award-top"><span className="learning-award-mark" aria-hidden="true">1<sup>st</sup></span><Trophy size={24} strokeWidth={1.5} aria-hidden="true"/></div>
+        <h3>First place in debate.</h3><p>A voice worth finding. First place in a debate competition at Gousia College.</p>
+      </article>
+    </div>
+    <p className="milestone-invitation">Hackathons &amp; participation</p>
     <div className="milestone-paper">
       {milestones.map(({ title, note, Icon, description, href, linkLabel }, index) => {
         const open = expanded === index
@@ -60,10 +70,6 @@ export function MilestoneHighlights() {
           </div>
         </article>
       })}
-    </div>
-    <div className="learning-awards">
-      <article><span className="learning-award-mark" aria-hidden="true">1<sup>st</sup></span><div><h3>A voice worth finding.</h3><p>First place in a debate competition at Gousia College.</p></div></article>
-      <article><span className="learning-award-mark" aria-hidden="true">3<span>×</span></span><div><h3>Ideas worth sharing.</h3><p>Won three poster presentation competitions.</p></div></article>
     </div>
   </div>
 }

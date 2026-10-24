@@ -104,3 +104,11 @@ Final captures live under `.impeccable/review/` as development-only evidence. Th
 - The collaborative browser reconnected for final integration checks. Verified metadata, explicit playback, timeline keyboard seeking, mute, all 14 caption cues through 43 seconds, end/replay, and pausing after the player scrolls out of view. The loaded source uses the final cache version.
 - Inspected desktop and phone player captures; at 390px there is no player overflow and all utility controls are 44×44px. Scoped axe WCAG 2 A/AA and 2.1 AA reported zero violations. Existing preview-host raster duplication remains; geometry was checked separately.
 - Updated the 43-second cover, poster, captions, download filename and complete text alternative. Production build, full FFmpeg decode and `git diff --check` passed. No website dependencies were added.
+
+## Simplified experience and award-first hierarchy — 24 October 2026
+
+- Replaced the company folder interface and nested disclosures with two compact experience cards. Both role summaries remain visible; one native button per company reveals its focus areas and skills.
+- Corrected poster presentation wins to four, per the owner. Poster wins and first-place debate now lead the section; hackathon participation remains below with both stories initially collapsed.
+- Inspected desktop and phone captures. Checked 768px, 390px, and 320px layouts with expanded details: no component overflow or offscreen card bounds. Native Enter opens experience details; participation expands to its original project link.
+- Scoped axe results reported no WCAG A/AA violations affecting the changed sections; no browser runtime errors. Reduced-motion emulation gives disclosure transitions a zero duration.
+- T3 snapshot calls timed out twice; visual verification used cached local Playwright/Chromium. Production build and diff whitespace checks passed. No dependencies or media assets changed.

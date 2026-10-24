@@ -34,7 +34,7 @@
 .learning-link:hover svg, .learning-link:focus-visible svg { transform: translateX(3px); }
 .learning-link:hover { text-decoration-color: currentColor; }
 .learning-highlights { margin-top: 34px; container-type: inline-size; }
-.milestone-invitation { font-size: 12px; color: var(--soft-ink); margin: 0 4px 18px; }
+.milestone-invitation { font-size: 12px; color: var(--soft-ink); margin: 32px 4px 12px; font-weight: 650; }
 .milestone-invitation span { display: inline-block; }
 .milestone-paper { background: #fffdf8; border-radius: 16px; padding: 0 28px; box-shadow: 0 8px 18px #29483d08, 0 24px 36px #29483d08; }
 .milestone-entry + .milestone-entry { border-top: 1px solid var(--line); }
@@ -54,15 +54,23 @@
 .milestone-story p { font-size: 13px; line-height: 1.85; color: var(--soft-ink); max-width: 68ch; }
 .milestone-story .learning-link { margin-top: 9px; }
 .is-open .milestone-story { animation: milestone-unfold .35s var(--ease) both; }
-.learning-awards { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 28px 12px 0; }
-.learning-awards article { display: flex; align-items: center; gap: 17px; min-width: 0; }
-.learning-award-mark { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 62px; height: 68px; background: #e6ebdf; border-radius: 12px; font-family: Georgia, serif; font-size: 35px; color: #53684d; transform: rotate(-6deg); transition: transform .4s var(--ease); }
-.learning-awards article:nth-child(2) .learning-award-mark { background: #eee7dc; color: #705d44; transform: rotate(5deg); }
-.learning-awards article:hover .learning-award-mark { transform: rotate(0) translateY(-4px); }
-.learning-award-mark sup { font-size: 15px; align-self: center; margin-top: -15px; }
-.learning-award-mark > span { font-size: 22px; }
-.learning-awards h3 { font-size: 14px; line-height: 1.5; }
-.learning-awards p { font-size: 12px; color: var(--soft-ink); margin-top: 5px; max-width: 29ch; }
+/* Wins lead the section; participation stays compact beneath them. */
+.learning-awards { display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; }
+.learning-awards article { min-width: 0; padding: 27px 30px 30px; border-radius: 16px; background: #eee7dc; color: #574a36; transition: transform .3s var(--ease), box-shadow .3s var(--ease); }
+.learning-awards .learning-award-primary { background: #29483d; color: #fffdf8; }
+.learning-award-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+.learning-award-top > svg { transition: transform .3s var(--ease); }
+.learning-award-primary .learning-award-top > svg { color: #eee3b6; }
+.learning-award-mark { display: flex; align-items: center; font-family: Georgia, serif; font-size: 58px; line-height: 1; letter-spacing: -.035em; }
+.learning-award-mark sup { font-size: 23px; margin-top: -23px; letter-spacing: 0; }
+.learning-award-mark > span { font-size: 34px; margin-left: 3px; }
+.learning-awards h3 { font-size: 21px; line-height: 1.4; letter-spacing: -.025em; max-width: 23ch; }
+.learning-awards p { font-size: 13px; line-height: 1.85; margin-top: 10px; max-width: 36ch; color: #64543e; }
+.learning-award-primary p { color: #e1e8d9; }
+@media (hover: hover) {
+  .learning-awards article:hover { transform: translateY(-4px); box-shadow: 0 14px 25px #29483d14; }
+  .learning-awards article:hover .learning-award-top > svg { transform: rotate(-9deg); }
+}
 @keyframes milestone-unfold { from { opacity: .5; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
 @container (max-width: 520px) {
   .milestone-paper { padding: 0 18px; }
@@ -71,7 +79,8 @@
   .milestone-stamp svg { width: 20px; }
   .milestone-label strong { font-size: 16px; }
   .milestone-story { padding: 0 0 19px 0; }
-  .learning-awards { grid-template-columns: 1fr; gap: 23px; margin: 27px 4px 0; }
+  .learning-awards { grid-template-columns: 1fr; gap: 16px; }
+  .learning-awards article { padding: 24px; }
   .learning-awards p { max-width: 34ch; }
 }
 @media (max-width: 600px) {
@@ -82,6 +91,6 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .education-note *, .learning-highlights * { animation: none !important; transition: none !important; }
-  .learning-seal, .milestone-stamp, .learning-award-mark { transform: none !important; }
+  .learning-awards article, .learning-award-top > svg, .learning-seal, .milestone-stamp, .learning-award-mark { transform: none !important; }
   .learning-link svg { transform: none !important; }
 }

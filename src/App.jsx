@@ -113,7 +113,7 @@ function ExperienceSection({page=false}) {
 function EducationAchievements() {
   return <>
     <section className="section-block education-section" id="education"><div className="narrow"><SectionTitle label="EDUCATION" Icon={GraduationCap}>A foundation in curiosity.<br/><span className="muted-word">And a little data science.</span></SectionTitle><EducationNote/></div></section>
-    <section className="section-block achievements-section" id="achievements"><div className="narrow"><SectionTitle label="A FEW MILESTONES" Icon={Trophy}>Showing up.<br/><span className="muted-word">And giving it a go.</span></SectionTitle></div><MilestoneHighlights/></section>
+    <section className="section-block achievements-section" id="achievements"><div className="narrow"><SectionTitle label="A FEW MILESTONES" Icon={Trophy}>Ideas worth sharing.<br/><span className="muted-word">Wins worth celebrating.</span></SectionTitle></div><MilestoneHighlights/></section>
   </>
 }
 
