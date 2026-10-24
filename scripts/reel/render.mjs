@@ -1,4 +1,4 @@
-import { createCanvas, GlobalFonts } from '@napi-rs/canvas'
+import { createCanvas, GlobalFonts, loadImage } from '@napi-rs/canvas'
 import ffmpeg from 'ffmpeg-static'
 import { spawn } from 'node:child_process'
 import { once } from 'node:events'
@@ -7,496 +7,244 @@ import os from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-// Original, deterministic motion graphics. No reference footage or sampled audio.
+// Deterministic 3D projection, real UI textures, exact vector type and original music.
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const OUT = path.join(ROOT, 'public/media')
-const REVIEW = path.join(ROOT, '.impeccable/review/reel')
-const TEMP = path.join(os.tmpdir(), 'bhoomika-reel-render')
-const W = 1920, H = 1080, FPS = 30, DURATION = 60
-const cuts = [0, 4.8, 9.6, 14.4, 21.6, 28.8, 36, 43.2, 48, 55.2, 60]
-const C = {
-  paper: '#f5f5ee', white: '#ffffff', ink: '#234638', forest: '#244d3e',
-  sage: '#dce6cd', mint: '#b6d5bf', muted: '#61735e', dark: '#182b24',
-  lavender: '#d9d7ed', violet: '#b9b3d8', clay: '#dfc8b0', line: '#d8dfd2',
-}
+const REVIEW = path.join(ROOT, '.impeccable/review/ideas-move')
+const TEMP = path.join(os.tmpdir(), 'bhoomika-ideas-move')
+const ASSETS = path.join(ROOT, 'scripts/reel/assets')
+const W = 1920, H = 1080, FPS = 24, DURATION = 43
+const cuts = [0, 3, 7, 10, 18, 21, 24, 27, 35, 43]
+// Cream and sage sampled from the supplied H.264 reference; deep sage from its source.
+const C = { paper: '#f3f4ed', sage: '#e2ebda', ink: '#234638', deep: '#244d3e', mid: '#81947a', yellow: '#e9dda0', line: '#c3cfb8' }
 GlobalFonts.registerFromPath(path.join(ROOT, 'public/fonts/manrope-variable.ttf'), 'Manrope')
-const canvas = createCanvas(W, H)
-const current = createCanvas(W, H)
-const previous = createCanvas(W, H)
+const images = {}
+for (const name of ['campus-filters', 'campus-login', 'adaptui', 'clearhead', 'splitgrid', 'splitgrid-create', 'safescan']) {
+  images[name] = await loadImage(path.join(ASSETS, name + (name === 'safescan' ? '.webp' : '.png')))
+}
+const code = (await fs.readFile(path.join(ASSETS, 'splitgrid-code.txt'), 'utf8')).trimEnd().split('\n')
+const canvas = createCanvas(W, H), sceneCanvas = createCanvas(W, H), oldCanvas = createCanvas(W, H)
 const ctx = canvas.getContext('2d')
-let g = current.getContext('2d')
-
+const shutter = createCanvas(W,H), shutterCtx = shutter.getContext('2d')
+let g = sceneCanvas.getContext('2d')
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v))
-const mix = (a, b, t) => a + (b - a) * t
-const out = t => 1 - Math.pow(1 - clamp(t), 4)
+const lerp = (a, b, t) => a + (b - a) * t
+const ease = t => 1 - (1 - clamp(t)) ** 4
+const prog = (t, start = 0, length = .5) => ease((t - start) / length)
 const smooth = t => { t = clamp(t); return t * t * (3 - 2 * t) }
-const arrive = (t, delay = 0, length = .75) => out((t - delay) / length)
-const pulse = (t, speed = 1) => Math.sin(t * speed)
-
-function rr(x, y, w, h, r = 24, fill = C.white, stroke, sw = 1) {
-  g.beginPath(); g.roundRect(x, y, w, h, r)
-  if (fill) { g.fillStyle = fill; g.fill() }
-  if (stroke) { g.lineWidth = sw; g.strokeStyle = stroke; g.stroke() }
-}
-function circle(x, y, r, fill, stroke, sw = 2) {
-  g.beginPath(); g.arc(x, y, Math.max(.01, r), 0, Math.PI * 2)
-  if (fill) { g.fillStyle = fill; g.fill() }
-  if (stroke) { g.strokeStyle = stroke; g.lineWidth = sw; g.stroke() }
-}
-function line(points, color = C.ink, width = 3, progress = 1) {
+function fill(color) { g.fillStyle = color; g.fillRect(0, 0, W, H) }
+function box(x, y, w, h, color, radius = 0) { g.beginPath(); g.roundRect(x, y, w, h, radius); g.fillStyle = color; g.fill() }
+function stroke(points, color = C.ink, width = 2, p = 1, closed = false) {
   g.beginPath(); g.moveTo(...points[0])
-  for (let i = 1; i < points.length; i++) {
-    const p = clamp(progress * (points.length - 1) - (i - 1))
-    if (!p) break
-    g.lineTo(mix(points[i - 1][0], points[i][0], p), mix(points[i - 1][1], points[i][1], p))
-  }
-  g.strokeStyle = color; g.lineWidth = width; g.lineCap = 'round'; g.lineJoin = 'round'; g.stroke()
+  for (let i = 1; i < points.length; i++) { const a = clamp(p * (points.length - 1) - i + 1); if (!a) break; g.lineTo(lerp(points[i - 1][0], points[i][0], a), lerp(points[i - 1][1], points[i][1], a)) }
+  if (closed) g.closePath(); g.strokeStyle = color; g.lineWidth = width; g.lineJoin = 'round'; g.lineCap = 'round'; g.stroke()
 }
-function txt(s, x, y, size = 40, color = C.ink, weight = 600, align = 'left', maxWidth) {
-  g.save(); g.textBaseline = 'middle'; g.textAlign = align; g.fillStyle = color
-  g.font = `${weight} ${size}px Manrope`
-  if (maxWidth && g.measureText(s).width > maxWidth) {
-    size *= maxWidth / g.measureText(s).width
-    g.font = `${weight} ${size}px Manrope`
-  }
-  g.fillText(s, x, y); g.restore()
+function circle(x, y, radius, color) { g.beginPath(); g.arc(x, y, Math.max(.001, radius), 0, Math.PI * 2); g.fillStyle = color; g.fill() }
+function transform(x, y, scale, rotation, draw) { g.save(); g.translate(x, y); g.rotate(rotation); g.scale(scale, scale); draw(); g.restore() }
+function text(s, x, y, size = 50, color = C.ink, weight = 750, align = 'left', max = 1750) {
+  g.save(); g.font = `${weight} ${size}px Manrope`; const ratio = Math.min(1, max / Math.max(1, g.measureText(s).width));
+  g.font = `${weight} ${size * ratio}px Manrope`; g.textBaseline = 'middle'; g.textAlign = align; g.fillStyle = color; g.fillText(s, x, y); g.restore()
 }
-function lines(strings, x, y, size = 80, color = C.ink, weight = 650, align = 'left', gap = size * 1.14) {
-  strings.forEach((s, i) => txt(s, x, y + i * gap, size, color, weight, align))
+function reveal(s, x, y, size, t, color = C.ink, max = 1740, align = 'left') {
+  const a = prog(t, 0, .45); g.save(); g.beginPath(); g.rect(0, y - size * .65, W, size * 1.35); g.clip(); text(s, x, y + (1 - a) * size * 1.4, size, color, 800, align, max); g.restore()
 }
-function shadow(fn, blur = 45, y = 18, opacity = .12) {
-  g.save(); g.shadowColor = `rgba(22,49,34,${opacity})`; g.shadowBlur = blur; g.shadowOffsetY = y
-  fn(); g.restore()
+function cursor(x, y, color = C.yellow, scale = 1) {
+  transform(x, y, scale, -.12, () => { g.beginPath(); g.moveTo(0, 0); g.lineTo(8, 42); g.lineTo(19, 30); g.lineTo(30, 49); g.lineTo(39, 44); g.lineTo(28, 25); g.lineTo(43, 22); g.closePath(); g.fillStyle = color; g.fill() })
 }
-function transform(x, y, scale, rotation, fn) {
-  g.save(); g.translate(x, y); g.rotate(rotation); g.scale(scale, scale); fn(); g.restore()
+function meta(label, dark = false) {
+  text('BHOOMIKA S.', 80, 1010, 21, dark ? C.sage : C.deep, 650)
+  text(label, 1840, 1010, 21, dark ? C.sage : C.deep, 500, 'right')
 }
-function appear(t, delay, x, y, fn, dy = 65, duration = .8) {
-  const a = arrive(t, delay, duration)
-  g.save(); g.globalAlpha *= a; g.translate(x, y + (1 - a) * dy); fn(a); g.restore()
-}
-function field(color = C.paper, glow = C.sage, time = 0) {
-  g.fillStyle = color; g.fillRect(0, 0, W, H)
-  const x = 1450 + Math.sin(time * .28) * 80, y = 900
-  const grad = g.createRadialGradient(x, y, 10, x, y, 1150)
-  grad.addColorStop(0, glow); grad.addColorStop(1, `${glow}00`)
-  g.fillStyle = grad; g.fillRect(0, 0, W, H)
-}
-function mark(x, y, size = 96, rotation = -.12, dark = false) {
-  transform(x, y, 1, rotation, () => {
-    shadow(() => rr(-size / 2, -size / 2, size, size, size * .23, dark ? C.sage : C.forest), 22, 9, .13)
-    txt('b.', -size * .015, -size * .015, size * .85, dark ? C.forest : C.paper, 750, 'center')
-  })
-}
-function footer(dark = false, study = false) {
-  g.save(); g.globalAlpha = .75
-  txt('BHOOMIKA S.', 78, 1033, 22, dark ? C.mint : C.muted, 700)
-  if (study) txt('Illustrative interface study', 1840, 1033, 22, dark ? C.mint : C.muted, 500, 'right')
+function grid(t, color = C.line, spacing = 160) {
+  g.save(); g.globalAlpha = .5
+  for (let x = 80; x < W; x += spacing) stroke([[x, 70], [x, lerp(70, 940, prog(t, (x % 320) / 1200, .65))]], color, 1)
+  for (let y = 100; y < H - 120; y += spacing) stroke([[80, y], [lerp(80, 1840, prog(t, (y % 320) / 1200, .65)), y]], color, 1)
   g.restore()
 }
-function cursor(x, y, scale = 1, rotation = -.12, color = C.forest, click = 0) {
-  if (click > 0) {
-    g.save(); g.globalAlpha = (1 - click) * .5
-    circle(x, y, 20 + click * 55, null, color, 4); g.restore()
-  }
-  transform(x, y, scale, rotation, () => {
-    shadow(() => {
-      g.beginPath(); g.moveTo(0, 0); g.lineTo(9, 57); g.lineTo(24, 43)
-      g.lineTo(39, 67); g.lineTo(50, 59); g.lineTo(35, 36); g.lineTo(56, 31); g.closePath()
-      g.fillStyle = color; g.fill(); g.strokeStyle = C.white; g.lineWidth = 4; g.stroke()
-    }, 12, 5, .15)
-  })
+function project([x, y, z], rx, ry, scale, cx, cy) {
+  const xx = x * Math.cos(ry) + z * Math.sin(ry), zz = -x * Math.sin(ry) + z * Math.cos(ry)
+  const yy = y * Math.cos(rx) - zz * Math.sin(rx), zzz = y * Math.sin(rx) + zz * Math.cos(rx)
+  const p = 4 / (4 + zzz)
+  return [cx + xx * scale * p, cy + yy * scale * p, zzz]
 }
-function icon(kind, x, y, size = 70, color = C.ink) {
-  transform(x, y, size / 100, 0, () => {
-    g.lineCap = 'round'; g.lineJoin = 'round'; g.strokeStyle = color; g.lineWidth = 5
-    if (kind === 'code') {
-      line([[-26, -24], [-49, 0], [-26, 24]], color, 6)
-      line([[26, -24], [49, 0], [26, 24]], color, 6)
-      line([[10, -34], [-10, 34]], color, 6)
-    } else if (kind === 'spark') {
-      g.beginPath(); g.moveTo(0, -48); g.quadraticCurveTo(7, -7, 48, 0)
-      g.quadraticCurveTo(7, 7, 0, 48); g.quadraticCurveTo(-7, 7, -48, 0)
-      g.quadraticCurveTo(-7, -7, 0, -48); g.stroke()
-    } else if (kind === 'pen') {
-      line([[-35, 35], [-27, 8], [22, -42], [42, -22], [-8, 27], [-35, 35]], color, 5)
-      line([[10, -30], [30, -10]], color, 5)
-    } else if (kind === 'book') {
-      g.beginPath(); g.moveTo(0, 35); g.lineTo(0, -30)
-      g.quadraticCurveTo(-24, -43, -44, -34); g.lineTo(-44, 31); g.quadraticCurveTo(-20, 22, 0, 35)
-      g.quadraticCurveTo(20, 22, 44, 31); g.lineTo(44, -34); g.quadraticCurveTo(24, -43, 0, -30); g.stroke()
-    } else if (kind === 'headphones') {
-      g.beginPath(); g.arc(0, 0, 35, Math.PI, 0); g.stroke()
-      rr(-43, -2, 18, 39, 8, null, color, 5); rr(25, -2, 18, 39, 8, null, color, 5)
-    } else if (kind === 'bag') {
-      rr(-35, -24, 70, 65, 10, null, color, 5)
-      g.beginPath(); g.arc(0, -18, 18, Math.PI, 0); g.stroke()
-    } else if (kind === 'check') {
-      line([[-32, 0], [-8, 24], [36, -24]], color, 7)
-    } else if (kind === 'plus') {
-      line([[-35, 0], [35, 0]], color, 8); line([[0, -35], [0, 35]], color, 8)
-    } else if (kind === 'barcode') {
-      ;[-40, -29, -23, -10, 4, 12, 28, 40].forEach((v, i) => line([[v, -35], [v, 35]], color, i % 3 === 0 ? 7 : 3))
-    } else if (kind === 'chat') {
-      rr(-45, -35, 90, 62, 17, null, color, 5)
-      line([[-26, 28], [-32, 45], [-8, 28]], color, 5)
-      ;[-20, 0, 20].forEach(v => circle(v, -4, 4, color))
-    }
-  })
-}
-function pill(label, x, y, fill = C.white, color = C.ink, font = 28, width) {
-  g.font = `650 ${font}px Manrope`
-  const w = width || g.measureText(label).width + 58
-  rr(x, y - 29, w, 58, 29, fill); txt(label, x + w / 2, y, font, color, 650, 'center')
-  return w
-}
-function windowFrame(x, y, w, h, title, dark = false) {
-  shadow(() => rr(x, y, w, h, 26, dark ? '#25372f' : C.white), 70, 28, .16)
-  rr(x, y, w, 58, [26, 26, 0, 0], dark ? '#34483c' : '#f1f3ec')
-  ;['#d2b5a5', '#dbcf9d', '#acc39d'].forEach((c, i) => circle(x + 26 + i * 21, y + 29, 6, c))
-  txt(title, x + w / 2, y + 29, 21, dark ? '#cbd7c8' : C.muted, 500, 'center')
-}
-
-function curiosity(t) {
-  field(C.paper, '#d3e4cd', t)
-  appear(t, .08, 390, 222, () => mark(0, 0, 92))
-  appear(t, .3, 500, 218, () => {
-    shadow(() => rr(0, -59, 955, 118, 55), 45, 14, .1)
-    txt('It starts with a “what if?”', 55, 0, 54, C.ink, 600)
-  })
-  appear(t, 1.22, 380, 430, () => {
-    shadow(() => rr(0, -53, 220, 106, 52), 30, 12, .08)
-    for (let i = 0; i < 3; i++) circle(64 + i * 43, -Math.sin(t * 5 - i) * 5, 10, [C.mint, '#8fa987', C.forest][i])
-  })
-  const reply = arrive(t, 1.85)
-  appear(t, 1.85, 690, 615, () => {
-    shadow(() => rr(0, -75, 1000, 150, 62, C.forest), 50, 19, .15)
-    txt('Then I make it real.', 500, 0, 65, C.paper, 650, 'center')
-  }, 90)
-  if (reply > .05) cursor(mix(1770, 1620, reply), mix(900, 705, reply), .95, -.1, C.forest, clamp((t - 2.7) * 1.6))
-  appear(t, 2.9, 960, 870, () => txt('Design. Code. A little curiosity.', 0, 0, 36, C.muted, 500, 'center'))
-  footer()
-}
-
-function identity(t) {
-  field(C.paper, '#dce7d4', t)
-  const a = arrive(t, .1, 1)
-  mark(mix(390, 270, a), mix(222, 215, a), 120, mix(-.12, -.055, a))
-  appear(t, .25, 960, 264, () => txt('Hi, I’m', 0, 0, 56, C.muted, 500, 'center'))
-  const letters = [...'Bhoomika.']
-  g.font = '750 190px Manrope'
-  const widths = letters.map(s => g.measureText(s).width)
-  let x = (W - widths.reduce((a, b) => a + b, 0)) / 2
-  letters.forEach((s, i) => {
-    const a = arrive(t, .4 + i * .055, .7)
-    g.save(); g.globalAlpha = a; txt(s, x, 465 + (1 - a) * 130, 190, i === 8 ? '#72946c' : C.ink, 750); g.restore()
-    x += widths[i]
-  })
-  const p = arrive(t, 1.2)
-  line([[595, 605], [1325, 605]], '#a0b390', 5, p)
-  appear(t, 1.3, 960, 697, () => txt('Bengaluru, India', 0, 0, 43, C.ink, 600, 'center'))
-  appear(t, 1.7, 960, 783, () => txt('Final-year AI & Data Science engineering student', 0, 0, 34, C.muted, 500, 'center'))
-  footer()
-}
-
-function workflow(t) {
-  field(C.dark, '#2b4e3c', t)
-  appear(t, .05, 960, 173, () => txt('Think it through. Bring it to life.', 0, 0, 72, C.paper, 650, 'center'))
-  const xs = [440, 960, 1480], labels = ['Design.', 'Develop.', 'Add intelligence.']
-  const fills = [C.sage, C.paper, C.mint]
-  xs.forEach((x, i) => {
-    const a = arrive(t, .35 + i * .25)
-    transform(x, 520 + (1 - a) * 110, .88 + .12 * a, (1 - a) * (i - 1) * .16, () => {
-      g.globalAlpha = a
-      shadow(() => rr(-205, -200, 410, 370, 32, fills[i]), 35, 20, .2)
-      icon(['pen', 'code', 'spark'][i], 0, -57, 105, C.forest)
-      txt(labels[i], 0, 85, i === 2 ? 37 : 47, C.ink, 700, 'center')
-    })
-  })
-  line([[655, 505], [740, 505]], '#90af8d', 4, arrive(t, .95))
-  line([[1175, 505], [1260, 505]], '#90af8d', 4, arrive(t, 1.3))
-  const cursorP = smooth((t - 1.1) / 2.2)
-  cursor(mix(575, 1590, cursorP), 690 - Math.sin(cursorP * Math.PI) * 210, 1, -.1, C.mint)
-  appear(t, 2.0, 960, 884, () => txt('Product thinking  ×  Full-stack development  ×  AI', 0, 0, 35, C.sage, 500, 'center'))
-  footer(true)
-}
-
-function campus(t) {
-  field('#e5ebdc', '#d0dfc1', t)
-  appear(t, .15, 110, 180, () => txt('CampusMesh', 0, 0, 44, C.forest, 700))
-  appear(t, .25, 110, 343, () => lines(['Campus,', 'connected.'], 0, 0, 97))
-  appear(t, .75, 110, 635, () => lines(['Student exchanges.', 'Thoughtfully connected.'], 0, 0, 33, C.muted, 500, 'left', 49))
-  appear(t, 1, 110, 842, () => pill('Design + full-stack', 0, 0, C.forest, C.paper, 25))
-  const a = arrive(t, .15, 1.2)
-  transform(1285 + (1 - a) * 520, 540 + Math.sin(t * .45) * 12, .92 + .06 * a, -.055 + .015 * smooth(t / 7.2), () => {
-    windowFrame(-570, -390, 1140, 780, 'CampusMesh')
-    txt('campusmesh.', -505, -265, 38, C.ink, 750)
-    icon('bag', 450, -254, 60, '#7a9466')
-    lines(['Good finds.', 'Closer to home.'], -505, -147, 67, C.ink, 700, 'left', 79)
-    txt('Buy, sell, and share within your campus.', -505, 36, 25, C.muted, 500)
-    rr(-505, 95, 1010, 62, 16, '#f3f5ed', C.line)
-    txt('Find something you need…', -475, 126, 24, C.muted, 450)
-    ;[['book', 'Books'], ['headphones', 'Electronics'], ['bag', 'Essentials']].forEach(([kind, label], i) => {
-      const b = arrive(t, 1.05 + i * .18)
-      g.save(); g.globalAlpha = b; g.translate(0, (1 - b) * 80)
-      const x = -505 + i * 345
-      rr(x, 195, 320, 138, 16, ['#e8e5d8', '#e0e8dd', '#e4e1d9'][i])
-      icon(kind, x + 160, 258, 63, ['#9c8f66', '#73886b', '#8d8573'][i])
-      txt(label, x + 160, 365, 24, C.ink, 600, 'center')
-      g.restore()
-    })
-  })
-  if (t > 2.4) cursor(1410 + 80 * Math.sin(t * .6), 765 + 20 * Math.cos(t), .85, -.08, C.forest, clamp((t - 3.2) * 2))
-  footer(false, true)
-}
-
-function clearhead(t) {
-  field('#201f2c', '#333c36', t)
-  appear(t, .12, 110, 170, () => txt('ClearHead', 0, 0, 44, C.lavender, 650))
-  appear(t, .3, 110, 332, () => lines(['Room for', 'your thoughts.'], 0, 0, 88, C.paper))
-  appear(t, .8, 110, 647, () => lines(['A space to reflect.', 'A little help from AI.'], 0, 0, 32, '#bbb9cd', 500, 'left', 50))
-  appear(t, 1.05, 110, 842, () => pill('Full-stack + AI integration', 0, 0, C.lavender, '#2e2c40', 24))
-  const a = arrive(t, .2, 1.1)
-  transform(1320 + (1 - a) * 460, 530, .93 + .035 * Math.sin(t / 3), .045 - t * .006, () => {
-    shadow(() => rr(-555, -350, 1090, 740, 30, '#2d2b3d'), 70, 25, .3)
-    txt('clearhead.', -478, -270, 37, '#e6e0f0', 650)
-    txt('A moment, just for you.', -478, -185, 29, '#b9b2ce', 500)
-    rr(-478, -110, 934, 245, 20, '#373448', '#4e485e', 2)
-    txt('What’s on your mind?', -435, -59, 35, '#efeaf6', 600)
-    const thought = 'An idea I want to explore…'
-    const typed = thought.slice(0, Math.floor(clamp((t - 1.3) / 2) * thought.length))
-    txt(typed, -435, 24, 28, '#beb7d1', 450)
-    if (t > 1.3 && t < 3.5) {
-      g.save(); g.font = '450 28px Manrope'
-      rr(-430 + g.measureText(typed).width, 10, 3, 28, 1, '#c9bfdc')
-      g.restore()
-    }
-    pill('Find a little clarity', -478, 201, '#c8bade', '#30283f', 26, 934)
-    ;['Reflect', 'Notice', 'Explore'].forEach((word, i) => {
-      appear(t, 3.5 + i * .16, -478 + i * 320, 315, () => {
-        rr(0, -36, 294, 72, 14, '#423d53')
-        txt(word, 147, 0, 27, '#e4dcec', 500, 'center')
-      }, 25)
-    })
-  })
-  footer(true, true)
-}
-
-function adapt(t) {
-  field('#e8ebdf', '#d9e5c8', t)
-  const a = arrive(t, .15, 1)
-  transform(660 - (1 - a) * 500, 537, .94 + .045 * a, .035 * (1 - smooth(t / 7.2)), () => {
-    windowFrame(-535, -355, 1070, 760, 'A web that works for you')
-    rr(-535, -297, 1070, 702, [0, 0, 26, 26], '#fffef9')
-    txt('Readable by design.', -455, -198, 48, C.ink, 700)
-    const font = 32 + 8 * smooth((t - 2.4) / 1.4)
-    lines(['Comfortable type.', 'A little more space.', 'Thoughtful contrast.'], -455, -65, font, C.ink, 500, 'left', 82 + smooth((t - 2.4) / 1.4) * 8)
-    rr(-455, 238, 402, 78, 18, C.forest)
-    txt('Made for real people', -254, 277, 27, C.paper, 650, 'center')
-    const selection = arrive(t, 1.7)
-    if (selection > 0) {
-      g.save(); g.globalAlpha = selection; rr(-470, -111, 740, 257, 8, null, '#8aa970', 3); g.restore()
-      ;[[-470, -111], [270, -111], [-470, 146], [270, 146]].forEach(([x, y]) => rr(x - 5, y - 5, 10, 10, 1, C.white, '#8aa970', 2))
-    }
-  })
-  appear(t, .3, 1250, 202, () => txt('AdaptUI', 0, 0, 44, C.forest, 700))
-  appear(t, .5, 1250, 328, () => lines(['The web,', 'your way.'], 0, 0, 79))
-  appear(t, 1.1, 1250, 601, () => {
-    shadow(() => rr(-5, -35, 520, 215, 22, C.white), 30, 12, .09)
-    txt('Make room for you.', 26, 15, 30, C.ink, 650)
-    line([[30, 93], [465, 93]], '#d8dfd2', 8)
-    const p = smooth((t - 2.4) / 1.4)
-    line([[30, 93], [mix(165, 363, p), 93]], '#728c64', 8)
-    circle(mix(165, 363, p), 93, 15, C.forest)
-    txt('Type size', 30, 144, 23, C.muted, 500)
-    txt(`${Math.round(mix(32, 40, p))} px`, 465, 144, 23, C.muted, 500, 'right')
-  })
-  appear(t, 1.5, 1250, 882, () => lines(['Accessibility-focused', 'browser extension'], 0, 0, 29, C.muted, 500, 'left', 43))
-  footer(false, true)
-}
-
-function split(t) {
-  field('#eee4d6', '#e0d6bf', t)
-  appear(t, .1, 115, 172, () => txt('SplitGrid', 0, 0, 44, C.ink, 700))
-  appear(t, .3, 115, 325, () => lines(['Shared plans.', 'Simpler expenses.'], 0, 0, 78))
-  appear(t, .9, 115, 626, () => lines(['Real-time collaboration.', 'One clearer way to settle up.'], 0, 0, 30, C.muted, 500, 'left', 49))
-  appear(t, 1.2, 115, 850, () => pill('React · Node.js · Socket.IO', 0, 0, C.forest, C.paper, 22))
-  const a = arrive(t, .2, 1.1)
-  transform(1320 + (1 - a) * 450, 534, .96, -.035 + t * .004, () => {
-    windowFrame(-535, -370, 1070, 780, 'SplitGrid')
-    txt('splitgrid.', -465, -249, 39, C.ink, 750)
-    txt('Good company. Clear expenses.', -465, -165, 37, C.ink, 650)
-    ;[['Weekend trip', 'Travel together'], ['Shared groceries', 'Everyday essentials'], ['Dinner together', 'Good food, good friends']].forEach(([name, desc], i) => {
-      appear(t, 1 + i * .2, -465, -47 + i * 110, () => {
-        rr(0, -42, 930, 89, 14, '#f1f3eb')
-        circle(46, 2, 23, ['#d7e2ca', '#e4d7be', '#cbded6'][i])
-        txt(name, 91, -8, 29, C.ink, 650)
-        txt(desc, 91, 25, 19, C.muted, 450)
-        icon('check', 870, 0, 27, '#617f52')
-      }, 35)
-    })
-    const p = arrive(t, 3, 1)
-    g.save(); g.globalAlpha = p
-    const xs = [-365, 0, 365]
-    line([[xs[0], 322], [xs[2], 322]], '#b8c9aa', 3)
-    xs.forEach((x, i) => { circle(x, 322, 32, [C.sage, C.mint, C.clay][i]); txt(['A', 'S', 'Y'][i], x, 322, 25, C.ink, 700, 'center') })
+function cube(t, cx = 1420, cy = 540, scale = 190, wire = 0, unfold = 0) {
+  const ry = -.6 + t * .36, rx = -.35 + Math.sin(t * .4) * .12
+  const verts = [[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]]
+  const faces = [[0,1,2,3],[1,5,6,2],[5,4,7,6],[4,0,3,7],[4,5,1,0],[3,2,6,7]]
+  const pts = verts.map(v => project(v, rx, ry, scale, cx, cy))
+  const sorted = faces.map((f,i) => ({f,i,z:f.reduce((n,v) => n + pts[v][2],0)/4})).sort((a,b)=>b.z-a.z)
+  if (wire < .98) { g.save(); g.globalAlpha = (1 - wire) * .16; g.filter = 'blur(22px)'; g.beginPath(); g.ellipse(cx, cy + scale * 1.55, scale * 1.1, scale * .19, 0, 0, Math.PI * 2); g.fillStyle = C.ink; g.fill(); g.restore() }
+  for (const {f,i} of sorted) {
+    const p = f.map(v => pts[v]); g.save()
+    if (unfold) g.translate((i % 3 - 1) * unfold * 320, (Math.floor(i / 3) - .5) * unfold * 360)
+    g.beginPath(); p.forEach(([x,y],j)=>j ? g.lineTo(x,y):g.moveTo(x,y));g.closePath()
+    const shades = [C.deep, '#94a98c', '#b9cbb0', '#6e896e', C.sage, '#3d654c']
+    if (wire < 1) {g.globalAlpha = 1 - wire;const grad=g.createLinearGradient(p[0][0],p[0][1],p[2][0],p[2][1]);grad.addColorStop(0,shades[i]);grad.addColorStop(1,i===4?C.paper:shades[(i+1)%6]);g.fillStyle=grad;g.fill()}
+    g.globalAlpha=1;g.strokeStyle = wire > .5 ? C.deep : C.paper;g.lineWidth = wire > .5 ? 2.5 : 1.2;g.stroke()
+    for(let n=1;n<3;n++){const a=n/3;stroke([[lerp(p[0][0],p[1][0],a),lerp(p[0][1],p[1][1],a)],[lerp(p[3][0],p[2][0],a),lerp(p[3][1],p[2][1],a)]],wire>.5?C.mid:C.paper,1);stroke([[lerp(p[0][0],p[3][0],a),lerp(p[0][1],p[3][1],a)],[lerp(p[1][0],p[2][0],a),lerp(p[1][1],p[2][1],a)]],wire>.5?C.mid:C.paper,1)}
     g.restore()
-  })
-  footer(false, true)
+  }
 }
-
-function more(t) {
-  field(C.dark, '#2d4b38', t)
-  appear(t, .05, 960, 170, () => txt('Still curious. Always building.', 0, 0, 78, C.paper, 650, 'center'))
-  const data = [
-    { title: ['SafeScan'], label: 'Product concept', icon: 'barcode', fill: C.sage },
-    { title: ['MediMatch'], label: 'Healthcare prototype', icon: 'plus', fill: '#d6e7df' },
-    { title: ['AI Smart Store', 'Assistant'], label: 'AI product discovery', icon: 'chat', fill: C.clay },
-  ]
-  data.forEach((d, i) => {
-    const a = arrive(t, .25 + i * .2, .85)
-    transform(370 + i * 590, 575 + (1 - a) * 240, .86 + .14 * a, (i - 1) * .045 * a, () => {
-      g.globalAlpha = a
-      shadow(() => rr(-255, -245, 510, 500, 28, d.fill), 40, 18, .25)
-      icon(d.icon, 0, -116, 92, C.forest)
-      lines(d.title, 0, d.title.length === 1 ? 45 : 20, d.title.length === 1 ? 50 : 43, C.ink, 700, 'center', 56)
-      txt(d.label, 0, 177, 28, C.forest, 500, 'center')
+// Genuine screenshot planes projected into 3D; no UI reconstruction or recoloring.
+const textures = {}
+function browserTexture(name) {
+  if(textures[name])return textures[name]
+  const im=images[name],c=createCanvas(im.width,im.height+44),q=c.getContext('2d');q.fillStyle=C.paper;q.fillRect(0,0,c.width,c.height)
+  q.fillStyle=C.mid;for(let i=0;i<3;i++){q.beginPath();q.arc(21+i*18,22,4,0,Math.PI*2);q.fill()}
+  q.font='500 14px Manrope';q.textAlign='center';q.fillStyle=C.deep;q.fillText(({ 'campus-filters':'CampusMesh','campus-login':'CampusMesh',adaptui:'AdaptUI',clearhead:'ClearHead',splitgrid:'SplitGrid','splitgrid-create':'SplitGrid',safescan:'SafeScan · design concept' })[name],c.width/2,27)
+  q.drawImage(im,0,44);textures[name]=c;return c
+}
+function plane(name,x,y,width,ry=0,rz=0,rx=0) {
+  const im=browserTexture(name),height=width*im.height/im.width
+  // Orthographic 3D projection: a single image resample keeps text and edges clean.
+  const ax=Math.cos(ry),by=Math.cos(rx),shear=Math.sin(ry)*Math.sin(rx)
+  transform(x,y,1,rz,()=>{
+    g.transform(ax,shear,0,by,0,0)
+    g.save();g.shadowColor='#23463835';g.shadowBlur=30;g.shadowOffsetY=24
+    box(-width/2,-height/2,width,height,C.paper);g.restore()
+    g.drawImage(im,-width/2,-height/2,width,height)
+  })
+}
+function crop(name,sx,sy,sw,sh,x,y,w,h) {g.drawImage(images[name],sx,sy,sw,sh,x,y,w,h)}
+function opening(t) {
+  fill(C.deep)
+  if(t<.25){if(Math.floor(t*12)%2===0)box(950,495,10,90,C.paper);return}
+  if(t<1.25){const a=prog(t,.25,.22),burst=prog(t,.93,.32);const word='IDEAS.';const size=310;g.font=`800 ${size}px Manrope`;const width=g.measureText(word).width
+    transform(960,535,lerp(1.35,1,a),0,()=>{
+      for(let i=0;i<6;i++){g.save();g.translate((i-2.5)*burst*70,Math.sin(i*2)*burst*170);g.rotate((i-2.5)*burst*.055);g.beginPath();g.rect(-width/2+i*width/6,-240,width/6+1,500);g.clip();text(word,0,0,size,C.paper,800,'center');g.restore()}
     })
-  })
-  appear(t, 1.5, 960, 917, () => txt('Different problems. The same care.', 0, 0, 35, C.sage, 500, 'center'))
-  footer(true)
-}
-
-function experience(t) {
-  field(C.paper, '#d9e6ce', t)
-  appear(t, .1, 110, 230, () => lines(['Learning by doing.', 'Building with people.'], 0, 0, 76))
-  appear(t, .8, 110, 573, () => {
-    txt('AI & Data Science', 0, 0, 41, C.ink, 650)
-    lines(['Don Bosco Institute of Technology', 'Bengaluru'], 0, 72, 29, C.muted, 500, 'left', 46)
-    pill('9.0 / 10 CGPA', 0, 230, C.sage, C.forest, 27)
-  })
-  ;[
-    { y: 290, title: 'Jarurat Care Foundation', role: 'UI/UX Design Intern', detail: 'Healthcare experiences, thoughtfully designed.', mark: 'jc', fill: C.sage },
-    { y: 620, title: 'Mini Web Solutions / WE3.BUILD', role: 'Design · Frontend · Digital content', detail: 'Turning ideas into digital experiences.', mark: 'w3', fill: C.clay },
-  ].forEach((d, i) => {
-    appear(t, .5 + i * .5, 1050, d.y, () => {
-      shadow(() => rr(-30, -70, 790, 266, 25, C.white), 40, 14, .09)
-      rr(0, -38, 72, 72, 17, d.fill); txt(d.mark, 36, -2, 31, C.ink, 750, 'center')
-      txt(d.title, 100, -3, i ? 30 : 34, C.ink, 700, 'left', 620)
-      txt(d.role, 0, 82, 29, C.ink, 600)
-      txt(d.detail, 0, 143, 24, C.muted, 450, 'left', 730)
-    }, 90)
-  })
-  footer()
-}
-
-function closing(t) {
-  field('#1f3d2f', '#33543b', t)
-  const a = arrive(t, .05, .85)
-  mark(960, 193 + (1 - a) * 65, 122 * (.7 + a * .3), -.09 + .06 * a, true)
-  appear(t, .25, 960, 405, () => lines(['Curiosity in design.', 'Purpose in code.'], 0, 0, 95, C.paper, 650, 'center', 119))
-  appear(t, .85, 960, 717, () => txt('Bhoomika S.', 0, 0, 44, C.sage, 700, 'center'))
-  appear(t, 1.15, 960, 798, () => txt('bbhoomikasb11@gmail.com', 0, 0, 34, C.paper, 500, 'center'))
-  appear(t, 1.5, 960, 927, () => txt('Open to internships & full-time opportunities', 0, 0, 28, '#b7cdb3', 500, 'center'))
-}
-
-const scenes = [curiosity, identity, workflow, campus, clearhead, adapt, split, more, experience, closing]
-function sceneAt(time) {
-  return Math.max(0, Math.min(9, cuts.findIndex((c, i) => i < 10 && time >= c && time < cuts[i + 1])))
-}
-function drawOn(target, scene, time) {
-  g = target.getContext('2d')
-  g.resetTransform(); g.globalAlpha = 1; g.clearRect(0, 0, W, H)
-  scenes[scene](Math.max(0, time))
-}
-function render(time) {
-  const i = sceneAt(Math.min(time, DURATION - .001)), local = time - cuts[i]
-  drawOn(current, i, local)
-  ctx.resetTransform(); ctx.globalAlpha = 1
-  if (i > 0 && local < .54) {
-    const p = out(local / .54)
-    drawOn(previous, i - 1, cuts[i] - cuts[i - 1] - .015)
-    ctx.drawImage(previous, 0, 0)
-    ctx.save()
-    if (i % 3 === 0) {
-      ctx.beginPath(); ctx.arc(1460, 530, Math.max(.1, p * 2000), 0, Math.PI * 2); ctx.clip()
-      ctx.drawImage(current, 0, 0)
-    } else if (i % 3 === 1) {
-      ctx.drawImage(current, W * (1 - p), 0)
-    } else {
-      const scale = 1.12 - p * .12
-      ctx.globalAlpha = p; ctx.translate(W / 2, H / 2); ctx.scale(scale, scale)
-      ctx.drawImage(current, -W / 2, -H / 2)
-    }
-    ctx.restore()
-  } else ctx.drawImage(current, 0, 0)
-}
-function poster() {
-  g = ctx; field(C.paper, '#d8e6cb', 0)
-  mark(960, 177, 115, -.08)
-  txt('Bhoomika, in motion.', 960, 326, 91, C.ink, 750, 'center')
-  txt('A little design. A little code. A lot of curiosity.', 960, 440, 34, C.muted, 500, 'center')
-  const icons = [
-    { x: 310, y: 667, a: -.12, icon: 'pen', label: 'Design', fill: C.white },
-    { x: 1578, y: 650, a: .1, icon: 'code', label: 'Develop', fill: C.forest },
-    { x: 1350, y: 865, a: -.07, icon: 'spark', label: 'Explore AI', fill: '#c8dcb9' },
-  ]
-  icons.forEach(d => transform(d.x, d.y, 1, d.a, () => {
-    shadow(() => rr(-145, -110, 290, 220, 29, d.fill), 40, 17, .12)
-    icon(d.icon, 0, -32, 70, d.fill === C.forest ? C.sage : C.forest)
-    txt(d.label, 0, 64, 29, d.fill === C.forest ? C.paper : C.ink, 650, 'center')
-  }))
-  txt('A 60-second introduction', 960, 946, 28, C.muted, 500, 'center')
-}
-
-async function savePreviews() {
-  await fs.mkdir(OUT, { recursive: true }); await fs.mkdir(REVIEW, { recursive: true })
-  poster()
-  await fs.writeFile(path.join(OUT, 'bhoomika-introduction-poster.jpg'), canvas.toBuffer('image/jpeg', 94))
-  const sheet = createCanvas(1280, 2000)
-  const sc = sheet.getContext('2d'); sc.fillStyle = '#14271e'; sc.fillRect(0, 0, sheet.width, sheet.height)
-  for (let i = 0; i < 10; i++) {
-    const time = cuts[i] + (cuts[i + 1] - cuts[i]) * .67
-    render(time)
-    await fs.writeFile(path.join(REVIEW, `scene-${String(i + 1).padStart(2, '0')}.jpg`), canvas.toBuffer('image/jpeg', 92))
-    const x = i % 2 * 640, y = Math.floor(i / 2) * 400
-    sc.drawImage(canvas, x, y, 640, 360)
-    sc.font = '20px Manrope'; sc.fillStyle = '#eff4e9'; sc.fillText(`${cuts[i].toFixed(1)}–${cuts[i + 1].toFixed(1)} sec`, x + 20, y + 388)
+    stroke([[370,740],[lerp(370,1550,prog(t,.55,.35)),740]],C.yellow,10)
+  } else {
+    const a=prog(t,1.25,.42),leave=prog(t,2.65,.35)
+    for(let i=0;i<4;i++){g.save();g.translate((i%2?1:-1)*(1-a)*500,(i-1.5)*leave*260);g.beginPath();g.rect(0,320+i*100,W,101);g.clip();text('EVERYWHERE.',960,535,238,C.paper,800,'center',1780);g.restore()}
+    if(t>1.7)cursor(lerp(230,1700,prog(t,1.7,.8)),735,C.yellow,.8)
+    text('One idea. Endless possibilities.',100,900,33,C.sage,500)
   }
-  await fs.writeFile(path.join(REVIEW, 'storyboard.jpg'), sheet.toBuffer('image/jpeg', 94))
 }
-
-await savePreviews()
-if (process.argv.includes('--preview')) {
-  console.log(`Storyboard: ${path.join(REVIEW, 'storyboard.jpg')}`)
-  console.log(`Poster: ${path.join(OUT, 'bhoomika-introduction-poster.jpg')}`)
-} else {
-  await fs.mkdir(TEMP, { recursive: true })
-  const audio = path.join(TEMP, 'music.wav')
-  try { await fs.access(audio) } catch {
-    const music = spawn('python3', [path.join(ROOT, 'scripts/reel/music.py'), '--output', audio, '--ffmpeg', ffmpeg], { stdio: 'inherit' })
-    const [code] = await once(music, 'exit')
-    if (code !== 0) throw new Error('Music rendering failed')
+function sketch(t) {
+  fill(C.paper);grid(t,C.line,180)
+  const solid=prog(t,.65,.7),rush=prog(t,3.35,.65)
+  cube(t*.8,lerp(1340,960,rush),lerp(535,540,rush),lerp(180,1300,rush),1-solid)
+  reveal('MY BRAIN',100,270,120,t-.35,C.ink,1050)
+  reveal("DOESN’T DO",100,420,120,t-.85,C.ink,1050)
+  if(t>1.25){box(95,510,lerp(0,625,prog(t,1.25,.35)),154,C.yellow);reveal('STATIC.',110,584,143,t-1.3,C.ink,1000)}
+  if(t>2) {stroke([[1030,750],[1180,750],[1270,665]],C.mid,2,prog(t,2,.4));text('A sketch is just the beginning.',100,845,33,C.deep,500)}
+  if(t<.65){cursor(lerp(1110,1500,prog(t,0,.65)),lerp(400,720,prog(t,0,.65)),C.yellow,.8)}
+}
+function identity(t) {
+  fill(C.sage);grid(t,C.mid,240)
+  if(t<.6)cube(3.2,960,540,200,0,prog(t,0,.6))
+  reveal('BHOOMIKA S.',95,395,200,t-.2,C.ink,1740)
+  reveal('AI & DATA SCIENCE',105,610,62,t-.7,C.ink)
+  reveal('DESIGN × CODE × IDEAS',105,720,42,t-1.1,C.ink)
+  const p=prog(t,1.7,.55);cursor(lerp(1700,480,p),lerp(850,405,p),C.yellow,1.2)
+  if(t>2.35){const r=prog(t,2.35,.65)*1500;circle(480,380,r,C.deep);circle(480,380,Math.max(0,r-30),C.paper)}
+}
+function campus(t) {
+  fill(C.sage)
+  if(t<2.5){reveal('CampusMesh',90,155,106,t,C.ink);reveal('Connecting students through a',95,280,40,t-.35,C.deep);reveal('smarter campus experience.',95,335,40,t-.5,C.deep)
+    plane('campus-filters',1070,690,1500,lerp(.38,.02,prog(t,.3,1)),lerp(-.09,.015,prog(t,.3,1)),.08);if(t>1.4){const q=prog(t,1.4,.7);cursor(lerp(1720,610,q),lerp(920,705,q),C.yellow,.8)}
+  }else if(t<4.5){const p=prog(t,2.5,.55);text('CampusMesh',90,130,70,C.ink);text('FIND. FILTER. CONNECT.',90,230,36,C.deep)
+    transform(960,610,lerp(.88,1.1,p),-.025*(1-p),()=>plane('campus-filters',0,0,1670,0,0,0))
+    stroke([[200,855],[lerp(200,1710,prog(t,3.1,.8)),855]],C.yellow,9)
+  }else if(t<6.7){const p=prog(t,4.5,.6);text('CampusMesh',90,145,82,C.ink);text('A campus. A community.',95,245,35,C.deep)
+    plane('campus-login',1160,610,1080,lerp(-.5,-.08,p),lerp(.08,0,p));plane('campus-filters',350,685,560,.1,-.08);if(t>5.4)cursor(lerp(1780,1300,prog(t,5.4,.7)),lerp(850,725,prog(t,5.4,.7)),C.yellow,.8)
+  }else{const p=prog(t,6.7,.7);plane('campus-login',lerp(1160,2600,p),610,1080,-.08,0);plane('campus-filters',lerp(350,960,p),540,lerp(560,1550,p),0,0)
+    stroke([[90,920],[1830*prog(t,6.85,.8),920]],C.yellow,10)
   }
-  const output = path.join(OUT, 'bhoomika-introduction.mp4')
-  const encoder = spawn(ffmpeg, [
-    '-hide_banner', '-loglevel', 'warning', '-y',
-    '-f', 'rawvideo', '-pixel_format', 'rgba', '-video_size', `${W}x${H}`, '-framerate', `${FPS}`, '-i', 'pipe:0',
-    '-i', audio, '-c:v', 'libx264', '-preset', 'medium', '-crf', '20', '-pix_fmt', 'yuv420p',
-    '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-movflags', '+faststart', '-t', `${DURATION}`,
-    '-metadata', 'title=Bhoomika S. — Curiosity in design. Purpose in code.',
-    '-metadata', 'comment=Original motion graphics and original synthesized music. Interface visuals are illustrative.',
-    output,
-  ], { stdio: ['pipe', 'inherit', 'inherit'] })
-  const done = once(encoder, 'exit')
-  encoder.stdin.on('error', e => { if (e.code !== 'EPIPE') console.error(e) })
-  for (let frame = 0; frame < FPS * DURATION; frame++) {
-    render(frame / FPS)
-    if (!encoder.stdin.write(canvas.data())) await once(encoder.stdin, 'drain')
-    if (frame % 150 === 0) console.log(`Rendered ${frame / FPS}s / ${DURATION}s`)
+  meta('CampusMesh · source interface')
+}
+function adapt(t) {
+  fill(C.paper);reveal('AdaptUI',90,200,138,t,C.ink);reveal('A more adaptable web.',95,350,42,t-.35,C.deep)
+  const assemble=prog(t,.2,.95)
+  // Crop only existing profile rows, then return them to their source positions.
+  if(t<1.5){for(let i=0;i<4;i++){const a=prog(t,.12+i*.15,.65);crop('adaptui',22,307+i*76,396,69,lerp(2100,1020,a)+(i%2?1:-1)*(1-assemble)*130,280+i*130,650,113)}
+  }else{plane('adaptui',1280,540,440*lerp(1.05,1.02,prog(t,1.5,1.2)),0,lerp(.06,0,prog(t,1.5,.35)));stroke([[1520,340],[1540,340],[1540,640],[1520,640]],C.yellow,6,prog(t,1.7,.6))}
+  if(t>1.1)text('Accessibility, with intention.',95,840,32,C.deep,500)
+  meta('AdaptUI · original extension UI')
+}
+function clarity(t) {
+  fill(C.sage)
+  reveal('ClearHead',90,155,108,t,C.ink)
+  const a=prog(t,0,.65)
+  if(t<.65){for(let i=0;i<3;i++){g.save();g.translate((1-a)*(i%2?1900:-1900),0);g.beginPath();g.rect(0,270+i*230,W,232);g.clip();plane('clearhead',1180,620,1100,0,0);g.restore()}}
+  else plane('clearhead',1180,620,1100+Math.sin((t-.65)*.6)*14,0,0)
+  stroke([[90,248],[lerp(90,720,prog(t,.8,.7)),248]],C.deep,2)
+  if(t>1.4)reveal('A little space',90,430,40,t-1.4,C.deep);if(t>1.6)reveal('for clarity.',90,490,40,t-1.6,C.deep)
+  meta('ClearHead · source interface')
+}
+function split(t) {
+  fill(C.paper);grid(t,C.line,240);reveal('SplitGrid',90,150,108,t,C.ink)
+  const a=prog(t,0,.65)
+  if(t<1.4){for(let i=0;i<4;i++){g.save();g.translate((1-a)*(i%2?500:-500),(1-a)*(i<2?-500:500));g.beginPath();g.rect(360+(i%2)*600,260+Math.floor(i/2)*325,602,327);g.clip();plane('splitgrid',960,585,1200,0,0);g.restore()}}
+  else{plane('splitgrid',520,610,820,-.12,-.025);plane('splitgrid-create',1340,610,820,.12,.025)}
+  stroke([[155,930],[960,930],[960,850],[1770,850]],C.yellow,7,prog(t,1.45,.8));meta('SplitGrid · source interfaces')
+}
+function codePanel(x,y,w,angle=0) {
+  transform(x,y,w/900,angle,()=>{box(-450,-320,900,640,C.deep,12);text('SplitGrid / simplifyDebts',-410,-270,27,C.sage,600);g.save();g.font='22px monospace';g.fillStyle=C.paper;g.textBaseline='middle';code.slice(0,17).forEach((s,i)=>g.fillText(s,-410,-204+i*27));g.restore()})
+}
+function montage(t) {
+  fill(t<2.5?C.deep:t<5?C.paper:C.sage)
+  const stage=t<2.5?0:t<5?1:2,local=t-[0,2.5,5][stage]
+  const word=['THINK.','DESIGN.','BUILD.'][stage],dark=stage===0
+  if(local<.65){text(word,lerp(2050,960,prog(local,0,.35)),500,300,dark?C.paper:C.ink,800,'center');stroke([[190,750],[lerp(190,1730,prog(local,.18,.4)),750]],C.yellow,12);return}
+  const p=prog(local,.65,.45),collapse=prog(t,7.4,.6),s=1-collapse*.98
+  transform(960,540,s,collapse*.3,()=>{
+    text(word,-850,-345,130,dark?C.paper:C.ink,800)
+    if(stage===0){plane('campus-filters',lerp(-1500,-400,p),0,900,.12,-.065);plane('adaptui',440,lerp(1000,20,prog(local,.85,.55)),320,-.2,.06);cube(t,50,170,130)}
+    if(stage===1){plane('safescan',-520,lerp(1000,110,p),640,.1,-.065);plane('clearhead',lerp(1600,300,prog(local,.85,.55)),70,1000,-.15,.05);text('SafeScan · product design concept',-840,450,24,C.deep,500)}
+    if(stage===2){codePanel(lerp(-1600,-330,p),40,930,-.045);plane('splitgrid-create',450,lerp(-1000,40,prog(local,.85,.55)),740,.17,.05);plane('campus-filters',80,lerp(1000,370,prog(local,1.05,.55)),730,-.05,-.025)}
+    // A framing rule travels with the idea across each composition.
+    stroke([[-850,480],[-850+1700*p,480]],C.yellow,7)
+  })
+  if(t>7.4)circle(960,540,5+collapse*4,C.deep)
+  meta('Design × code × ideas',dark)
+}
+function finale(t) {
+  fill(C.deep)
+  const emerge=prog(t,0,.7),settle=prog(t,1.2,1.2)
+  cube(9+Math.min(t,6)*.45,lerp(960,1460,settle),lerp(540,480,settle),lerp(8,220,emerge),0)
+  if(t>.9)reveal('I MAKE',90,330,175,t-.9,C.paper,1280)
+  if(t>1.5)reveal('IDEAS',90,520,175,t-1.5,C.paper,1280)
+  if(t>2.1){box(85,620,lerp(0,710,prog(t,2.1,.45)),175,C.yellow);reveal('MOVE.',105,705,175,t-2.15,C.ink,1100)}
+  if(t>3.3)reveal('BHOOMIKA S.',100,870,58,t-3.3,C.paper)
+  if(t>4.1)reveal('PRODUCT DESIGN · FRONTEND DEVELOPMENT · AI',100,945,28,t-4.1,C.sage)
+  // Clean lower-right area is deliberately reserved for a confirmed portfolio URL.
+  if(t>5.2)stroke([[1260,820],[lerp(1260,1780,prog(t,5.2,.9)),820]],C.sage,1)
+  if(t>6.3&&t<7.1){const x=lerp(1670,1770,prog(t,6.3,.5));cursor(x,855,C.paper,.6)}
+  if(t>7.1){g.save();g.globalAlpha=1-prog(t,7.1,.2);g.fillStyle=C.deep;g.fillRect(1740,835,90,90);g.restore();if(Math.floor((t-7.1)*4)%2===0)box(1780,850,5,33,C.paper)}
+}
+const scenes=[opening,sketch,identity,campus,adapt,clarity,split,montage,finale]
+function drawScene(target,i,t){g=target.getContext('2d');g.resetTransform();g.globalAlpha=1;g.filter='none';g.clearRect(0,0,W,H);scenes[i](Math.max(0,t))}
+function render(t){
+  let i=cuts.findIndex((v,n)=>n<scenes.length&&t>=v&&t<cuts[n+1]);if(i<0)i=scenes.length-1
+  const local=t-cuts[i];drawScene(sceneCanvas,i,local);ctx.resetTransform();ctx.globalAlpha=1;ctx.drawImage(sceneCanvas,0,0)
+  // The same crease/line drives short wipes. The name's O supplies the product portal.
+  if(i>0&&local<.25&&i!==8){drawScene(oldCanvas,i-1,cuts[i]-cuts[i-1]-.001);const p=prog(local,0,.25);ctx.save();ctx.beginPath()
+    if(i===3){ctx.rect(0,0,W,H);ctx.arc(480,380,p*2200,0,Math.PI*2,true);ctx.clip('evenodd')}
+    else{ctx.moveTo(W*p,0);ctx.lineTo(W,0);ctx.lineTo(W,H);ctx.lineTo(W*p-160,H);ctx.closePath();ctx.clip()}
+    ctx.drawImage(oldCanvas,0,0);ctx.restore()
   }
-  encoder.stdin.end()
-  const [code] = await done
-  if (code !== 0) throw new Error(`Video rendering failed with exit ${code}`)
-  console.log(`Rendered: ${output}`)
+}
+function poster(){
+  g=ctx;fill(C.sage);grid(2,C.line,240);text('I MAKE',105,225,175,C.ink);text('IDEAS MOVE.',100,415,175,C.ink,800,'left',1650)
+  cube(10,1450,710,170);box(100,620,210,9,C.yellow);text('BHOOMIKA S.',100,730,51,C.ink);text('DESIGN × CODE × IDEAS',100,812,28,C.deep,600);text('43 seconds. One moving idea.',100,962,27,C.deep,500)
+}
+async function previews(){await fs.mkdir(REVIEW,{recursive:true});await fs.mkdir(OUT,{recursive:true});poster();await fs.writeFile(path.join(REVIEW,'poster.jpg'),canvas.toBuffer('image/jpeg',94))
+  const times=[.6,1.8,3.5,5.2,6.3,8.3,9.3,10.9,12.9,15.2,17.3,18.9,20.1,22.3,24.8,26.1,27.2,28.5,30.5,32.2,33.3,34.8,36.2,38,40,42.6]
+  const sheet=createCanvas(1600,Math.ceil(times.length/4)*250),q=sheet.getContext('2d');q.fillStyle=C.deep;q.fillRect(0,0,sheet.width,sheet.height)
+  for(let n=0;n<times.length;n++){render(times[n]);const x=n%4*400,y=Math.floor(n/4)*250;q.drawImage(canvas,x,y,400,225);q.fillStyle=C.paper;q.font='14px Manrope';q.fillText(`${times[n].toFixed(1)}s`,x+12,y+244);await fs.writeFile(path.join(REVIEW,`frame-${times[n]}.jpg`),canvas.toBuffer('image/jpeg',92))}
+  await fs.writeFile(path.join(REVIEW,'storyboard.jpg'),sheet.toBuffer('image/jpeg',94));console.log(`Storyboard: ${REVIEW}/storyboard.jpg`)
+}
+await previews()
+if(!process.argv.includes('--preview')){
+  await fs.mkdir(TEMP,{recursive:true})
+  const audio=path.join(TEMP,'score.wav'),output=path.join(TEMP,'Bhoomika-S-Ideas-Move.mp4')
+  const music=spawn('python3',[path.join(ROOT,'scripts/reel/music.py'),'--output',audio,'--ffmpeg',ffmpeg],{stdio:'inherit'});if((await once(music,'exit'))[0]!==0)throw Error('Score render failed')
+  const enc=spawn(ffmpeg,['-hide_banner','-loglevel','warning','-y','-f','rawvideo','-pixel_format','rgba','-video_size',`${W}x${H}`,'-framerate',`${FPS}`,'-i','pipe:0','-i',audio,'-c:v','libx264','-preset','medium','-crf','18','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k','-ar','48000','-movflags','+faststart','-t',`${DURATION}`,'-metadata','title=Bhoomika S. — I MAKE IDEAS MOVE','-metadata','comment=Original motion graphics and score. Authentic source-interface captures; no generated UI.',output],{stdio:['pipe','inherit','inherit']})
+  const done=once(enc,'exit');enc.stdin.on('error',e=>{if(e.code!=='EPIPE')console.error(e)})
+  for(let f=0;f<FPS*DURATION;f++){const t=f/FPS;const rapid=cuts.some(c=>t>=c&&t<c+.55)||(t>27&&t<35);if(rapid&&f>0){render(t-1/96);shutterCtx.drawImage(canvas,0,0);render(t);ctx.globalAlpha=.18;ctx.drawImage(shutter,0,0);ctx.globalAlpha=1}else render(t);if(!enc.stdin.write(canvas.data()))await once(enc.stdin,'drain');if(f%120===0)console.log(`Rendered ${f/FPS}s / ${DURATION}s`)}
+  enc.stdin.end();if((await done)[0]!==0)throw Error('Film encode failed')
+  // Replace the served film only after a complete successful encode.
+  await fs.copyFile(output,path.join(OUT,'bhoomika-introduction.mp4'));await fs.copyFile(path.join(REVIEW,'poster.jpg'),path.join(OUT,'bhoomika-introduction-poster.jpg'));console.log(`Film: ${OUT}/bhoomika-introduction.mp4`)
 }

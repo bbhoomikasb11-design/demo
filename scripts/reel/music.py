@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render an original 60-second instrumental for Bhoomika's portfolio reel.
+"""Render an original 43-second instrumental for Bhoomika's portfolio reel.
 
 No recordings, samples, or downloaded assets are used. The notes, synthesis,
 arrangement, and transition sounds are generated here. Requires Python 3,
@@ -25,11 +25,11 @@ import numpy as np
 
 
 SAMPLE_RATE = 48_000
-BPM = 100
+BPM = 120
 BEAT = 60 / BPM
 BAR = BEAT * 4
-DURATION = BAR * 25
-SCENE_CUTS = [0, 4.8, 9.6, 14.4, 21.6, 28.8, 36, 43.2, 48, 55.2, 60]
+DURATION = 43
+SCENE_CUTS = [0, 3, 7, 10, 18, 21, 24, 27, 35, 43]
 RNG = np.random.default_rng(20261020)
 MIX = np.zeros((round(SAMPLE_RATE * DURATION), 2), dtype=np.float64)
 
@@ -152,99 +152,62 @@ def transition_chime(at: float, note: int, gain: float = 0.07):
 
 
 def compose():
-    # Dmaj9, Bm7/add9, Gmaj9, Asus2/4 -> Aadd9. Two bars per chord.
-    progression = [
-        (38, [62, 66, 69, 73, 76]),
-        (38, [62, 66, 69, 73, 76]),
-        (35, [62, 66, 69, 71, 73]),
-        (35, [62, 66, 69, 71, 73]),
-        (31, [59, 62, 66, 69, 74]),
-        (31, [59, 62, 66, 69, 74]),
-        (33, [62, 64, 69, 71, 74]),
-        (33, [61, 64, 69, 71, 76]),
-    ]
-    # Original restrained eight-bar melody; beat, MIDI note, note length in beats.
-    melody = [
-        [(0.5, 78, 0.8), (2, 76, 1.1), (3.5, 73, 0.7)],
-        [(1, 74, 0.8), (2.5, 76, 1.1)],
-        [(0, 73, 1.3), (2, 71, 0.7), (3, 69, 0.8)],
-        [(0.5, 71, 1), (2.5, 73, 1.2)],
-        [(0, 74, 1.4), (2, 78, 0.7), (3, 76, 0.8)],
-        [(0.5, 74, 1.3), (2.5, 71, 1.1)],
-        [(0.5, 69, 0.8), (2, 71, 0.8), (3, 74, 0.8)],
-        [(0.5, 73, 1.1), (2.5, 76, 1.2)],
-    ]
-    kick_sample = kick()
-    arp_positions = [(0, 0), (0.75, 2), (1.5, 1), (2, 3), (2.75, 2), (3.5, 4)]
-    for bar in range(25):
+    # Original D-minor/add9 progression. A 120 BPM grid supports half-second edits.
+    progression = [(38, [62, 65, 69, 76]), (34, [62, 65, 69, 72]),
+                   (41, [60, 65, 69, 76]), (36, [60, 64, 67, 74])]
+    for bar in range(22):
         at = bar * BAR
-        root, notes = progression[bar % 8] if bar < 24 else progression[0]
-        outro = bar >= 23
-        breakdown = 12 <= bar < 15
-        for index, note in enumerate(notes[:4]):
-            add(
-                pad(note - 12, BAR + 0.6, index * 0.7),
-                at, 0.027 if not outro else 0.024,
-                [-0.62, -0.22, 0.25, 0.63][index],
-            )
-        if bar == 24:
-            for index, note in enumerate(notes):
-                add(key(note, 2.35, velvet=True), at + index * 0.055,
-                    0.105, (index - 2) * 0.22, echo=True)
-            add(bass(root, 1.65), at, 0.11)
+        root, notes = progression[(bar // 2) % 4]
+        if 34 <= at < 36:
             continue
-
-        # Intro and mid-reel breakdown leave space for text; the ending opens up.
-        positions = arp_positions[::2] if bar < 2 or breakdown or outro else arp_positions
-        for index, (beat, chord_index) in enumerate(positions):
-            note = notes[chord_index]
-            gain = (0.115 if index % 2 == 0 else 0.09)
-            gain *= float(RNG.uniform(0.9, 1.05))
-            add(key(note, 1.35), at + beat * BEAT, gain,
-                [-0.5, 0.34, -0.2, 0.5, 0.12, -0.36][index], echo=True)
-
-        if bar >= 2:
-            add(bass(root, 0.9), at, 0.19 if not breakdown else 0.13)
-            if not breakdown and not outro:
-                add(bass(root, 0.45), at + 1.5 * BEAT, 0.10)
-                add(bass(root + 7, 0.6), at + 2.5 * BEAT, 0.125)
-                add(bass(root, 0.35), at + 3.5 * BEAT, 0.08)
-
-        if bar >= 4 and not breakdown and not outro:
-            for beat, gain in [(0, 0.24), (2, 0.18)]:
-                add(kick_sample, at + beat * BEAT, gain)
-            for beat in (1, 3):
-                add(brush(), at + beat * BEAT + 0.008, 0.075, 0.14)
-            # Four quiet off-beat shakers per bar; no continuous hat wash.
-            for beat in (0.5, 1.5, 2.5, 3.5):
-                add(shaker(), at + beat * BEAT, 0.035, -0.35)
-        elif 2 <= bar < 4 or 15 <= bar < 16:
-            add(kick_sample, at, 0.19)
-
-        # Melody enters after the identity, pauses at the middle, then returns.
-        if (4 <= bar < 12) or (16 <= bar < 23):
-            for beat, note, length in melody[(bar - 4) % 8]:
-                add(key(note, max(1.15, length * BEAT + 0.5), velvet=True),
-                    at + beat * BEAT, 0.105, 0.12, echo=True)
-        elif bar == 23:
-            for beat, note in [(0, 76), (1.5, 73), (3, 74)]:
-                add(key(note, 1.8, velvet=True), at + beat * BEAT,
-                    0.09, 0.12, echo=True)
-
-    # Soft accents are timed to editorial cuts, with fewer chimes than cuts.
+        ending = at >= 36
+        calm = 21 <= at < 24
+        for i, note in enumerate(notes):
+            add(pad(note - 12, BAR + .4, i * .6), at,
+                .019 if ending else .016, (i - 1.5) * .35)
+        for beat in range(4):
+            tick = at + beat * BEAT
+            if tick >= 42:
+                continue
+            add(bass(root + (7 if beat == 3 else 0), .42), tick,
+                .12 if ending or calm else .18)
+            if not ending and not calm:
+                add(kick(), tick, .32 if beat % 2 == 0 else .20)
+                if beat % 2:
+                    add(brush(), tick, .13, .12)
+                add(shaker(), tick + .25, .048, -.3 if beat % 2 else .3)
+            elif beat == 0:
+                add(kick(), tick, .16)
+        for i, beat in enumerate([0, .5, 1.5, 2, 2.5, 3.5]):
+            if ending and i % 2:
+                continue
+            note = notes[(i + bar) % 4] + (12 if 27 <= at < 34 else 0)
+            add(key(note, .8, velvet=ending), at + beat * BEAT,
+                .075 if calm else .11, (-.5, .4, -.15)[i % 3], echo=True)
+    # Editorial impacts, light mechanical snaps and short pencil-like textures.
+    for at in [.25, 1.25, 3, 4.25, 5.25, 7, 8, 10, 12.5, 14.5, 18, 19.5,
+               21, 24, 25.5, 27, 29.5, 32, 35, 36.5, 37.1]:
+        add(kick(), at, .30)
+        add(soften_edges(band_noise(.07) * np.exp(-timeline(.07) / .012), .001, .015),
+            at, .085, .1)
     for cut in SCENE_CUTS[1:-1]:
-        whoosh(cut, 0.023 if cut in [9.6, 36, 48, 55.2] else 0.014)
-    for cut, note in [(4.8, 74), (14.4, 78), (28.8, 74), (43.2, 78), (55.2, 76)]:
-        transition_chime(cut, note, 0.06 if cut != 55.2 else 0.075)
-
-    fade_in = round(0.6 * SAMPLE_RATE)
-    fade_out = round(1.5 * SAMPLE_RATE)
-    MIX[:fade_in] *= np.sin(np.linspace(0, np.pi / 2, fade_in))[:, None] ** 2
-    MIX[-fade_out:] *= np.cos(np.linspace(0, np.pi / 2, fade_out))[:, None] ** 2
-    # Remove tiny oscillator DC bias and retain comfortable pre-master headroom.
+        whoosh(cut, .052)
+    for at in [3.05, 3.35, 3.65]:
+        sound = band_noise(.16, narrow=True) * np.sin(np.pi * timeline(.16) / .16) ** 2
+        add(sound, at, .045, -.2)
+    for at in [0, .15, 8.8, 19.8, 42.2, 42.7]:
+        add(soften_edges(band_noise(.025), .001, .018), at, .055, .2)
+    transition_chime(35.25, 74, .11)
+    # A short vacuum before the signature. Sample envelope, not a hard mute cut.
+    a, b = round(34.55 * SAMPLE_RATE), round(35.03 * SAMPLE_RATE)
+    MIX[a:b] *= .035
+    n = round(.08 * SAMPLE_RATE)
+    MIX[a-n:a] *= np.linspace(1, .035, n)[:, None]
+    MIX[b:b+n] *= np.linspace(.035, 1, n)[:, None]
+    MIX[:240] *= np.linspace(0, 1, 240)[:, None]
+    MIX[-round(.25*SAMPLE_RATE):] *= np.linspace(1, 0, round(.25*SAMPLE_RATE))[:, None]
     MIX[:] -= MIX.mean(axis=0)
-    MIX[:] *= 0.80 / max(float(np.max(np.abs(MIX))), 1e-9)
-    # Keep both endpoints exactly silent, including after DC removal.
+    MIX[:] *= .80 / max(float(np.max(np.abs(MIX))), 1e-9)
     MIX[:48] *= np.linspace(0, 1, 48)[:, None]
     MIX[-48:] *= np.linspace(1, 0, 48)[:, None]
 
@@ -290,7 +253,7 @@ def render(output: Path, ffmpeg: str):
         ffmpeg_run(ffmpeg, [
             "-y", "-i", str(raw), "-af", master,
             "-ar", str(SAMPLE_RATE), "-ac", "2", "-c:a", "pcm_s24le",
-            "-metadata", "title=Making Things Make Sense — Original Portfolio Bed",
+            "-metadata", "title=I Make Ideas Move — Original Portfolio Score",
             "-metadata", "comment=Original procedural composition; no sampled recordings.",
             str(output),
         ])
@@ -306,7 +269,7 @@ def render(output: Path, ffmpeg: str):
         "channels": 2,
         "pcm_bits": 24,
         "bpm": BPM,
-        "bars": 25,
+        "bars": 21.5,
         "integrated_lufs": float(measured["input_i"]),
         "true_peak_dbtp": float(measured["input_tp"]),
         "loudness_range_lu": float(measured["input_lra"]),

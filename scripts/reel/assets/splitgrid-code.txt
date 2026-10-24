@@ -1,0 +1,18 @@
+function simplifyDebts(balancesMap, members) {
+  const entries = members.map((m) => ({
+    id: m.id,
+    name: m.name,
+    amount: balancesMap[m.id] ?? 0,
+  }));
+
+  const creditors = entries.filter((e) => e.amount > 0.005).sort((a, b) => b.amount - a.amount);
+  const debtors   = entries.filter((e) => e.amount < -0.005).sort((a, b) => a.amount - b.amount);
+
+  const debts = [];
+  let ci = 0;
+  let di = 0;
+
+  // Work on copies to avoid mutation
+  const cList = creditors.map(c => ({ ...c }));
+  const dList = debtors.map(d => ({ ...d }));
+
