@@ -13,10 +13,8 @@ import { EducationNote, MilestoneHighlights } from './components/LearningHighlig
 
 const navItems = [
   {to:'/',label:'Home',Icon:Home},
-  {to:'/projects',label:'Projects',Icon:FolderOpen},
+  {to:'/projects',label:'Designs',Icon:FolderOpen},
   {to:'/playground',label:'Playground',Icon:Blocks},
-  {to:'/skills',label:'My toolkit',Icon:Layers},
-  {to:'/about',label:'About me',Icon:UserRound},
 ]
 
 function External({href,children,className='',...props}) {
