@@ -2,12 +2,13 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, Route, Routes, useLocation, useParams } from 'react-router-dom'
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Blocks, BriefcaseBusiness, Check, Code2, Copy, ExternalLink, FileText, FolderOpen, GraduationCap, Home, Layers, Mail, MapPin, Menu, MousePointer2, PanelLeftClose, PanelLeftOpen, PencilRuler, Send, Sparkles, Trophy, UserRound, X } from 'lucide-react'
 import { Github, Linkedin } from './components/BrandIcons.jsx'
-import { links, projects, experience } from './data.js'
+import { links, projects } from './data.js'
 import ProjectArt from './components/ProjectArt.jsx'
 import Playground from './components/Playground.jsx'
 import ReelPlayer from './components/ReelPlayer.jsx'
 import ProjectBoard from './components/ProjectBoard.jsx'
 import TechStack from './components/TechStack.jsx'
+import ExperienceJournal from './components/ExperienceJournal.jsx'
 
 const navItems = [
   {to:'/',label:'Home',Icon:Home},
@@ -105,7 +106,7 @@ function SkillsSection({page=false}) {
 }
 
 function ExperienceSection({page=false}) {
-  return <section className={`section-block ${page?'page-section':''}`} id="experience"><div className="narrow"><SectionTitle label="EXPERIENCE" Icon={BriefcaseBusiness} level={page?1:2}>Learning by doing.<br/><span className="muted-word">Building with people.</span></SectionTitle></div><div className="experience-list wide">{experience.map(exp=><article className="experience-card" key={exp.company}><div className={`company-mark mark-${exp.color}`} aria-hidden="true">{exp.mark}<span>.</span></div><div className="experience-content"><h3>{exp.company}</h3><p className="experience-role">{exp.role}</p><p className="experience-description">{exp.description}</p><div className="experience-focus">{exp.focus.map(f=><span key={f}>{f}</span>)}</div></div></article>)}</div></section>
+  return <section className={`section-block ${page?'page-section':''}`} id="experience"><div className="narrow"><SectionTitle label="EXPERIENCE" Icon={BriefcaseBusiness} level={page?1:2}>Learning by doing.<br/><span className="muted-word">Building with people.</span></SectionTitle></div><ExperienceJournal/></section>
 }
 
 function EducationAchievements() {

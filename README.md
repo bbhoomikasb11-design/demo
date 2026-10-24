@@ -31,6 +31,7 @@ npm run preview
 - `src/components/ProjectArt.jsx` contains the illustrative project previews.
 - `src/components/ProjectBoard.jsx` contains the seven swinging polaroid cards; `ProjectSpotlight.jsx` contains their inline details and destination links.
 - `src/components/TechStack.jsx` and `TechStack.css` contain the interactive fan of six skill cards. `TechCardArt.jsx` contains their original SVG illustrations.
+- `src/components/ExperienceJournal.jsx` and `ExperienceJournal.css` contain the experience folders and expandable work areas. Their role summaries, skills, and work-area descriptions live in `src/data.js`.
 - `src/components/Playground.jsx` contains the three experiments.
 - `src/components/ReelPlayer.jsx` contains the homepage introduction player.
 - `scripts/reel/` contains the editable video and original music generators; see `docs/reel.md`.
@@ -58,3 +59,5 @@ The homepage project cards swing into place once, lift and tilt on pointer hover
 The homepage hero’s “Explore projects” and “Let’s connect” buttons scroll to the card board and Connect section on the same page.
 
 The tech-stack cards fan out on arrival. Hover reveals a category’s tools with a lift, pointer tilt, and staggered labels. Clicking or focusing a card centers it; category buttons, previous/next controls, horizontal swipes, and Left/Right/Home/End keys provide other ways to explore. Motion finishes without looping and respects reduced-motion preferences. The same component appears on the homepage and `/skills`.
+
+The experience journal has two company folders. Click a folder or use Left/Right/Home/End while its tab is focused to switch roles. Each folder has three expandable work areas, remembers its open area, and keeps the original role summary and focus skills visible. Paper entrances and hover effects are finite and respect reduced-motion preferences. The journal is shared by the homepage, About, and Experience pages.

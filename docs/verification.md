@@ -74,3 +74,13 @@ Final captures live under `.impeccable/review/` as development-only evidence. Th
 - Verified both destinations at 1280px and 390px; each scrolls into view while the pathname stays `/`. Native Enter activation also reached the project board on mobile.
 - The board anchor has a 40px scroll margin. Existing scroll behavior and reduced-motion styles apply; the other navigation links retain their original destinations.
 - Independent source review, production build, and `git diff --check` passed.
+
+## Interactive experience journal — 24 October 2026
+
+- Replaced the static experience cards with two company folders, three expandable work areas per role, and the original always-visible role summaries and focus skills. Compared every original experience field with Git HEAD; company names, roles, descriptions, marks, colors, and skills are unchanged.
+- Inspected desktop and phone captures; checked 1280px, 768px, 390px, and 320px layouts. Both roles fit without page-width or text overflow. Accordion controls are at least 69px tall on the smallest viewport.
+- Verified company switching, opening/collapsing work areas, one-open-area behavior, keyboard tab-arrow wrap, and native Enter activation. Exactly one company panel is visible. All new animations finish at rest.
+- Scoped axe-core checks for WCAG 2 A/AA and 2.1 AA reported no violations for either company panel at 320px.
+- Applied the actual reduced-motion CSS rules in a temporary browser style: page/tag animations and accordion transitions compute to `none`. Restored the style afterward; OS-level preference switching was not exercised.
+- Confirmed the homepage contains the journal alongside all seven project cards and six tech-stack cards. The standalone Experience page uses the same component. Existing preview-host raster blur/duplication affects captures; DOM layout measurements were checked separately.
+- Production build and `git diff --check` passed. No dependencies or raster assets were added.

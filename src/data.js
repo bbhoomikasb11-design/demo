@@ -68,10 +68,20 @@ export const experience = [
     company: 'Jarurat Care Foundation', role: 'UI/UX Design Intern', mark: 'jc', color: 'sage',
     description: 'Worked on healthcare-focused digital experiences, including dashboards for nutritionists and psychologists, therapy-related screens, patient workflows, and administrative interfaces.',
     focus: ['UI/UX design', 'Figma', 'Auto Layout', 'Design systems', 'Responsive design', 'Incorporating feedback'],
+    areas: [
+      { title: 'Care dashboards', description: 'Healthcare-focused dashboards for nutritionists and psychologists.', tags: ['Nutritionists', 'Psychologists'] },
+      { title: 'Patient & therapy workflows', description: 'Therapy-related screens, patient workflows, and administrative interfaces.', tags: ['Patient journeys', 'Therapy screens', 'Administration'] },
+      { title: 'Systems & refinement', description: 'Figma, Auto Layout, design systems, and responsive design, incorporating feedback into interface improvements.', tags: ['Design systems', 'Responsive design', 'Feedback'] },
+    ],
   },
   {
     company: 'Mini Web Solutions / WE3.BUILD', role: 'Product Design · Frontend Development · Digital Content', mark: 'w3', color: 'clay',
     description: 'Collaborate on digital product experiences, website development, branding, and technology-focused content.',
     focus: ['Product thinking', 'Interface design', 'Frontend implementation', 'Visual storytelling', 'Content creation'],
+    areas: [
+      { title: 'Product & interface design', description: 'Collaborating on digital product experiences through product thinking and interface design.', tags: ['Product thinking', 'Interface design'] },
+      { title: 'Frontend development', description: 'Website development and frontend implementation, connecting design with working digital experiences.', tags: ['Websites', 'Frontend implementation'] },
+      { title: 'Brand & digital content', description: 'Branding, visual storytelling, content creation, and technology-focused content.', tags: ['Branding', 'Visual storytelling', 'Technology content'] },
+    ],
   },
 ]
