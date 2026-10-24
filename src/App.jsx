@@ -6,6 +6,7 @@ import { links, projects } from './data.js'
 import ProjectArt from './components/ProjectArt.jsx'
 import Playground from './components/Playground.jsx'
 import ReelPlayer from './components/ReelPlayer.jsx'
+import PortraitCanvas from './components/PortraitCanvas.jsx'
 import ProjectBoard from './components/ProjectBoard.jsx'
 import TechStack from './components/TechStack.jsx'
 import ExperienceJournal from './components/ExperienceJournal.jsx'
@@ -76,15 +77,10 @@ function Hero() {
           <h1 id="hero-title">Curiosity in <span className="muted-word">design.</span><br/>Purpose in <span className="inline-code" aria-hidden="true"><Code2/></span> code.</h1>
           <p className="hero-roles">Full-Stack Developer <i/> Product Designer <i/> AI Builder</p>
           <p className="hero-description">I design thoughtful digital experiences and build useful products by combining product design, frontend and backend development, and AI integration.</p>
-          <div className="button-row"><ButtonLink href="#connect" primary><Sparkles size={17}/>Let’s connect<ArrowDown size={16}/></ButtonLink><ButtonLink href="#project-board"><FolderOpen size={18}/>Explore projects</ButtonLink></div>
+          <div className="button-row"><ButtonLink href="#connect" primary><Sparkles size={17}/>Let’s connect<ArrowDown size={16}/></ButtonLink></div>
           <span className="hero-location"><MapPin size={13}/>Based in Bengaluru, India</span>
         </div>
-        <div className="hero-portrait">
-          <figure className="hero-portrait-frame">
-            <img src="/media/bhoomika-portrait.jpg" alt="Portrait of Bhoomika S." width="576" height="768" fetchPriority="high" decoding="async"/>
-            <figcaption>Bhoomika S.</figcaption>
-          </figure>
-        </div>
+        <PortraitCanvas/>
       </div>
     </section>
     <ReelPlayer/>
@@ -96,7 +92,7 @@ function WorkFeature() {
   return <section className="section-block" id="selected-work">
     <div className="narrow"><SectionTitle label="SELECTED WORK" Icon={FolderOpen}>Ideas out of my head.<br/><span className="muted-word">And into the world.</span></SectionTitle><p className="section-copy">A few things I’ve designed, developed, and learned from. Different problems. Different possibilities. The same attention to detail.</p></div>
     <ProjectBoard/>
-    <div className="work-categories narrow">{[[PencilRuler,'Product design','Design'],[Code2,'Full-stack development','Full-stack'],[Sparkles,'AI applications','AI']].map(([Icon,label,filter])=><Link key={label} to={`/projects?filter=${encodeURIComponent(filter)}`}><span><Icon strokeWidth={1.4}/></span>{label}</Link>)}</div><div className="center-action"><ButtonLink to="/projects"><FolderOpen size={17}/>See all seven projects<ArrowRight size={16}/></ButtonLink></div>
+    <div className="work-categories narrow">{[[PencilRuler,'Product design','Design'],[Code2,'Full-stack development','Full-stack'],[Sparkles,'AI applications','AI']].map(([Icon,label,filter])=><Link key={label} to={`/projects?filter=${encodeURIComponent(filter)}`}><span><Icon strokeWidth={1.4}/></span>{label}</Link>)}</div>
   </section>
 }
 
@@ -191,6 +187,13 @@ function App() {
     targets.forEach(t=>observer.observe(t))
     return()=>observer.disconnect()
   },[location.pathname])
+  useEffect(()=>{
+    if(!location.hash)return
+    const frame=requestAnimationFrame(()=>{
+      document.getElementById(location.hash.slice(1))?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'})
+    })
+    return()=>cancelAnimationFrame(frame)
+  },[location.pathname,location.hash,location.key])
   function closeMenu(){setMobileOpen(false);requestAnimationFrame(()=>document.getElementById('mobile-menu-toggle')?.focus())}
   return <div className={`app-shell ${collapsed?'sidebar-collapsed':''}`}><a href="#main-content" className="skip-link" onClick={()=>main.current?.focus()}>Skip to content</a><header className="mobile-header"><Brand/><button id="mobile-menu-toggle" className="icon-button" aria-label={mobileOpen?'Close navigation':'Open navigation'} aria-expanded={mobileOpen} aria-controls="site-navigation" onClick={()=>setMobileOpen(v=>!v)}>{mobileOpen?<X size={24}/>:<Menu size={24}/>}</button></header><Sidebar collapsed={collapsed} setCollapsed={setCollapsed} mobileOpen={mobileOpen} setMobileOpen={v=>v===false?closeMenu():setMobileOpen(v)} isMobile={isMobile}/><main id="main-content" tabIndex="-1" ref={main} className="main-scroll" inert={isMobile&&mobileOpen?true:undefined}><div className={`page-sheet ${location.pathname==='/playground'?'playground-sheet':''}`}><Routes><Route path="/" element={<HomePage/>}/><Route path="/projects" element={<ProjectsPage/>}/><Route path="/projects/:projectId" element={<ProjectPage/>}/><Route path="/playground" element={<PlaygroundPage/>}/><Route path="/skills" element={<><SkillsSection page/><ContactSection/><Footer/></>}/><Route path="/about" element={<><AboutSection page/><ExperienceSection/><EducationAchievements/><ContactSection/><Footer/></>}/><Route path="/experience" element={<><ExperienceSection page/><EducationAchievements/><ContactSection/><Footer/></>}/><Route path="/contact" element={<><ContactSection page/><Footer/></>}/><Route path="*" element={<NotFound/>}/></Routes></div></main></div>
 }

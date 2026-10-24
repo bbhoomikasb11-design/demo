@@ -112,3 +112,11 @@ Final captures live under `.impeccable/review/` as development-only evidence. Th
 - Inspected desktop and phone captures. Checked 768px, 390px, and 320px layouts with expanded details: no component overflow or offscreen card bounds. Native Enter opens experience details; participation expands to its original project link.
 - Scoped axe results reported no WCAG A/AA violations affecting the changed sections; no browser runtime errors. Reduced-motion emulation gives disclosure transitions a zero duration.
 - T3 snapshot calls timed out twice; visual verification used cached local Playwright/Chromium. Production build and diff whitespace checks passed. No dependencies or media assets changed.
+
+## Portrait canvas and homepage navigation — 24 October 2026
+
+- Removed the hero Explore projects button and the redundant See all seven projects button below the complete card board.
+- Education now links to `/#project-board`. Verified it scrolls to the board from both Home and About; the target sits at the main scroll container's top edge.
+- Replaced the passive portrait frame with Design, Code, and AI compositions, native pressed-state controls, and bounded pointer tilt. The supplied image remains unchanged. Keyboard Enter selects Code; touch-compatible clicks select AI.
+- Inspected desktop Design/Code and phone AI captures, and checked portrait bounds at 1280px, 768px, 390px, and 320px. Decorative paper extends beyond the component's box but stays within the page. No runtime errors; scoped hero axe checks reported zero WCAG A/AA violations. Reduced motion removes transitions.
+- Collaborative preview navigation timed out and the snapshot reported no available automation host. Verification used cached local Playwright/Chromium. Production build and diff whitespace checks passed; no dependencies added.

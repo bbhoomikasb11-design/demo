@@ -419,82 +419,14 @@ button{background:transparent}
 }
 @media(max-width:370px){.hero h1{font-size:27px}.hero-roles{font-size:8px}.hero-availability{font-size:6.5px}.hero-description{font-size:12px}.hero .button{font-size:11px}.contact-section .button{font-size:10px;padding-left:12px;padding-right:12px}}
 
-/* The supplied portrait keeps its natural color and full 3:4 composition. */
+/* The portrait canvas shares the hero grid without changing the supplied photo. */
 .hero-with-portrait { container-type: inline-size; }
-.hero-composition {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 240px;
-  grid-template-areas: "copy portrait";
-  align-items: center;
-  gap: 36px;
-}
+.hero-composition { display: grid; grid-template-columns: minmax(0, 1fr) 260px; grid-template-areas: "copy portrait"; align-items: center; gap: 32px; }
 .hero-copy { grid-area: copy; min-width: 0; }
-.hero-portrait {
-  grid-area: portrait;
-  position: relative;
-  width: 240px;
-  margin: 0;
-  isolation: isolate;
-  animation: portrait-arrive .85s var(--ease) both;
-}
-.hero-portrait::before {
-  content: "";
-  position: absolute;
-  inset: 9px 1px -8px;
-  border-radius: 18px;
-  background: var(--sage);
-  transform: rotate(-5deg);
-  z-index: -1;
-}
-.hero-portrait-frame {
-  margin: 0;
-  padding: 9px 9px 14px;
-  background: #fffdf7;
-  border-radius: 18px;
-  box-shadow: 0 5px 8px #29483d0b, 0 20px 32px #29483d1c;
-  transform: rotate(2.5deg);
-  transition: transform .6s var(--ease), box-shadow .6s var(--ease);
-}
-.hero-portrait img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 3 / 4;
-  border-radius: 10px;
-}
-.hero-portrait figcaption {
-  padding-top: 11px;
-  color: #5c724c;
-  text-align: center;
-  font-family: Georgia, serif;
-  font-size: 24px;
-  font-style: italic;
-  letter-spacing: -.03em;
-  line-height: 1.2;
-}
-@media (hover: hover) {
-  .hero-portrait:hover .hero-portrait-frame {
-    transform: translateY(-4px) rotate(0);
-    box-shadow: 0 7px 12px #29483d0b, 0 26px 38px #29483d20;
-  }
-}
 @container (min-width: 741px) {
   .hero-with-portrait h1 { font-size: clamp(40px, 5.8cqw, 50px); }
 }
 @container (max-width: 740px) {
-  .hero-composition {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "portrait" "copy";
-    gap: 38px;
-  }
+  .hero-composition { grid-template-columns: minmax(0, 1fr); grid-template-areas: "portrait" "copy"; gap: 30px; }
   .hero-copy { width: calc(100% - 12px); max-width: 660px; margin-inline: auto; }
-  .hero-portrait { width: 200px; max-width: calc(100% - 28px); justify-self: center; }
-  .hero-portrait figcaption { font-size: 21px; }
-}
-@keyframes portrait-arrive {
-  from { opacity: .65; transform: translateY(18px) rotate(-3deg); }
-  to { opacity: 1; transform: translateY(0) rotate(0); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-portrait-frame, .hero-portrait:hover .hero-portrait-frame { transform: none; }
 }

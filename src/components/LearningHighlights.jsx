@@ -33,7 +33,7 @@ export function EducationNote() {
     <p className="education-specialism">Artificial Intelligence &amp; Data Science</p>
     <div className="education-note-bottom">
       <p className="education-grade"><strong>9.0<span>/10</span></strong><span>CGPA</span></p>
-      <Link to="/projects" className="learning-link">See what I’m building<ArrowRight size={17}/></Link>
+      <Link to="/#project-board" className="learning-link">See what I’m building<ArrowRight size={17}/></Link>
     </div>
   </article>
 }
