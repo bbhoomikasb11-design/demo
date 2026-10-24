@@ -84,3 +84,13 @@ Final captures live under `.impeccable/review/` as development-only evidence. Th
 - Applied the actual reduced-motion CSS rules in a temporary browser style: page/tag animations and accordion transitions compute to `none`. Restored the style afterward; OS-level preference switching was not exercised.
 - Confirmed the homepage contains the journal alongside all seven project cards and six tech-stack cards. The standalone Experience page uses the same component. Existing preview-host raster blur/duplication affects captures; DOM layout measurements were checked separately.
 - Production build and `git diff --check` passed. No dependencies or raster assets were added.
+
+## Education and milestone highlights — 24 October 2026
+
+- Replaced the education divider row with an ivory paper note, a folded corner, and a working Projects link. Degree, institution, Bengaluru location, and 9.0/10 CGPA remain visible.
+- Added two expandable milestone stories with their original descriptions and external event/GitHub destinations. One story opens at a time; closing a story removes its link from keyboard interaction with `inert`. Debate and poster competition facts remain visible beneath the stories.
+- Inspected desktop and phone captures and checked 1280px, 768px, 390px, and 320px layouts with both stories selected. No page-width or target text overflow and no browser runtime errors were found.
+- Verified native Enter activation, collapse to zero height, correct expanded/hidden states, and navigation from education to `/projects`. Axe-core WCAG 2 A/AA and 2.1 AA checks reported no violations affecting the new sections.
+- Browser reduced-motion emulation produced zero running animations and zero-duration disclosure transitions. No dependencies or raster assets were added.
+- The T3 collaborative preview failed with snapshot timeouts and a disconnected automation host. Following two failures, verification used locally cached Playwright and Chromium against the running Vite server.
+- Production build and `git diff --check` passed.

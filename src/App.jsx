@@ -9,6 +9,7 @@ import ReelPlayer from './components/ReelPlayer.jsx'
 import ProjectBoard from './components/ProjectBoard.jsx'
 import TechStack from './components/TechStack.jsx'
 import ExperienceJournal from './components/ExperienceJournal.jsx'
+import { EducationNote, MilestoneHighlights } from './components/LearningHighlights.jsx'
 
 const navItems = [
   {to:'/',label:'Home',Icon:Home},
@@ -111,8 +112,8 @@ function ExperienceSection({page=false}) {
 
 function EducationAchievements() {
   return <>
-    <section className="section-block education-section" id="education"><div className="narrow"><SectionTitle label="EDUCATION" Icon={GraduationCap}>A foundation in curiosity.<br/><span className="muted-word">And a little data science.</span></SectionTitle><article className="education-card"><div className="education-icon"><GraduationCap size={30} strokeWidth={1.5}/></div><div><h3>Don Bosco Institute of Technology</h3><p>Bachelor of Engineering<br/>Artificial Intelligence & Data Science</p><span><MapPin size={12}/>Bengaluru</span></div><div className="cgpa"><strong>9.0<span>/10</span></strong><span>CGPA</span></div></article></div></section>
-    <section className="section-block achievements-section" id="achievements"><div className="narrow"><SectionTitle label="A FEW MILESTONES" Icon={Trophy}>Showing up.<br/><span className="muted-word">And giving it a go.</span></SectionTitle></div><div className="achievements wide"><article className="achievement-row"><span className="achievement-symbol"><Trophy size={23}/></span><div><span className="achievement-note">ROUND 1 SELECTION</span><h3>SEBI Securities Market TechSprint</h3><p>Participation and selection for Round 1 of the SEBI Securities Market TechSprint.</p></div><External href="https://hackculture.io/hackathons/sebi-securities-market-techsprint" className="icon-button raised-button" aria-label="View SEBI TechSprint event"><ArrowUpRight size={18}/></External></article><article className="achievement-row"><span className="achievement-symbol"><Code2 size={23}/></span><div><span className="achievement-note">24-HOUR HACKATHON · TEAM BAREMETAL</span><h3>Code Carnage 2.0</h3><p>Participated in a 24-hour offline hackathon at SJB Institute of Technology. Contributed to a disaster management and volunteer platform connecting disaster-response needs with volunteers.</p></div><External href="https://github.com/Prajwal-17/disaster-volunteer-platform" className="icon-button raised-button" aria-label="View Team BareMetal hackathon project on GitHub"><ArrowUpRight size={18}/></External></article><div className="achievement-small-row"><article><span className="award-mark">1<sup>st</sup></span><div><h3>A voice worth finding.</h3><p>First place in a debate competition<br/>at Gousia College.</p></div></article><article><span className="award-mark">3<span>×</span></span><div><h3>Ideas worth sharing.</h3><p>Won three poster<br/>presentation competitions.</p></div></article></div></div></section>
+    <section className="section-block education-section" id="education"><div className="narrow"><SectionTitle label="EDUCATION" Icon={GraduationCap}>A foundation in curiosity.<br/><span className="muted-word">And a little data science.</span></SectionTitle><EducationNote/></div></section>
+    <section className="section-block achievements-section" id="achievements"><div className="narrow"><SectionTitle label="A FEW MILESTONES" Icon={Trophy}>Showing up.<br/><span className="muted-word">And giving it a go.</span></SectionTitle></div><MilestoneHighlights/></section>
   </>
 }
 
