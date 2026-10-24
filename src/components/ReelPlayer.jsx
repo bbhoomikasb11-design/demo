@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react'
-import { Captions, ChevronDown, Download, Maximize, Minimize, Pause, Play, RotateCcw, Volume2, VolumeX } from 'lucide-react'
+import { Captions, Maximize, Minimize, Pause, Play, RotateCcw, Volume2, VolumeX } from 'lucide-react'
 import './ReelPlayer.css'
 
 const VIDEO_URL = '/media/bhoomika-introduction.mp4?v=ideas-move-20261024'
@@ -100,7 +100,7 @@ export default function ReelPlayer() {
     } catch (playError) {
       setWaiting(false)
       if (playError.name !== 'AbortError') {
-        setError('The video couldn’t start. Try again, or download it below.')
+        setError('The video couldn’t start. Please try again.')
       }
     }
   }
@@ -127,7 +127,7 @@ export default function ReelPlayer() {
   }
 
   function handleMediaError() {
-    setError('The video couldn’t load. Try again, or download it below.')
+    setError('The video couldn’t load. Please try again.')
     setPlaying(false)
     setWaiting(false)
     setReady(false)
@@ -194,7 +194,6 @@ export default function ReelPlayer() {
           preload="metadata"
           playsInline
           aria-label="Bhoomika S. — I make ideas move"
-          aria-describedby={`${id}-description`}
           onLoadedMetadata={updateDuration}
           onDurationChange={updateDuration}
           onPlay={handlePlay}
@@ -209,8 +208,8 @@ export default function ReelPlayer() {
           onError={handleMediaError}
         >
           <source src={VIDEO_URL} type="video/mp4" onError={handleMediaError} />
-          <track kind="captions" src="/media/bhoomika-introduction.vtt?v=ideas-move-20261024" srcLang="en" label="English" onError={() => setNotice('Captions couldn’t load. You can read the story below.')} />
-          Your browser cannot play this video. Use the download link below.
+          <track kind="captions" src="/media/bhoomika-introduction.vtt?v=ideas-move-20261024" srcLang="en" label="English" onError={() => setNotice('Captions couldn’t load. Please reload the page to try again.')} />
+          Your browser cannot play this video. Please try another browser.
         </video>
         {!playing && (
           <button
@@ -278,19 +277,7 @@ export default function ReelPlayer() {
         </div>
       </div>
       {(error || notice) && <p className="reel-notice" role="status">{error || notice}</p>}
-      <div className="reel-footer">
-        <details className="reel-story">
-          <summary>Read the story <ChevronDown size={13} aria-hidden="true" /></summary>
-          <div id={`${id}-description`}>
-            <p>Ideas. Everywhere. My brain doesn’t do static. I’m Bhoomika S., an AI &amp; Data Science student connecting design, code, and ideas.</p>
-            <p>A single idea becomes a sketch, a dimensional form, and a window into my work. CampusMesh connects students through a smarter campus experience. AdaptUI explores an adaptable web. ClearHead makes room for clarity. SplitGrid focuses on shared expenses.</p>
-            <p>Think. Design. Build. The montage brings together authentic project interfaces, the SafeScan design concept, and a source-code excerpt from SplitGrid. Screens are captured from the projects’ actual frontends; they are not generated interfaces. The captures show interface design, not end-to-end service verification.</p>
-            <p>I make ideas move. Bhoomika S. — product design, frontend development, and AI. <a href="mailto:bbhoomikasb11@gmail.com">Let’s connect.</a></p>
-            <p>This 43-second film has original electronic music and sound effects, animated text, and no narration. Playback starts only when you choose to play.</p>
-          </div>
-        </details>
-        <a className="reel-download" href={VIDEO_URL} download="Bhoomika-S-Ideas-Move.mp4"><Download size={14} aria-hidden="true" /> Download video</a>
-      </div>
+
     </section>
   )
 }

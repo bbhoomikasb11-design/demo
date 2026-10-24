@@ -308,7 +308,7 @@ Mobile navigation opens as a drawer over a blurred backdrop. It traps keyboard f
 
 ### Layered Showcase and Playground
 
-The hero contains a user-controlled 43-second portfolio film, “I MAKE IDEAS MOVE,” rendered at 1920×1080 and 24fps. Exact kinetic typography and a projected modular object connect real UI captures through masks, camera framing, grid assemblies, and a final collapse to a point. Cream and sage are sampled from the original film; butter yellow provides restrained emphasis. Original screenshot colors are preserved with the owner’s approval. An original 120 BPM electronic score synchronizes the key reveals and includes a brief near-silent moment before the signature. The poster leaves the center play-control area clear. Playback never starts automatically or loops, and pauses when hidden or offscreen. Captions, a full text alternative, seeking, sound, fullscreen, replay, and download remain available. The inline code tile rotates slightly on heading hover.
+The hero contains a user-controlled 43-second portfolio film, “I MAKE IDEAS MOVE,” rendered at 1920×1080 and 24fps. Exact kinetic typography and a projected modular object connect real UI captures through masks, camera framing, grid assemblies, and a final collapse to a point. Cream and sage are sampled from the original film; butter yellow provides restrained emphasis. Original screenshot colors are preserved with the owner’s approval. An original 120 BPM electronic score synchronizes the key reveals and includes a brief near-silent moment before the signature. The poster leaves the center play-control area clear. Playback never starts automatically or loops, and pauses when hidden or offscreen. Captions, seeking, sound, fullscreen and replay remain available; there is no story or download footer. The inline code tile rotates slightly on heading hover.
 
 The homepage project collage has a physical-paper motion sequence: each card swings from its fastening point and settles over (1.15s), with (65ms) sibling delays. Hover straightens, lifts, enlarges, and tilts the selected card towards the pointer. Selection opens the inline project file over (560ms). The sequence runs once on arrival, or when “Swing the cards” is pressed; it does not loop. All spatial movement is removed for reduced-motion preferences.
 
@@ -320,7 +320,7 @@ Milestone stories unfold over (350ms); stamps straighten on interaction over (40
 
 The playground has exactly three bounded studies: a saved-state button, adjustable Manrope type, and a user-triggered three-tile motion study. The motion study uses a (1.1s) animation with (0.12s) staggered delays. Section entrances run once as they enter view; project filter entries settle over (0.45s).
 
-**The Motion at Your Pace Rule.** Entrances finish, project switching stays manual, and playground motion begins on request. Under `prefers-reduced-motion: reduce`, interface animations, transitions, and smooth scrolling are disabled. The introduction stays on its poster until explicitly played; visitors can read its complete story without starting the video.
+**The Motion at Your Pace Rule.** Entrances finish, project switching stays manual, and playground motion begins on request. Under `prefers-reduced-motion: reduce`, interface animations, transitions, and smooth scrolling are disabled. The introduction stays on its poster until explicitly played; visitors choose when to start it.
 
 ## Do's and Don'ts
 

@@ -30,7 +30,7 @@ The lower-right closing area is intentionally left available for a confirmed por
 - `scripts/reel/music.py`: original 120 BPM electronic score, warm synthesized bass/keys, percussion, cursor clicks, sketch textures, snaps, whooshes and impacts. A near-silent interval at 34.55–35.03 seconds precedes the signature. No recordings or downloaded music are used.
 - `scripts/reel/assets/`: genuine interface captures, code excerpt and detailed provenance. These are not served as website assets.
 - `public/media/`: delivered MP4, JPEG poster and matching VTT captions.
-- `src/components/ReelPlayer.jsx`: player, 43-second cover information, full text alternative, controls and download name.
+- `src/components/ReelPlayer.jsx`: player, 43-second cover information and playback controls.
 
 Install the existing locked dependencies and NumPy, then run:
 
@@ -47,4 +47,4 @@ The master WAV measures −17.16 LUFS integrated, −1.50 dBTP and 3.9 LU loudne
 
 ## Player behavior
 
-Playback never autoplays or loops. It pauses when hidden or outside the viewport, while fullscreen playback remains available. Controls include play/pause/replay, seeking, mute, English captions, fullscreen and download. “Read the story” provides a text alternative. Reduced-motion preferences remove control animation; the film itself runs only when explicitly played.
+Playback never autoplays or loops. It pauses when hidden or outside the viewport, while fullscreen playback remains available. Controls include play/pause/replay, seeking, mute, English captions and fullscreen. The story disclosure and download footer were removed at the owner’s request. Reduced-motion preferences remove control animation; the film itself runs only when explicitly played.

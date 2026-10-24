@@ -53,7 +53,7 @@ The portfolio has no backend or contact submission service. Contact buttons open
 
 ## Accessibility and motion
 
-Keyboard navigation, visible focus styles, a skip link, a focus-trapped mobile menu, semantic page headings, descriptive destination links, and reduced-motion styles are included. The introduction video starts only when played and includes captions, a text alternative, and a download. Playground motion only runs when activated and stops automatically.
+Keyboard navigation, visible focus styles, a skip link, a focus-trapped mobile menu, semantic page headings, descriptive destination links, and reduced-motion styles are included. The introduction video starts only when played and includes captions and playback controls. Playground motion only runs when activated and stops automatically.
 
 The homepage project cards swing into place once, lift and tilt on pointer hover, and can be animated again with “Swing the cards.” Selecting a project opens its information below the collage without changing routes. “Back to the cards” closes the information and restores focus to the selected card. Reduced-motion preferences remove the swinging and tilting.
 
