@@ -35,7 +35,7 @@ npm run preview
 - `src/components/LearningHighlights.jsx` and `LearningHighlights.css` contain the education note, expandable milestone stories, and award stamps.
 - `src/components/Playground.jsx` contains the three experiments.
 - `src/components/ReelPlayer.jsx` contains the homepage introduction player.
-- `scripts/reel/` contains the editable video and original music generators; see `docs/reel.md`.
+- `scripts/reel/` contains the editable 43-second “I MAKE IDEAS MOVE” film, original 120 BPM score, and authentic UI captures with provenance; see `docs/reel.md`.
 - `src/styles.css` contains the visual system, responsive layouts, and motion.
 - `public/fonts/` contains the self-hosted Manrope font and its license.
 - `public/media/bhoomika-portrait.jpg` is the supplied homepage portrait, optimized for the web. Its source and preparation are recorded in `docs/assets.md`.

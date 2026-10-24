@@ -94,3 +94,13 @@ Final captures live under `.impeccable/review/` as development-only evidence. Th
 - Browser reduced-motion emulation produced zero running animations and zero-duration disclosure transitions. No dependencies or raster assets were added.
 - The T3 collaborative preview failed with snapshot timeouts and a disconnected automation host. Following two failures, verification used locally cached Playwright and Chromium against the running Vite server.
 - Production build and `git diff --check` passed.
+
+## I MAKE IDEAS MOVE film — 24 October 2026
+
+- Matched the supplied original MP4 to the previous homepage film by SHA-256, reviewed sequential frames across its duration, and sampled cream/sage background pixels. Original project UI colors are retained with explicit user approval.
+- Captured unmodified CampusMesh, AdaptUI, ClearHead and SplitGrid frontends; copied the owner-supplied SafeScan design and an exact SplitGrid code excerpt. Provenance and runtime limitations are recorded in `scripts/reel/assets/README.md`. No sample listings, AI results, active extension scans, or expenses were invented.
+- Inspected 26 storyboard frames, full-size project/closing frames, and a 1-fps contact sheet spanning the encoded film. Corrected screenshot projection seams and a ClearHead text overlap. The final file fully decodes without errors: 1,032 frames, 1920×1080, 24fps, 43 seconds, H.264/yuv420p and 48 kHz stereo AAC, with fast-start metadata.
+- Original 120 BPM score includes synthesized percussion, bass, keys and transition effects. Master WAV: −17.16 LUFS, −1.50 dBTP; encoded AAC measured −17.18 LUFS and −1.49 dBTP. These are programmatic measurements, not an audible audition.
+- The collaborative browser reconnected for final integration checks. Verified metadata, explicit playback, timeline keyboard seeking, mute, all 14 caption cues through 43 seconds, end/replay, and pausing after the player scrolls out of view. The loaded source uses the final cache version.
+- Inspected desktop and phone player captures; at 390px there is no player overflow and all utility controls are 44×44px. Scoped axe WCAG 2 A/AA and 2.1 AA reported zero violations. Existing preview-host raster duplication remains; geometry was checked separately.
+- Updated the 43-second cover, poster, captions, download filename and complete text alternative. Production build, full FFmpeg decode and `git diff --check` passed. No website dependencies were added.

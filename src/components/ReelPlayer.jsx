@@ -2,8 +2,8 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { Captions, ChevronDown, Download, Maximize, Minimize, Pause, Play, RotateCcw, Volume2, VolumeX } from 'lucide-react'
 import './ReelPlayer.css'
 
-const VIDEO_URL = '/media/bhoomika-introduction.mp4'
-const EXPECTED_DURATION = 60
+const VIDEO_URL = '/media/bhoomika-introduction.mp4?v=ideas-move-20261024'
+const EXPECTED_DURATION = 43
 
 function formatTime(seconds) {
   const safeSeconds = Math.max(0, Math.floor(Number.isFinite(seconds) ? seconds : 0))
@@ -182,7 +182,7 @@ export default function ReelPlayer() {
   const progress = duration ? Math.min(100, (currentTime / duration) * 100) : 0
 
   return (
-    <section ref={player} className="reel-player wide" aria-label="Bhoomika’s one-minute introduction">
+    <section ref={player} className="reel-player wide" aria-label="Bhoomika’s animated portfolio film">
       <div className="reel-stage">
         <video
           ref={video}
@@ -190,10 +190,10 @@ export default function ReelPlayer() {
           className="reel-video"
           width="1920"
           height="1080"
-          poster="/media/bhoomika-introduction-poster.jpg"
+          poster="/media/bhoomika-introduction-poster.jpg?v=ideas-move-20261024"
           preload="metadata"
           playsInline
-          aria-label="Bhoomika S. — design, code and curiosity"
+          aria-label="Bhoomika S. — I make ideas move"
           aria-describedby={`${id}-description`}
           onLoadedMetadata={updateDuration}
           onDurationChange={updateDuration}
@@ -209,7 +209,7 @@ export default function ReelPlayer() {
           onError={handleMediaError}
         >
           <source src={VIDEO_URL} type="video/mp4" onError={handleMediaError} />
-          <track kind="captions" src="/media/bhoomika-introduction.vtt" srcLang="en" label="English" onError={() => setNotice('Captions couldn’t load. You can read the story below.')} />
+          <track kind="captions" src="/media/bhoomika-introduction.vtt?v=ideas-move-20261024" srcLang="en" label="English" onError={() => setNotice('Captions couldn’t load. You can read the story below.')} />
           Your browser cannot play this video. Use the download link below.
         </video>
         {!playing && (
@@ -224,7 +224,7 @@ export default function ReelPlayer() {
             <span className="reel-cover-content">
               <span className="reel-cover-icon"><PlaybackIcon size={29} strokeWidth={1.8} aria-hidden="true" /></span>
               <span className="reel-cover-title">{centerLabel}</span>
-              <span className="reel-cover-note">60 sec · Design, code &amp; curiosity</span>
+              <span className="reel-cover-note">43 sec · I make ideas move</span>
             </span>
           </button>
         )}
@@ -282,14 +282,14 @@ export default function ReelPlayer() {
         <details className="reel-story">
           <summary>Read the story <ChevronDown size={13} aria-hidden="true" /></summary>
           <div id={`${id}-description`}>
-            <p>It starts with a “what if?” Then I make it real. I’m Bhoomika S., a final-year AI &amp; Data Science engineering student from Bengaluru. I connect product design, full-stack development, and AI to build thoughtful, useful experiences.</p>
-            <p>CampusMesh connects students through a campus marketplace. ClearHead combines full-stack development with AI integration. AdaptUI explores a more accessible, adaptable web. SplitGrid simplifies shared expenses through real-time collaboration.</p>
-            <p>My other explorations include SafeScan, a product-scanning concept; MediMatch, a healthcare prototype; and AI Smart Store Assistant, an AI product-discovery experience. The animated interfaces are illustrative studies of these projects.</p>
-            <p>I study at Don Bosco Institute of Technology, Bengaluru, with a CGPA of 9.0/10. At Jarurat Care Foundation, I worked as a UI/UX Design Intern on healthcare experiences. At Mini Web Solutions / WE3.BUILD, I collaborate on design, frontend development, and digital content.</p>
-            <p>Curiosity in design. Purpose in code. I’m open to internships and full-time opportunities. Connect at <a href="mailto:bbhoomikasb11@gmail.com">bbhoomikasb11@gmail.com</a>. The video uses original instrumental music with animated text and no narration.</p>
+            <p>Ideas. Everywhere. My brain doesn’t do static. I’m Bhoomika S., an AI &amp; Data Science student connecting design, code, and ideas.</p>
+            <p>A single idea becomes a sketch, a dimensional form, and a window into my work. CampusMesh connects students through a smarter campus experience. AdaptUI explores an adaptable web. ClearHead makes room for clarity. SplitGrid focuses on shared expenses.</p>
+            <p>Think. Design. Build. The montage brings together authentic project interfaces, the SafeScan design concept, and a source-code excerpt from SplitGrid. Screens are captured from the projects’ actual frontends; they are not generated interfaces. The captures show interface design, not end-to-end service verification.</p>
+            <p>I make ideas move. Bhoomika S. — product design, frontend development, and AI. <a href="mailto:bbhoomikasb11@gmail.com">Let’s connect.</a></p>
+            <p>This 43-second film has original electronic music and sound effects, animated text, and no narration. Playback starts only when you choose to play.</p>
           </div>
         </details>
-        <a className="reel-download" href={VIDEO_URL} download="Bhoomika-S-Introduction.mp4"><Download size={14} aria-hidden="true" /> Download video</a>
+        <a className="reel-download" href={VIDEO_URL} download="Bhoomika-S-Ideas-Move.mp4"><Download size={14} aria-hidden="true" /> Download video</a>
       </div>
     </section>
   )
