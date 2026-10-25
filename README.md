@@ -19,7 +19,8 @@ npm run preview
 ## Pages
 
 - `/` — introduction, animated project-card collage with same-page details, skills, experience, education, achievements, and Connect.
-- `/projects` — the seven projects, with Design, Full-stack, and AI filters.
+- `/designs/mobile-apps`, `/designs/web-apps`, and `/designs/websites` — three visual design collections, with three boards in each.
+- `/designs` and `/projects` — open the Mobile Apps collection by default.
 - `/projects/:projectId` — individual project details and their original destination links.
 - `/playground` — three contained, user-activated experiments.
 - `/skills`, `/about`, `/experience`, and `/contact` — focused versions of the relevant content.
@@ -28,7 +29,9 @@ npm run preview
 
 - `src/data.js` contains project content, all destination links, skills, and experience.
 - `src/App.jsx` contains page layouts and navigation.
-- `src/components/ProjectArt.jsx` contains the illustrative project previews.
+- `src/components/DesignGallery.jsx` and `DesignGallery.css` contain the nine design boards, category navigation, alternate views, and zoom viewer. The direction is recorded in `docs/design-gallery-brief.md`.
+- `public/media/designs/README.md` records gallery image sources, licenses, and the original ClearHead capture.
+- `src/components/ProjectArt.jsx` contains the illustrative previews used by homepage projects and their detail pages.
 - `src/components/ProjectBoard.jsx` contains the seven swinging polaroid cards; `ProjectSpotlight.jsx` contains their inline details and destination links.
 - `src/components/TechStack.jsx` and `TechStack.css` contain the interactive fan of six skill cards. `TechCardArt.jsx` contains their original SVG illustrations.
 - `src/components/ExperienceJournal.jsx` and `ExperienceJournal.css` contain compact experience cards with expandable focus details. Their role summaries, skills, and work-area descriptions live in `src/data.js`.
@@ -43,7 +46,9 @@ npm run preview
 - `DESIGN.md` records the implemented palette, typography, spacing, components, and motion rules.
 - `docs/verification.md` records the checks performed and their scope.
 
-The project covers are original interface studies, not screenshots of the linked applications. This is also stated on each project detail page. Replace them with actual project captures whenever those are available.
+The homepage project covers are original interface studies, not screenshots of the linked applications. This is also stated on each project detail page. Replace them with actual project captures whenever those are available.
+
+The Designs gallery presents SafeScan, Roam, and Tempo as mobile boards; CampusMesh, SplitGrid, and ClearHead as web apps; and Atelier / 04, Sunday, and Elsewhere as websites. Each mobile board contains three complete phone screens. Gallery captions use names and concise concept/study labels, with no project descriptions, case-study navigation, or repository links. Each concept has its own palette and typography inside the portfolio’s sage and cream shell. ClearHead uses an unchanged original interface capture; the other boards are authored visual studies with illustrative content.
 
 ## Hosting
 
@@ -54,6 +59,8 @@ The portfolio has no backend or contact submission service. Contact buttons open
 ## Accessibility and motion
 
 Keyboard navigation, visible focus styles, a skip link, a focus-trapped mobile menu, semantic page headings, descriptive destination links, and reduced-motion styles are included. The introduction video starts only when played and includes captions and playback controls. Playground motion only runs when activated and stops automatically.
+
+Gallery category links support direct URLs and browser history. “Closer look” and “Overview” switch compositions; selecting a board opens a native modal dialog with fit/zoom controls and a scrollable canvas. Native links and buttons support keyboard and touch, Escape closes the viewer, and closing restores focus to the selected board. Artboards retain their 1000 × 700 composition and scale through `ResizeObserver` within a gallery capped at 1140px. Gallery motion is finite and respects reduced-motion preferences.
 
 The homepage project cards swing into place once, lift and tilt on pointer hover, and can be animated again with “Swing the cards.” Selecting a project opens its information below the collage without changing routes. “Back to the cards” closes the information and restores focus to the selected card. Reduced-motion preferences remove the swinging and tilting.
 

@@ -120,3 +120,13 @@ Final captures live under `.impeccable/review/` as development-only evidence. Th
 - Replaced the passive portrait frame with Design, Code, and AI compositions, native pressed-state controls, and bounded pointer tilt. The supplied image remains unchanged. Keyboard Enter selects Code; touch-compatible clicks select AI.
 - Inspected desktop Design/Code and phone AI captures, and checked portrait bounds at 1280px, 768px, 390px, and 320px. Decorative paper extends beyond the component's box but stays within the page. No runtime errors; scoped hero axe checks reported zero WCAG A/AA violations. Reduced motion removes transitions.
 - Collaborative preview navigation timed out and the snapshot reported no available automation host. Verification used cached local Playwright/Chromium. Production build and diff whitespace checks passed; no dependencies added.
+
+## Visual Designs collections — 24 October 2026
+
+- Replaced the sidebar's old project listing with Mobile Apps, Web Apps, and Websites. Three visual showcases per category include existing-project studies and distinctly labeled original concepts. No gallery case-study, GitHub, demo, or project-description links remain. Original project details and destinations remain available through homepage cards.
+- Inspected Kree8's three referenced categories and their large image-led compositions. No reference imagery or logos were copied into the portfolio.
+- Verified all nine overview and closer-look states. Corrected mobile content/navigation collisions, the Roam cover's stacking, a ClearHead detail crop, and redundant board captions. Independent finish review scored both listed crop/caption findings resolved and returned ship for that scope.
+- Verified category URLs and browser history, keyboard Enter to open a design, dialog focus, Escape dismissal and return focus, plus zoom/pan at desktop and 390px. Gallery bounds fit 390px and 320px. The same dialog fits its canvas initially and offers a 1400px inspection canvas when zoomed.
+- Scoped axe WCAG 2 A/AA and 2.1 AA checks reported zero violations across all three categories after contrast corrections. Reduced-motion emulation yields zero-duration phone transitions. No browser runtime errors.
+- T3 preview navigation timed out; snapshot reported no available automation host. Used cached local Playwright/Chromium. Mobile captures were allowed to settle after the existing responsive sidebar transition.
+- All four shipped rasters carry embedded source metadata and have documented provenance. Pexels imagery is local; no new packages or remote runtime calls. Production build and diff whitespace checks passed.

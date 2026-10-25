@@ -7,6 +7,7 @@ import ProjectArt from './components/ProjectArt.jsx'
 import Playground from './components/Playground.jsx'
 import ReelPlayer from './components/ReelPlayer.jsx'
 import PortraitCanvas from './components/PortraitCanvas.jsx'
+import DesignGallery from './components/DesignGallery.jsx'
 import ProjectBoard from './components/ProjectBoard.jsx'
 import TechStack from './components/TechStack.jsx'
 import ExperienceJournal from './components/ExperienceJournal.jsx'
@@ -14,7 +15,7 @@ import { EducationNote, MilestoneHighlights } from './components/LearningHighlig
 
 const navItems = [
   {to:'/',label:'Home',Icon:Home},
-  {to:'/projects',label:'Designs',Icon:FolderOpen},
+  {to:'/designs',label:'Designs',Icon:FolderOpen},
   {to:'/playground',label:'Playground',Icon:Blocks},
 ]
 
@@ -92,7 +93,7 @@ function WorkFeature() {
   return <section className="section-block" id="selected-work">
     <div className="narrow"><SectionTitle label="SELECTED WORK" Icon={FolderOpen}>Ideas out of my head.<br/><span className="muted-word">And into the world.</span></SectionTitle><p className="section-copy">A few things I’ve designed, developed, and learned from. Different problems. Different possibilities. The same attention to detail.</p></div>
     <ProjectBoard/>
-    <div className="work-categories narrow">{[[PencilRuler,'Product design','Design'],[Code2,'Full-stack development','Full-stack'],[Sparkles,'AI applications','AI']].map(([Icon,label,filter])=><Link key={label} to={`/projects?filter=${encodeURIComponent(filter)}`}><span><Icon strokeWidth={1.4}/></span>{label}</Link>)}</div>
+    <div className="work-categories narrow">{[[PencilRuler,'Product design','mobile-apps'],[Code2,'Full-stack development','web-apps'],[Sparkles,'AI applications','web-apps']].map(([Icon,label,filter])=><Link key={label} to={`/designs/${filter}`}><span><Icon strokeWidth={1.4}/></span>{label}</Link>)}</div>
   </section>
 }
 
@@ -136,21 +137,13 @@ function HomePage() {
   return <><Hero/><section className="intro-story section-block narrow"><p className="story-lead">The best part of an idea?<br/><span className="muted-word">Turning it into something real.</span></p><p>Sometimes that starts with a wireframe.<br/>Sometimes, a line of code. Or a little <span className="inline-spark"><Sparkles size={18}/></span> “what if?”</p><p>I enjoy connecting those dots—understanding the problem, shaping the experience, and building something that’s <span className="highlight-word">actually useful.</span></p><div className="craft-tokens"><span><PencilRuler size={18}/>Think it through.</span><ArrowRight size={15}/><span><Code2 size={19}/>Bring it to life.</span></div></section><WorkFeature/><SkillsSection/><ExperienceSection/><EducationAchievements/><ContactSection/><Footer/></>
 }
 
-function ProjectsPage() {
-  const location=useLocation()
-  const startFilter=new URLSearchParams(location.search).get('filter')
-  const [filter,setFilter]=useState(['All work','Design','Full-stack','AI'].includes(startFilter)?startFilter:'All work')
-  useEffect(()=>{const v=new URLSearchParams(location.search).get('filter');setFilter(['Design','Full-stack','AI'].includes(v)?v:'All work')},[location.search])
-  const filtered=projects.filter(p=>filter==='All work'||p.filters.includes(filter))
-  return <><header className="project-gallery-heading wide"><h1>Selected work<span>.</span></h1><p>Thoughtfully designed. Purposefully built.</p></header><div className="project-filters wide" role="group" aria-label="Filter projects">{['All work','Design','Full-stack','AI'].map(f=><button key={f} aria-pressed={filter===f} onClick={()=>setFilter(f)} className={filter===f?'selected':''}>{f}<span>{f==='All work'?projects.length:projects.filter(p=>p.filters.includes(f)).length}</span></button>)}</div><div className="project-grid wide" aria-live="polite">{filtered.map(project=><article className="project-card" key={project.id}><Link className="project-card-art" to={`/projects/${project.id}`} aria-label={`Explore ${project.name}`}><ProjectArt project={project}/><span className="project-open"><ArrowUpRight size={22}/></span></Link><div className="project-card-heading"><Link to={`/projects/${project.id}`}><h2>{project.name}</h2></Link><External href={project.url} aria-label={`${project.linkLabel}: ${project.name}`} className="icon-button"><ArrowUpRight size={18}/></External></div><p className="project-discipline">{project.category}</p><p className="project-summary">{project.description}</p><Link className="text-link" to={`/projects/${project.id}`}>Explore project <ArrowRight size={14}/></Link></article>)}</div><ContactSection/><Footer/></>
-}
 
 function ProjectPage() {
   const {projectId}=useParams()
   const project=projects.find(p=>p.id===projectId)
   if(!project)return <NotFound/>
   const next=projects[(projects.indexOf(project)+1)%projects.length]
-  return <><header className="project-detail-heading narrow"><Link to="/projects" className="text-link back-link"><ArrowLeft size={15}/>All projects</Link><span className="section-label">{project.category}</span><h1>{project.name}</h1><p className="project-detail-tagline">{project.short}</p><div className="project-tags">{project.disciplines.map(d=><span key={d}>{d}</span>)}</div></header><div className="project-detail-art wide"><ProjectArt project={project}/></div><div className="project-detail-copy narrow"><h2>The idea</h2><p>{project.description}</p>{project.detail&&<p>{project.detail}</p>}{project.contribution&&<><h2>My contribution</h2><p>{project.contribution}</p></>}{project.tech&&<><h2>Built with</h2><div className="detail-tech">{project.tech.map(t=><span key={t}>{t}</span>)}</div></>}<div className="button-row"><ButtonLink href={project.url} primary>{project.linkLabel.includes('GitHub')?<Github size={18}/>:<ExternalLink size={18}/>} {project.linkLabel}<ArrowUpRight size={16}/></ButtonLink></div><p className="illustration-note">The visual above is an illustrative interface study. Explore the linked project for the implementation or prototype.</p></div><Link to={`/projects/${next.id}`} className="next-project wide"><span>UP NEXT<h2>{next.name}</h2></span><ArrowRight size={28}/></Link><Footer/></>
+  return <><header className="project-detail-heading narrow"><Link to="/#project-board" className="text-link back-link"><ArrowLeft size={15}/>All projects</Link><span className="section-label">{project.category}</span><h1>{project.name}</h1><p className="project-detail-tagline">{project.short}</p><div className="project-tags">{project.disciplines.map(d=><span key={d}>{d}</span>)}</div></header><div className="project-detail-art wide"><ProjectArt project={project}/></div><div className="project-detail-copy narrow"><h2>The idea</h2><p>{project.description}</p>{project.detail&&<p>{project.detail}</p>}{project.contribution&&<><h2>My contribution</h2><p>{project.contribution}</p></>}{project.tech&&<><h2>Built with</h2><div className="detail-tech">{project.tech.map(t=><span key={t}>{t}</span>)}</div></>}<div className="button-row"><ButtonLink href={project.url} primary>{project.linkLabel.includes('GitHub')?<Github size={18}/>:<ExternalLink size={18}/>} {project.linkLabel}<ArrowUpRight size={16}/></ButtonLink></div><p className="illustration-note">The visual above is an illustrative interface study. Explore the linked project for the implementation or prototype.</p></div><Link to={`/projects/${next.id}`} className="next-project wide"><span>UP NEXT<h2>{next.name}</h2></span><ArrowRight size={28}/></Link><Footer/></>
 }
 
 function PlaygroundPage() {
@@ -176,7 +169,7 @@ function App() {
     main.current?.scrollTo({top:0,behavior:'instant'})
     setMobileOpen(false)
     const project=projects.find(p=>location.pathname===`/projects/${p.id}`)
-    const title=project?.name||{'/projects':'Selected work','/playground':'Playground','/skills':'My toolkit','/about':'About me','/experience':'Experience','/contact':'Let’s connect'}[location.pathname]
+    const title=project?.name||{'/projects':'Designs','/designs':'Designs','/designs/mobile-apps':'Mobile Apps','/designs/web-apps':'Web Apps','/designs/websites':'Websites','/playground':'Playground','/skills':'My toolkit','/about':'About me','/experience':'Experience','/contact':'Let’s connect'}[location.pathname]
     document.title=title?`${title} — Bhoomika S.`:'Bhoomika S. — Designer & Developer'
     if(!firstRender.current)main.current?.focus({preventScroll:true})
     firstRender.current=false
@@ -195,7 +188,7 @@ function App() {
     return()=>cancelAnimationFrame(frame)
   },[location.pathname,location.hash,location.key])
   function closeMenu(){setMobileOpen(false);requestAnimationFrame(()=>document.getElementById('mobile-menu-toggle')?.focus())}
-  return <div className={`app-shell ${collapsed?'sidebar-collapsed':''}`}><a href="#main-content" className="skip-link" onClick={()=>main.current?.focus()}>Skip to content</a><header className="mobile-header"><Brand/><button id="mobile-menu-toggle" className="icon-button" aria-label={mobileOpen?'Close navigation':'Open navigation'} aria-expanded={mobileOpen} aria-controls="site-navigation" onClick={()=>setMobileOpen(v=>!v)}>{mobileOpen?<X size={24}/>:<Menu size={24}/>}</button></header><Sidebar collapsed={collapsed} setCollapsed={setCollapsed} mobileOpen={mobileOpen} setMobileOpen={v=>v===false?closeMenu():setMobileOpen(v)} isMobile={isMobile}/><main id="main-content" tabIndex="-1" ref={main} className="main-scroll" inert={isMobile&&mobileOpen?true:undefined}><div className={`page-sheet ${location.pathname==='/playground'?'playground-sheet':''}`}><Routes><Route path="/" element={<HomePage/>}/><Route path="/projects" element={<ProjectsPage/>}/><Route path="/projects/:projectId" element={<ProjectPage/>}/><Route path="/playground" element={<PlaygroundPage/>}/><Route path="/skills" element={<><SkillsSection page/><ContactSection/><Footer/></>}/><Route path="/about" element={<><AboutSection page/><ExperienceSection/><EducationAchievements/><ContactSection/><Footer/></>}/><Route path="/experience" element={<><ExperienceSection page/><EducationAchievements/><ContactSection/><Footer/></>}/><Route path="/contact" element={<><ContactSection page/><Footer/></>}/><Route path="*" element={<NotFound/>}/></Routes></div></main></div>
+  return <div className={`app-shell ${collapsed?'sidebar-collapsed':''}`}><a href="#main-content" className="skip-link" onClick={()=>main.current?.focus()}>Skip to content</a><header className="mobile-header"><Brand/><button id="mobile-menu-toggle" className="icon-button" aria-label={mobileOpen?'Close navigation':'Open navigation'} aria-expanded={mobileOpen} aria-controls="site-navigation" onClick={()=>setMobileOpen(v=>!v)}>{mobileOpen?<X size={24}/>:<Menu size={24}/>}</button></header><Sidebar collapsed={collapsed} setCollapsed={setCollapsed} mobileOpen={mobileOpen} setMobileOpen={v=>v===false?closeMenu():setMobileOpen(v)} isMobile={isMobile}/><main id="main-content" tabIndex="-1" ref={main} className="main-scroll" inert={isMobile&&mobileOpen?true:undefined}><div className={`page-sheet ${location.pathname==='/playground'?'playground-sheet':''}`}><Routes><Route path="/" element={<HomePage/>}/><Route path="/designs" element={<DesignGallery/>}/><Route path="/designs/:category" element={<DesignGallery/>}/><Route path="/projects" element={<DesignGallery/>}/><Route path="/projects/:projectId" element={<ProjectPage/>}/><Route path="/playground" element={<PlaygroundPage/>}/><Route path="/skills" element={<><SkillsSection page/><ContactSection/><Footer/></>}/><Route path="/about" element={<><AboutSection page/><ExperienceSection/><EducationAchievements/><ContactSection/><Footer/></>}/><Route path="/experience" element={<><ExperienceSection page/><EducationAchievements/><ContactSection/><Footer/></>}/><Route path="/contact" element={<><ContactSection page/><Footer/></>}/><Route path="*" element={<NotFound/>}/></Routes></div></main></div>
 }
 
 export default App
